@@ -1,0 +1,54 @@
+name: UI tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: "Test suite"
+        required: true
+        default: "smoke"
+        type: choice
+        options:
+          - smoke
+          - regression
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      STAGE_EMAIL: ${{ secrets.STAGE_EMAIL }}
+      STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
+      PW_HEADLESS: "true"
+      PW_TIMEOUT_MS: "15000"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Run tests
+        run: |
+          if [ "${{ inputs.suite }}" = "smoke" ]; then
+            pytest -m smoke --alluredir=allure-results
+          else
+            pytest -m regression --alluredir=allure-results
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            allure-results
+            artifacts
