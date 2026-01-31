@@ -37,4 +37,27 @@ def context(browser: Browser, request) -> BrowserContext:
 
 @pytest.fixture()
 def page(context: BrowserContext) -> Page:
-    return context.new_page()
+    page = context.new_page()
+
+    # OneTrust cookie consent часто блокує кліки overlay-ем.
+    # Пытаємось закрити/прийняти, якщо банер з'явився.
+    try:
+        # 1) якщо є кнопка Accept all
+        accept = page.get_by_role("button", name="Accept All Cookies")
+        if accept.is_visible():
+            accept.click()
+        else:
+            # 2) альтернативний OneTrust селектор (часто стабільний)
+            btn = page.locator("#onetrust-accept-btn-handler")
+            if btn.is_visible():
+                btn.click()
+            else:
+                # 3) якщо відкрилась preferences modal - закриваємо overlay
+                close = page.get_by_role("button", name="Close")
+                if close.is_visible():
+                    close.click()
+    except Exception:
+        # якщо банера нема — ок
+        pass
+
+    return page

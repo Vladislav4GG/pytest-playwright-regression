@@ -1,6 +1,21 @@
-.venv/
+# OS
+.DS_Store
+
+# Env
+.env
+env
+
+# Python
 __pycache__/
 *.pyc
-.env
+.venv/
+venv/
+
+# Playwright
+playwright-report/
+test-results/
 artifacts/
-allure-results/
+
+# IDE
+.idea/
+.vscode/

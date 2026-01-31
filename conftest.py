@@ -1,3 +1,62 @@
-pytest_plugins = [
-    "fixtures.browser",
-]
+# conftest.py
+import pathlib
+import pytest
+from dotenv import load_dotenv
+
+# ✅ ВАЖЛИВО: спочатку вантажимо .env ОДИН раз, ДО будь-яких імпортів config
+load_dotenv(dotenv_path=".env", override=False)
+
+from playwright.sync_api import sync_playwright, Browser, BrowserContext, Page
+from utils.config import PW_HEADLESS, PW_TIMEOUT_MS
+
+ARTIFACTS = pathlib.Path("artifacts")
+ARTIFACTS.mkdir(exist_ok=True)
+
+
+@pytest.fixture(scope="session")
+def pw():
+    with sync_playwright() as p:
+        yield p
+
+
+@pytest.fixture(scope="session")
+def browser(pw) -> Browser:
+    return pw.chromium.launch(headless=PW_HEADLESS)
+
+
+@pytest.fixture()
+def context(browser: Browser, request) -> BrowserContext:
+    test_name = request.node.name.replace("/", "_")
+
+    ctx = browser.new_context(
+        viewport={"width": 1440, "height": 900},
+        record_video_dir=str(ARTIFACTS / "video" / test_name),
+    )
+    ctx.set_default_timeout(PW_TIMEOUT_MS)
+
+    ctx.tracing.start(screenshots=True, snapshots=True, sources=True)
+
+    yield ctx
+
+    failed = getattr(request.node, "rep_call", None) and request.node.rep_call.failed
+
+    if failed:
+        trace_path = ARTIFACTS / "trace" / f"{test_name}.zip"
+        trace_path.parent.mkdir(parents=True, exist_ok=True)
+        ctx.tracing.stop(path=str(trace_path))
+    else:
+        ctx.tracing.stop()
+
+    ctx.close()
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
+
+
+@pytest.fixture()
+def page(context: BrowserContext) -> Page:
+    return context.new_page()

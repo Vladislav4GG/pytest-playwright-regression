@@ -1,0 +1,39 @@
+import pytest
+import allure
+from flows.purchase_flow import PurchaseFlow
+
+PDP_INK_URL = "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB/products/ink-and-paper/ink-consumables/102-ecotank-pigment-black-ink-bottle/p/22050"
+
+
+@pytest.mark.e2e
+@allure.title("E2E: Guest checkout with credit card (Adyen) + Shipment API + Return flow")
+def test_guest_place_order_card_and_return(page):
+    flow = PurchaseFlow(page)
+
+    address = {
+        "first": "Vlad",
+        "last": "Ponomarenko",
+        "line1": "2 Garth Morgana An Fe",
+        "town": "Newquay",
+        "postcode": "TR8 4XW",
+    }
+
+    guest_email = "vlad.ponomarenko@keenethics.com"
+
+    card = {
+        "number": "5555 4444 3333 1111",
+        "expiry": "03/30",
+        "cvc": "737",
+        "holder": "Vlad",
+    }
+
+    flow.go_pdp_and_reach_billing_info_as_guest(
+        pdp_url=PDP_INK_URL,
+        guest_email=guest_email,
+        address=address,
+    )
+
+    flow.pay_by_card_and_place_order(card)
+
+    result = flow.place_order_and_return_as_guest(guest_email=guest_email)
+    print("RETURN RESULT:", result)
