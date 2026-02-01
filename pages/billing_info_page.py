@@ -21,3 +21,4 @@ class BillingInfoPage:
         btn = self.page.get_by_role("button", name="Save and Continue")
         expect(btn).to_be_visible()
         btn.click()
+        self.page.wait_for_timeout(2500)

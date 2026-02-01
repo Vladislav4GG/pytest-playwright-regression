@@ -1,0 +1,613 @@
+/* Adyen default styled template */
+.chckt-sdk {
+    float: left;
+    font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-payment-holder {
+    float: left;
+    position: relative;
+    width: 100%;
+}
+
+/* Payment method list  */
+.chckt-pm-list {
+    float: left;
+    min-width: 280px;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-pm-list__error-message {
+    background-color: #d81b4a;
+    color: #ffffff;
+    display: none;
+    font-weight: 600;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.chckt-pm-list.chckt-pm-list--error {
+    border: 1px solid #d81b4a;
+}
+
+.chckt-pm-list--error .chckt-pm-list__error-message {
+    display: block;
+}
+
+.chckt-pm-list--error .chckt-pm {
+    display: none;
+}
+
+/* Payment methods */
+.chckt-pm {
+    background: white;
+    border: 1px solid #d6d6d6;
+    border-top: 0;
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    transition: border 0.3s ease-out;
+    width: 100%;
+    z-index: 1;
+}
+
+.chckt-pm--disabled {
+    cursor: default;
+    pointer-events: none;
+}
+
+.chckt-pm:first-child {
+    border-top: 1px solid #d6d6d6;
+    border-radius: 4px 4px 0 0;
+}
+
+.chckt-pm:first-child .chckt-pm__header {
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.chckt-pm--hidden{
+    display: none;
+}
+
+.chckt-pm:hover {
+    cursor: pointer;
+}
+
+.chckt-pm--disabled:hover {
+    cursor: default;
+}
+
+/* Buttons */
+.chckt-button-container {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-button {
+    background-color: #30c94a;
+    border: 0;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.chckt-pm-list__button:hover {
+    cursor: auto;
+}
+
+.chckt-pm-list__button-disabled:hover {
+    background-color: #d6d6d6;
+}
+
+.chckt-button--disabled {
+    background-color: #d2dae1;
+    cursor: auto;
+    pointer-events: none;
+}
+
+.chckt-button--submit {
+    margin-top: 20px;
+}
+
+.chckt-button:hover {
+    background-color: #00914b;
+}
+
+.chckt-button__loading-icon {
+    display: none;
+}
+
+.chckt-button__loading-icon > div {
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    margin-left: 4px;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+    animation: bouncedelay 1.4s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.chckt-button__loading-icon .circle1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.chckt-button__loading-icon .circle2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: .4;
+    ;
+    }
+    30% {
+        transform: scale(1);
+        opacity: 1; }
+}
+
+@keyframes bouncedelay {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: .4;
+    } 30% {
+          transform: scale(1);
+          opacity: 1;
+      }
+}
+
+.chckt-pm-list__button {
+    box-sizing: border-box;
+    float: left;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+.chckt-pm-list__button--loading {
+    opacity: .8;
+    pointer-events: none;
+}
+
+.chckt-pm-list__button--loading .chckt-button__loading-icon {
+    display: block;
+}
+
+.chckt-pm-list__button--loading .chckt-button__text,
+.chckt-pm-list__button--loading .chckt-button__amount,
+.chckt-pm-list__button--error .chckt-button__amount {
+    display: none;
+}
+
+.chckt-pm-list__button--error {
+    background-color: #ff7d00;
+}
+
+.chckt-more-pm-button {
+    background: white;
+    border-bottom: 1px solid #d6d6d6;
+    border-left: 1px solid #d6d6d6;
+    border-right: 1px solid #d6d6d6;
+    color: #717171;
+    display: none;
+    text-align: left;
+    text-decoration: none;
+    padding: 12px 0 14px 20px;
+}
+
+.chckt-more-pm-button--shown {
+    display: block;
+}
+
+.chckt-more-pm-button__text {
+    float: left;
+    margin-left: 10px;
+    padding-top: 8px;
+    position: relative;
+    text-decoration: none;
+}
+
+.chckt-more-pm-button__icon {
+    color: #cccfd5;
+    float: left;
+    font-size: 2em;
+    line-height: 1em;
+    position: relative;
+}
+
+.chckt-more-pm-button:hover {
+    background-color: #fbfbfb;
+    color: #00112c;
+    cursor: pointer;
+}
+
+.chckt-more-pm-button:hover .chckt-more-pm-button__icon {
+    color: #00112c;
+}
+
+
+
+/* Checkout pm header */
+.chckt-pm__header {
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    padding: 14px 20px;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-pm:hover .chckt-pm__header {
+    background-color: #fbfbfb;
+}
+
+.chckt-pm__radio-button {
+    float: left;
+    margin-top: 7px;
+    position: relative;
+}
+
+.chckt-pm__name {
+    color: #4e4e4e;
+    float: left;
+    position: relative;
+    margin-left: 10px;
+    padding-top: 4px;
+}
+
+.chckt-pm__add-fee {
+    color: #717171;
+    padding-top: 6px;
+    float: left;
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+
+.chckt-pm__image {
+    background-color: #ffffff;
+    border-radius: 4px;
+    -moz-boder-radius: 4px;
+    -webkit-border-radius: 4px;
+    float: right;
+    line-height: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.chckt-pm__image-border {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    position: absolute;
+    display: block;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px inset rgba(0,0,0,0.1);
+}
+
+.chckt-pm__details {
+    box-sizing: border-box;
+    display: none;
+    float: left;
+    padding: 0 20px 20px 20px;
+    width: 100%;
+}
+
+.chckt-pm__details:hover {
+    cursor: default;
+}
+
+.chckt-pm__details--redirect {
+
+}
+
+.chckt-pm__recurring-details {
+    float: left;
+    padding-top: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-pm__pending-message {
+    background-color: #30c94a;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.chckt-pm__pending-message.chckt-pm__error-message{
+    background-color: #d81b4a;
+}
+
+/* Selected state TODO: remove js-chckt classes to own, independently loaded style sheet (along the lines of behaviours-common-light.css)*/
+.js-chckt-pm--selected .js-chckt-pm__name {
+    color: #00112c;
+}
+
+.js-chckt-pm--selected:hover {
+    cursor: default;
+}
+
+.js-chckt-pm--selected::after {
+    opacity: 0;
+}
+
+.js-chckt-pm--selected .js-chckt-pm__details{
+    display: block;
+    background-color: #fbfbfb;
+}
+
+.js-chckt-pm--selected .js-chckt-pm__header {
+    background-color: #fbfbfb;
+}
+
+.js-chckt-pm.js-chckt-pm--disabled.js-chckt-pm--selected{
+    display: block;
+}
+/* end Selected state */
+
+
+/* Process states */
+.chckt-pm--pending .chckt-pm__header,
+.chckt-pm--redirecting .chckt-pm__header,
+.chckt-pm--error .chckt-pm__header{
+    display: none;
+}
+
+.chckt-pm--pending form,
+.chckt-pm--redirecting form,
+.chckt-pm--error form{
+    display: none;
+}
+
+.chckt-pm.chckt-pm--disabled{
+    border: 0;
+    display: none;
+}
+
+.chckt-pm__pending-message {
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+/* Forms */
+.chckt-form {
+    float: left;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-form--max-width {
+    max-width: 420px;
+}
+
+
+/* Input fields and types */
+.chckt-input-field {
+    background: white;
+    border: 1px solid #d8d8d8;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    clear: left;
+    font-size:  0.93333333333em;
+    float: left;
+    height: 35px;
+    padding: 8px;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-input-field:focus {
+    border: 1px solid #969696;
+}
+
+.chckt-select-box {
+    background: white;
+    clear: left;
+    border: 1px solid #d8d8d8;
+    box-shadow: none;
+    float: left;
+    font-size:  0.93333333333em;
+    height: 40px;
+    margin-top: 4px;
+    max-width: 420px;
+    width: 100%;
+    padding: 5px 8px;
+    position: relative;
+}
+
+.chckt-input-field--error {
+    color: #ff7d00;
+    border: 1px solid #ff7d00;
+}
+
+.chckt-input-field--error + .chckt-form-label__error-text {
+    display: block;
+}
+
+.chckt-input-field--recurring{
+    border: none;
+    background: #fbfbfb;
+    padding: 4px 0 4px 2px;
+}
+
+.chckt-input-field--cvc {
+    max-width: 80px;
+}
+
+/*--*/
+
+.chckt-input-field::-webkit-input-placeholder {
+    color: #b3b3b3;
+}
+
+.chckt-input-field::-moz-placeholder {
+    color: #b3b3b3;
+}
+.chckt-input-field:-ms-input-placeholder {
+    color: #b3b3b3;
+}
+.chckt-input-field:-moz-placeholder {
+    color: #b3b3b3;
+}
+
+.chckt-checkbox {
+    float: left;
+    position: relative;
+    margin-right: 10px;
+}
+
+.chckt-form-label {
+    float: left;
+    padding-bottom: 1em;
+    position: relative;
+}
+
+.chckt-form-label:last-child {
+    padding-bottom: 0;
+}
+
+.chckt-form-label--full-width {
+    width: 100%;
+}
+
+.chckt-form-label--exp-date {
+    width: 40%;
+}
+
+.chckt-form-label--exp-month {
+    width: 25%;
+}
+
+.chckt-form-label--exp-year {
+    margin-left: 10px;
+    width: 20%;
+}
+
+.chckt-form-label--cvc {
+    float: right;
+    width: 40%;
+}
+
+.chckt-form-label__text {
+    color: #00112c;
+    float: left;
+    font-size: 0.93333em;
+    padding-bottom: 6px;
+    position: relative;
+}
+
+.chckt-form-label__helper {
+    clear: left;
+    color: #acacac;
+    float: left;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-form-label__error-text {
+    color: #ff7d00;
+    display: none;
+    float: left;
+    font-size: 13px;
+    padding-top: .4em;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-form-label__info {
+    float: right;
+    position: relative;
+}
+
+.chckt-pm__submit-container {
+    float: left;
+    width: 100%;
+}
+
+/* Info text box */
+.chckt-info-text {
+    border: 1px solid #969696;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    float: left;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.chckt-info-text--hidden {
+    display: none;
+}
+
+/* Giropay styling */
+.chckt-pm__giropay-suggestions {
+    border: 1px solid #d8d8d8;
+    color: #717171;
+    clear: left;
+    display: block;
+    float: left;
+    font-size: 14px;
+    list-style: none;
+    height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: .3rem 0 0 .3rem;
+    position: relative;
+    width: 100%;
+}
+
+/* Mobile styling */
+@media (max-width: 420px) {
+    .chckt-pm-list {
+        border: 0;
+    }
+
+    .chckt-pm__header {
+        padding:  10px  8px  ;
+    }
+
+    .chckt-pm__details {
+        padding: 0 10px 10px;
+    }
+}
+
+

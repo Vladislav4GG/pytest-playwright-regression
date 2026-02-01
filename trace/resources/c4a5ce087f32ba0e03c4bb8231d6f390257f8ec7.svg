@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16">
+  <g id="icon-user-mobile" transform="translate(-5403 -1342)">
+    <rect id="Rectangle_390" data-name="Rectangle 390" width="14" height="16" transform="translate(5403 1342)" fill="none"/>
+    <g id="Group_1619" data-name="Group 1619" transform="translate(4045.875 -122)">
+      <path id="Path_24" data-name="Path 24" d="M17,3.5a3.489,3.489,0,1,1,0-.022V3.5" transform="translate(1350.625 1465)" fill="#fff"/>
+      <path id="Path_25" data-name="Path 25" d="M8.09,27.392,6.082,29.266,4.16,27.392C2.366,27.375,0,29.689,0,32.486a1.007,1.007,0,0,0,.957,1.031H11.293a1.007,1.007,0,0,0,.957-1.031c0-2.8-1.562-5.094-4.16-5.094" transform="translate(1358 1445.483)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

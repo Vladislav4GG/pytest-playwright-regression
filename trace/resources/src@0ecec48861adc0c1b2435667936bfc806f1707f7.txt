@@ -1,0 +1,36 @@
+from playwright.sync_api import Page, expect
+
+class CheckoutLoginPage:
+    def __init__(self, page: Page):
+        self.page = page
+
+    def checkout_as_guest(self, email: str):
+        email_input = self.page.locator("#guest\\.email")
+        expect(email_input).to_be_visible()
+        email_input.fill(email)
+
+        # Кнопка може називатись по-різному; пробуємо роль/текст
+        guest_btn = self.page.get_by_role("button", name="Check Out as a Guest")
+        expect(guest_btn).to_be_visible()
+        guest_btn.click()
+
+    def sign_in_and_checkout(self, email: str, password: str):
+        username = self.page.locator("#j_username")
+        pwd = self.page.locator("#j_password")
+
+        expect(username).to_be_visible(timeout=20000)
+        expect(pwd).to_be_visible(timeout=20000)
+
+        username.fill(email)
+        pwd.fill(password)
+
+        btn = self.page.locator("button.btn.btn-primary[type='submit']").filter(
+            has_text="Sign In and Check Out"
+        )
+
+        # fallback якщо текст трохи інший/є пробіли
+        if btn.count() == 0:
+            btn = self.page.get_by_role("button", name="Sign In and Check Out")
+
+        expect(btn.first).to_be_enabled(timeout=20000)
+        btn.first.click()

@@ -1,0 +1,227 @@
+import re
+from typing import Optional, Dict, Any
+
+from playwright.sync_api import Page, expect
+
+from utils.consent import dismiss_onetrust
+from utils.config import BASE_URL
+
+from pages.pdp_page import PDPPage
+from pages.cart_page import CartPage
+from pages.checkout_login_page import CheckoutLoginPage
+from pages.delivery_address_page import DeliveryAddressPage
+from pages.delivery_method_page import DeliveryMethodPage
+from pages.billing_info_page import BillingInfoPage
+from pages.payment_method_page import PaymentMethodPage
+from pages.summary_page import SummaryPage
+from pages.confirmation_page import ConfirmationPage
+from pages.guest_order_lookup_page import GuestOrderLookupPage
+from pages.order_details_page import OrderDetailsPage
+from pages.return_order_page import ReturnOrderPage
+from utils.shipment_api import ShipmentApiClient
+
+
+class PurchaseFlow:
+    def __init__(self, page: Page):
+        self.page = page
+
+    # ---------------------------
+    # Helpers
+    # ---------------------------
+    def _abs(self, path: str) -> str:
+        """Build absolute URL from BASE_URL + path."""
+        return f"{BASE_URL.rstrip('/')}/{path.lstrip('/')}"
+
+    def _go_to_cart_after_buy_now(self):
+        """
+        Після PDP buy_now() інколи редірект в /cart,
+        інколи лишається на PDP. Тому робимо надійний fallback.
+        """
+        try:
+            self.page.wait_for_url("**/cart**", timeout=8000)
+            return
+        except Exception:
+            pass
+
+        checkout_btn = self.page.get_by_role("button", name="Checkout")
+        if checkout_btn.count() > 0 and checkout_btn.is_visible():
+            checkout_btn.click()
+            try:
+                self.page.wait_for_url("**/cart**", timeout=8000)
+                return
+            except Exception:
+                pass
+
+        self.page.goto(self._abs("/en_GB/cart"))
+        self.page.wait_for_url("**/cart**", timeout=15000)
+
+    def _reach_billing_info(
+        self,
+        pdp_url: str,
+        address: dict,
+        *,
+        checkout_mode: str,
+        email: str,
+        password: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Єдиний шлях до billing info для guest/registered.
+
+        checkout_mode:
+          - "guest"
+          - "registered"
+        """
+        if checkout_mode not in ("guest", "registered"):
+            raise ValueError("checkout_mode must be 'guest' or 'registered'")
+
+        # 1) PDP
+        self.page.goto(pdp_url)
+        dismiss_onetrust(self.page)
+
+        PDPPage(self.page).buy_now()
+
+        # 2) Cart
+        self._go_to_cart_after_buy_now()
+        dismiss_onetrust(self.page)
+        CartPage(self.page).click_checkout()
+
+        # 3) Login/Checkout page
+        if "/login/checkout" in self.page.url:
+            dismiss_onetrust(self.page)
+            cl = CheckoutLoginPage(self.page)
+
+            if checkout_mode == "guest":
+                cl.checkout_as_guest(email)
+            else:
+                if not password:
+                    raise RuntimeError("password is required for registered checkout")
+                cl.sign_in_and_checkout(email, password)
+
+        # 4) Delivery address
+        self.page.wait_for_url("**/checkout/multi/delivery-address/**", timeout=20000)
+        dismiss_onetrust(self.page)
+
+        DeliveryAddressPage(self.page).fill_and_continue(
+            first=address["first"],
+            last=address["last"],
+            line1=address["line1"],
+            town=address["town"],
+            postcode=address["postcode"],
+        )
+
+        # 5) Delivery method
+        self.page.wait_for_url("**/checkout/multi/delivery-method/**", timeout=20000)
+        dismiss_onetrust(self.page)
+        DeliveryMethodPage(self.page).next()
+
+        # 6) Billing info
+        self.page.wait_for_url("**/checkout/multi/billing-information/**", timeout=20000)
+        dismiss_onetrust(self.page)
+
+        BillingInfoPage(self.page).fill_and_continue_non_business(
+            first=address["first"],
+            last=address["last"],
+            line1=address["line1"],
+            town=address["town"],
+            postcode=address["postcode"],
+        )
+
+        return {"final_url": self.page.url}
+
+    # ---------------------------
+    # Public: Guest / Registered
+    # ---------------------------
+    def go_pdp_and_reach_billing_info_as_guest(self, pdp_url: str, guest_email: str, address: dict):
+        return self._reach_billing_info(
+            pdp_url=pdp_url,
+            address=address,
+            checkout_mode="guest",
+            email=guest_email,
+        )
+
+    def go_pdp_and_reach_billing_info_as_registered(
+        self,
+        pdp_url: str,
+        user_email: str,
+        user_password: str,
+        address: dict,
+    ):
+        return self._reach_billing_info(
+            pdp_url=pdp_url,
+            address=address,
+            checkout_mode="registered",
+            email=user_email,
+            password=user_password,
+        )
+
+    # ---------------------------
+    # Payment
+    # ---------------------------
+    def pay_by_card_and_place_order(self, card: dict, *, prefer_saved: Optional[bool] = None):
+        """
+        prefer_saved:
+          - None => auto (if oneclick exists -> True else False)
+          - True/False => forced
+        """
+        expect(self.page).to_have_url(re.compile(r".*/adyen/select-payment-method.*"))
+
+        p = PaymentMethodPage(self.page)
+
+        if prefer_saved is None:
+            prefer_saved = p.has_saved_card_option()
+            print("[debug] prefer_saved(auto) =", prefer_saved)
+
+        p.select_credit_card(prefer_saved=prefer_saved)
+        p.fill_card(
+            number=card["number"],
+            expiry=card["expiry"],
+            cvc=card["cvc"],
+            holder=card["holder"],
+        )
+        p.click_next()
+
+        expect(self.page).to_have_url(re.compile(r".*/adyen/summary/view.*"), timeout=20000)
+
+        s = SummaryPage(self.page)
+        s.accept_terms()
+        s.place_order()
+
+    # ---------------------------
+    # Return flow (через guest lookup)
+    # ---------------------------
+    def place_order_and_return(self, email_for_lookup: str) -> dict:
+        """
+        Викликати ПІСЛЯ pay_by_card_and_place_order().
+        """
+        c = ConfirmationPage(self.page)
+        order_code = c.get_order_code()
+        sku = c.get_first_sku()
+
+        self.page.wait_for_timeout(10000)
+
+        api = ShipmentApiClient()
+        resp = api.notify_shipment(order_ref=order_code, sku=sku, shipped_qty=1)
+        if resp.status_code >= 400:
+            raise AssertionError(f"Shipment API failed: {resp.status_code} {resp.text}")
+
+        g = GuestOrderLookupPage(self.page)
+        g.open()
+        dismiss_onetrust(self.page)
+        g.retrieve_order(email=email_for_lookup, order_code=order_code)
+
+        od = OrderDetailsPage(self.page)
+        od.wait_loaded()
+
+        sku_ui = od.get_first_sku()
+        if sku_ui != sku:
+            raise AssertionError(f"SKU mismatch. confirmation={sku}, order_details={sku_ui}")
+
+        od.click_return_order()
+
+        r = ReturnOrderPage(self.page)
+        r.confirm_return_three_steps()
+
+        return {"order_code": order_code, "sku": sku, "shipment_status": resp.status_code}
+
+    def place_order_and_return_as_guest(self, guest_email: str) -> dict:
+        return self.place_order_and_return(email_for_lookup=guest_email)

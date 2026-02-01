@@ -1,0 +1,34 @@
+{
+  "lib": {
+    "defaultVersion": "1.0.172",
+    "canaryVersion": "1.0.172",
+    "canaryWeight": 0,
+    "flushVersion": "false",
+    "skipBridgeInitClientIds": [
+      "klarna_live_client_M1VYaTY_cEFrPzh4N1pITnJqNTkkQjNvMiVtdExFVTksNzcwNjY1YWItZjg0ZS00M2RjLTkzZjgtMjhmZjBkZmFmMTEyLDEsZUJRM2ZHblVaQjdxeHVRK1l6YVBSeHJtb29QNW1yQTBHZ1FCbWliZ1pnRT0",
+      "3b9a385b-e0c5-558e-9455-18abf33b70d2"
+    ]
+  },
+  "identity": {
+    "naClientIds": [
+      "klarna_test_client_aSovSHFnVSVWZWpjTzlRQXFSJGdTNjhXUC1PJVZ1RTcsZGE5MGFlNjctY2M3NC00MTJmLTg2NGQtMWQ4OWMwZjEzNzg5LDEsR0lDeXV0d1hhemRpVXdITUdlS1Bkckw5VjRMWlMyVHZ1RlVWMjFqczhGbz0",
+      "klarna_test_client_S2FOITJLaGgoWXclbUsyR0lsQmRxIU52aCpkdnRlRFMsYzg1MTAxNTktMzczNC00ZjMyLWJkNGQtMWUzMGE5ZTllNGEyLDEsQlZOcGFqb3krQWIxQm96MWxRMFFvRU12bU9GUldwaFdOWk10LzlDRUxBdz0",
+      "klarna_test_client_dk4tcW85NzAlcHhER3MxVXhnNGxaQkR0WVMtdzFIdEwsMjI2ZDJhZGEtMzU3ZC00OWE0LWI2NGItODJmN2FmMDEyMGNlLDEsYmdrYUVpYWgrU014a2pBMlVsaFdvWTEzZExHRTRCSXA0THVDVVY5YlM5QT0",
+      "klarna_test_client_amZVcmhNbzU0QVRGazFrRnp1a0tzMDJzMEppa01rUEYsMTBiOGNlMDAtNjgxYi00OTcxLTkzZjAtNzI4MzFiZjA0NzRiLDEsTmJnUUcyTmlRQzdDNkFZbkxKL1pmWGJObmQ3SEthaFBpbGpJMTJqVVNKUT0",
+      "klarna_test_client_bVBCdk8wdC10ZEQ4P0FYY1Q1QUFKN3FiIThpUkM3UVgsOTFlNTg3ZjktZDMxZS00YTlhLThhOGUtYzZhMWViZWUwYmFkLDEsTzVZN1hTcnpPVlVLZG1LUUVSa3dsbk5GZFZqTWRScGVkdTJDS0dxUVdraz0",
+      "klarna_test_client_QlAjQiE0dVVtYz9NSHJvNTRkTnQzNktDcDk4ZFI_IUksODUwNWQwNjYtNzUyZS00ZmQ5LTkyY2UtZWY2NTY0YWJhZTdkLDEsVVZMUXBESzZXY204TjdlNnJhU1R5eUdoMFl5bXBOU1pkdEt6Z3B2ZU5jND0"
+    ],
+    "nonPKCEClientIds": [
+      "klarna_test_client_MiVBTS9xJClDNlhzVCFEcVkwbiNzTCR0QmJlTW5DdTcsMTBiZTVhN2ItMTNlYi00NDRjLThkZDYtZWQ0MjRjM2U0NzM3LDEsTUZ0ck41emE2di94UDRxR2NlOGxycWJBdDFkSitESG0rSlRLVjRsQVBxND0"
+    ]
+  },
+  "shopping": {
+    "rolloutWeights": {
+      "identity": 1,
+      "interoperability": 1,
+      "messaging": 1,
+      "payment": 1
+    }
+  },
+  "lastUpdated": "2026-01-28T08:36:50Z"
+}

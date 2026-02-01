@@ -45,7 +45,7 @@ class ShipmentApiClient:
         payload = {
             "shippedDate": self._shipped_date(),
             "orderRef": order_ref,
-            "shipmentID": f"autotest-{uuid.uuid4()}",
+            "shipmentID": f"trackref4-{uuid.uuid4()}",
             "entries": [
                 {
                     "sku": sku,
@@ -55,8 +55,8 @@ class ShipmentApiClient:
             ],
             "trackingRefs": [
                 {
-                    "url": "autotest",
-                    "reference": "autotest",
+                    "url": "trackref4",
+                    "reference": "trackref4",
                     "integrationKey": self.integration_key,
                 }
             ],

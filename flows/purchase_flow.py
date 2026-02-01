@@ -14,6 +14,9 @@ from pages.guest_order_lookup_page import GuestOrderLookupPage
 from pages.order_details_page import OrderDetailsPage
 from pages.return_order_page import ReturnOrderPage
 from utils.shipment_api import ShipmentApiClient
+from pages.my_account_orders_page import MyAccountOrdersPage
+from pages.order_details_registered_page import OrderDetailsRegisteredPage
+import time
 
 
 class PurchaseFlow:
@@ -66,12 +69,15 @@ class PurchaseFlow:
 
         return {"final_url": self.page.url}
 
-    def pay_by_card_and_place_order(self, card: dict):
+    def pay_by_card_and_place_order(self, card: dict, *, prefer_saved: bool = True):
         expect(self.page).to_have_url(re.compile(r".*/adyen/select-payment-method.*"))
 
         p = PaymentMethodPage(self.page)
-        p.select_credit_card()
+
+        mode = p.select_credit_card(prefer_saved=prefer_saved)  # ← ВАЖЛИВО
+
         p.fill_card(
+            mode=mode,
             number=card["number"],
             expiry=card["expiry"],
             cvc=card["cvc"],
@@ -84,6 +90,18 @@ class PurchaseFlow:
         s = SummaryPage(self.page)
         s.accept_terms()
         s.place_order()
+
+
+    def return_order_as_registered(self, *, order_code: str) -> dict:
+        # ти вже залогінений як registered
+
+        # чекаємо поки бек реально дозволить return
+        self.page.wait_for_timeout(5000)
+        self._wait_return_available(order_code, timeout_s=180, poll_s=5)
+
+        r = ReturnOrderPage(self.page)
+        r.confirm_return_three_steps()
+        return {"order_code": order_code}
 
     def place_order_and_return_as_guest(self, guest_email: str) -> dict:
         """
@@ -128,3 +146,94 @@ class PurchaseFlow:
         r.confirm_return_three_steps()
 
         return {"order_code": order_code, "sku": sku, "shipment_status": resp.status_code}
+    
+    def _goto(self, url: str):
+        self.page.goto(url, wait_until="domcontentloaded", timeout=45000)
+        dismiss_onetrust(self.page)
+
+    def _reach_billing_info(self, address: dict):
+        self.page.wait_for_url("**/checkout/multi/delivery-address/**", timeout=20000)
+        DeliveryAddressPage(self.page).fill_and_continue(
+            first=address["first"],
+            last=address["last"],
+            line1=address["line1"],
+            town=address["town"],
+            postcode=address["postcode"],
+        )
+
+        self.page.wait_for_url("**/checkout/multi/delivery-method/**", timeout=20000)
+        DeliveryMethodPage(self.page).next()
+
+        self.page.wait_for_url("**/checkout/multi/billing-information/**", timeout=20000)
+        BillingInfoPage(self.page).fill_and_continue_non_business(
+            first=address["first"],
+            last=address["last"],
+            line1=address["line1"],
+            town=address["town"],
+            postcode=address["postcode"],
+        )
+
+        return {"final_url": self.page.url}
+    
+    def go_pdp_and_reach_billing_info_as_registered(
+        self,
+        *,
+        pdp_url: str,
+        user_email: str,
+        user_password: str,
+        address: dict,
+    ):
+        self._goto(pdp_url)
+        PDPPage(self.page).buy_now()
+
+        try:
+            self.page.wait_for_url("**/cart**", timeout=10000)
+        except Exception:
+            checkout_btn = self.page.get_by_role("button", name="Checkout")
+            if checkout_btn.is_visible():
+                checkout_btn.click()
+            else:
+                self._goto(f"{self.page.url.split('/en_GB')[0]}/en_GB/cart")
+
+        dismiss_onetrust(self.page)
+        CartPage(self.page).click_checkout()
+
+        # registered path: log in (і тільки якщо ми реально на checkout login)
+        if "/login/checkout" in self.page.url:
+            dismiss_onetrust(self.page)
+            CheckoutLoginPage(self.page).login(email=user_email, password=user_password)
+
+        return self._reach_billing_info(address)
+    
+    def _wait_return_available(self, order_code: str, timeout_s: int = 120, poll_s: int = 5):
+        """
+        Чекаємо поки /returns реально відкривається без фейлу.
+        Це прибирає флапи через асинхронний бек-процесинг після Shipment API.
+        """
+        url_returns = f"https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB/customer/order/{order_code}/returns"
+        deadline = time.time() + timeout_s
+        last_url = None
+
+        while time.time() < deadline:
+            self.page.goto(url_returns, wait_until="domcontentloaded", timeout=45000)
+            last_url = self.page.url
+
+            # 1) якщо нас редіректнуло — значить ще не готово
+            if "/customer/order/" not in last_url or "/returns" not in last_url:
+                time.sleep(poll_s)
+                continue
+
+            # 2) якщо є банер помилки — ще не готово
+            error_banner = self.page.locator("text=Something went wrong").first
+            if error_banner.count() > 0 and error_banner.is_visible():
+                time.sleep(poll_s)
+                continue
+
+            # 3) ключове: на returns-сторінці має з’явитись кнопка confirm (або заголовок)
+            confirm = self.page.get_by_role("button", name=re.compile(r"confirm", re.I))
+            if confirm.count() > 0 and confirm.first.is_visible():
+                return
+
+            time.sleep(poll_s)
+
+        raise AssertionError(f"Return page not ready for order {order_code}. Last url={last_url}")

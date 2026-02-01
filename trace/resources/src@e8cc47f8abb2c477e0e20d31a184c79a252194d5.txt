@@ -1,0 +1,189 @@
+import re
+from playwright.sync_api import Page, expect
+
+
+class PaymentMethodPage:
+    def __init__(self, page: Page):
+        self.page = page
+
+    # -------------------- public helper --------------------
+    def has_saved_card_option(self) -> bool:
+        return self.page.locator("input[name='subpaymentMethod'][value^='adyen_oneclick_']").count() > 0
+
+    # -------------------- internal helpers --------------------
+    def _click_radio_by_id(self, radio_id: str):
+        radio = self.page.locator(f"#{radio_id}")
+        expect(radio).to_be_attached(timeout=20000)
+        radio.scroll_into_view_if_needed()
+
+        label = self.page.locator(f"label[for='{radio_id}']")
+        if label.count() > 0:
+            label.first.click(force=True)
+        else:
+            radio.first.click(force=True)
+
+        # some pages rely on "check" state
+        try:
+            radio.first.check(force=True)
+        except Exception:
+            pass
+
+    def _open_details_if_exists(self, details_selector: str, timeout: int = 30000):
+        """
+        If details block exists - wait it becomes visible.
+        If it doesn't exist on guest flow - do nothing.
+        """
+        d = self.page.locator(details_selector)
+        if d.count() == 0:
+            return
+        try:
+            expect(d.first).to_be_visible(timeout=timeout)
+        except Exception:
+            # sometimes animation/accordion takes time; give it one more tick
+            self.page.wait_for_timeout(500)
+            expect(d.first).to_be_visible(timeout=timeout)
+
+    # -------------------- main actions --------------------
+    def select_credit_card(self, prefer_saved: bool = True, timeout: int = 30000):
+        """
+        Key change vs previous version:
+        - DO NOT wait for iframes to become visible here.
+        - Only select the right method / expand details if possible.
+        - Actual waiting happens in fill_card() on the real inputs.
+
+        This avoids your current failure where iframe exists but never becomes "visible".
+        """
+        # Let the page finish JS rendering (helps with accordions/animations)
+        try:
+            self.page.wait_for_load_state("domcontentloaded", timeout=timeout)
+        except Exception:
+            pass
+
+        # 1) If main paymentMethod=adyen_card exists (registered flow) - click it
+        main = self.page.locator("input[name='paymentMethod'][value='adyen_card']")
+        if main.count() > 0:
+            main_id = main.first.get_attribute("id")
+            if main_id:
+                self._click_radio_by_id(main_id)
+                # expand details if present
+                self._open_details_if_exists("#dd_method_adyen_card", timeout=timeout)
+
+        # 2) Prefer saved card (registered flow)
+        if prefer_saved:
+            saved = self.page.locator("input[name='subpaymentMethod'][value^='adyen_oneclick_']")
+            if saved.count() > 0:
+                saved_radio = saved.first
+                saved_id = saved_radio.get_attribute("id")
+                if saved_id:
+                    self._click_radio_by_id(saved_id)
+
+                    # Try to expand the corresponding details block if we can infer it,
+                    # but don't hard-fail if DOM naming differs.
+                    saved_val = saved_radio.get_attribute("value") or ""
+                    token = saved_val.replace("adyen_oneclick_", "")
+                    details_id = f"#dd_method_adyen_oneclick_{token}"
+                    self._open_details_if_exists(details_id, timeout=timeout)
+                    return
+
+        # 3) New card option (adyen_cc) - exists in both guest and registered
+        other = self.page.locator("input[name='subpaymentMethod'][value='adyen_cc']")
+        if other.count() > 0:
+            other_id = other.first.get_attribute("id")
+            if other_id:
+                self._click_radio_by_id(other_id)
+                self._open_details_if_exists("#dd_method_adyen_cc", timeout=timeout)
+                return
+
+        # 4) Fallback: maybe page already shows secured fields without radios
+        # Ensure at least the iframe is attached (NOT visible).
+        self.page.wait_for_selector(
+            "iframe[title='Iframe for secured card number'], iframe[title='Iframe for secured card security code']",
+            state="attached",
+            timeout=timeout,
+        )
+
+    def fill_card(self, number: str, expiry: str, cvc: str, holder: str, timeout: int = 30000):
+        """
+        Key change:
+        - Don't rely on iframe element being :visible.
+        - Directly wait for the real input inside the iframe to become visible.
+        That is the only thing we truly need.
+        """
+
+        # -------- try NEW CARD first (dd_method_adyen_cc) --------
+        dd_new = self.page.locator("#dd_method_adyen_cc")
+        if dd_new.count() > 0:
+            # Card number
+            if dd_new.locator("iframe[title='Iframe for secured card number']").count() > 0:
+                card_frame = self.page.frame_locator(
+                    "#dd_method_adyen_cc iframe[title='Iframe for secured card number']"
+                )
+                card_input = card_frame.locator("input[data-fieldtype='encryptedCardNumber']")
+                expect(card_input).to_be_visible(timeout=timeout)
+                card_input.fill(number)
+
+                # Expiry
+                exp_frame = self.page.frame_locator(
+                    "#dd_method_adyen_cc iframe[title='Iframe for secured card expiry date']"
+                )
+                exp_input = exp_frame.locator("input[data-fieldtype='encryptedExpiryDate']")
+                expect(exp_input).to_be_visible(timeout=timeout)
+                exp_input.fill(expiry)
+
+                # CVC
+                cvc_frame = self.page.frame_locator(
+                    "#dd_method_adyen_cc iframe[title='Iframe for secured card security code']"
+                )
+                cvc_input = cvc_frame.locator("input[data-fieldtype='encryptedSecurityCode']")
+                expect(cvc_input).to_be_visible(timeout=timeout)
+                cvc_input.fill(cvc)
+
+                # Holder (if present)
+                holder_input = dd_new.locator("input[name='holderName'], input[id^='adyen-checkout-holderName']")
+                if holder_input.count() > 0:
+                    holder_input.first.fill(holder)
+
+                return
+
+        # -------- SAVED CARD: only CVC inside oneclick details --------
+        oneclick_cvc_iframe = self.page.locator(
+            "div[id^='dd_method_adyen_oneclick_'] iframe[title='Iframe for secured card security code']"
+        )
+        if oneclick_cvc_iframe.count() > 0:
+            cvc_frame = self.page.frame_locator(
+                "div[id^='dd_method_adyen_oneclick_'] iframe[title='Iframe for secured card security code']"
+            )
+            cvc_input = cvc_frame.locator("input[data-fieldtype='encryptedSecurityCode']")
+            expect(cvc_input).to_be_visible(timeout=timeout)
+            cvc_input.fill(cvc)
+            return
+
+        # -------- LAST RESORT: global secured fields (guest flow often) --------
+        if self.page.locator("iframe[title='Iframe for secured card number']").count() > 0:
+            card_frame = self.page.frame_locator("iframe[title='Iframe for secured card number']")
+            card_input = card_frame.locator("input[data-fieldtype='encryptedCardNumber']")
+            expect(card_input).to_be_visible(timeout=timeout)
+            card_input.fill(number)
+
+            exp_frame = self.page.frame_locator("iframe[title='Iframe for secured card expiry date']")
+            exp_input = exp_frame.locator("input[data-fieldtype='encryptedExpiryDate']")
+            expect(exp_input).to_be_visible(timeout=timeout)
+            exp_input.fill(expiry)
+
+            cvc_frame = self.page.frame_locator("iframe[title='Iframe for secured card security code']")
+            cvc_input = cvc_frame.locator("input[data-fieldtype='encryptedSecurityCode']")
+            expect(cvc_input).to_be_visible(timeout=timeout)
+            cvc_input.fill(cvc)
+            return
+
+        raise AssertionError(
+            "No Adyen secured field inputs found. "
+            "Either the payment section didn't expand or page markup differs."
+        )
+
+    def click_next(self, timeout: int = 30000):
+        btn = self.page.get_by_role("button", name=re.compile(r"^\\s*Next\\s*$", re.I))
+        if btn.count() == 0:
+            btn = self.page.locator("button").filter(has_text=re.compile(r"^\\s*Next\\s*$", re.I))
+        expect(btn.first).to_be_enabled(timeout=timeout)
+        btn.first.click()

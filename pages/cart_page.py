@@ -6,17 +6,18 @@ class CartPage:
     def __init__(self, page: Page):
         self.page = page
 
-    def click_checkout(self):
+    def click_checkout(self, timeout: int = 20000):
         dismiss_onetrust(self.page)
         expect(self.page).to_have_url(re.compile(r".*/cart.*"))
 
         btns = self.page.locator("button.js-continue-checkout-button")
+        if btns.count() > 0:
+            expect(btns.first).to_be_attached(timeout=timeout)
+            expect(btns.first).to_be_visible(timeout=timeout)
+            btns.first.click()
+            return
 
-        # 1) дочекайся що кнопки зʼявились у DOM
-        expect(btns.first).to_be_attached()
-
-        # 2) дочекайся що хоча б одна стала видимою
-        expect(btns.first).to_be_visible()
-
-        # 3) клік (strict mode не проблема, бо ми клікаємо конкретно first)
-        btns.first.click()
+        # fallback якщо клас інший
+        btn = self.page.locator("button, a").filter(has_text=re.compile(r"checkout|continue|proceed", re.I))
+        expect(btn.first).to_be_visible(timeout=timeout)
+        btn.first.click()
