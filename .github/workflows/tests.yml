@@ -1,40 +1,53 @@
-env:
-  BASE_URL: ${{ secrets.BASE_URL }}
-  STAGE_EMAIL: ${{ secrets.STAGE_EMAIL }}
-  STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
-
-  SHIPMENT_API_USER: ${{ secrets.SHIPMENT_API_USER }}
-  SHIPMENT_API_PASSWORD: ${{ secrets.SHIPMENT_API_PASSWORD }}
-  SHIPMENT_INTEGRATION_KEY: ${{ secrets.SHIPMENT_INTEGRATION_KEY }}
-  SHIPMENT_API_URL: ${{ secrets.SHIPMENT_API_URL }}
-  SHIPMENT_POST_PERSIST_HOOK: ${{ secrets.SHIPMENT_POST_PERSIST_HOOK }}
-
-  PW_HEADLESS: "true"
-  PW_TIMEOUT_MS: "15000"
-
 name: UI tests
 
 on:
   workflow_dispatch:
     inputs:
-      suite:
-        description: "Test suite"
+      scenario:
+        description: "E2E scenario"
         required: true
-        default: "smoke"
         type: choice
         options:
-          - smoke
-          - regression
+          - all
+          - registered_return
+          - registered_order
+          - guest_return
+          - guest_order
+
+      registered_email:
+        description: "Registered user email"
+        required: false
+
+      registered_password:
+        description: "Registered user password"
+        required: false
+
+      guest_email:
+        description: "Guest email"
+        required: false
 
 jobs:
   run:
     runs-on: ubuntu-latest
+
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
-      STAGE_EMAIL: ${{ secrets.STAGE_EMAIL }}
-      STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
       PW_HEADLESS: "true"
       PW_TIMEOUT_MS: "15000"
+
+      # Registered creds:
+      STAGE_EMAIL: ${{ inputs.registered_email != '' && inputs.registered_email || secrets.STAGE_EMAIL }}
+      STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
+
+      # Guest email:
+      GUEST_EMAIL: ${{ inputs.guest_email != '' && inputs.guest_email || secrets.GUEST_EMAIL }}
+
+      # Shipment API:
+      SHIPMENT_API_URL: ${{ secrets.SHIPMENT_API_URL }}
+      SHIPMENT_API_USER: ${{ secrets.SHIPMENT_API_USER }}
+      SHIPMENT_API_PASSWORD: ${{ secrets.SHIPMENT_API_PASSWORD }}
+      SHIPMENT_INTEGRATION_KEY: ${{ secrets.SHIPMENT_INTEGRATION_KEY }}
+      SHIPMENT_POST_PERSIST_HOOK: ${{ secrets.SHIPMENT_POST_PERSIST_HOOK }}
 
     steps:
       - uses: actions/checkout@v4
@@ -52,11 +65,23 @@ jobs:
 
       - name: Run tests
         run: |
-          if [ "${{ inputs.suite }}" = "smoke" ]; then
-            pytest -m smoke --alluredir=allure-results
-          else
-            pytest -m regression --alluredir=allure-results
-          fi
+            case "${{ inputs.scenario }}" in
+              all)
+                pytest -m e2e
+                ;;
+              registered_return)
+                pytest -m "e2e and e2e_registered and e2e_return"
+                ;;
+              registered_order)
+                pytest -m "e2e and e2e_registered and e2e_order"
+                ;;
+              guest_return)
+                pytest -m "e2e and e2e_guest and e2e_return"
+                ;;
+              guest_order)
+                pytest -m "e2e and e2e_guest and e2e_order"
+                ;;
+            esac
 
       - name: Upload artifacts
         if: always()

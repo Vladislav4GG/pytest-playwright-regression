@@ -33,6 +33,7 @@ def _guest_data():
 
 
 @pytest.mark.e2e
+@pytest.mark.e2e_guest
 @pytest.mark.e2e_order
 @allure.title("E2E (Guest): Place order with credit card (no shipment/return)")
 def test_guest_place_order_card_only(page):
@@ -56,6 +57,7 @@ def test_guest_place_order_card_only(page):
 
 
 @pytest.mark.e2e
+@pytest.mark.e2e_guest_return
 @pytest.mark.e2e_return
 @allure.title("E2E (Guest): Place order + Shipment API + Return flow")
 def test_guest_place_order_card_and_return(page):
