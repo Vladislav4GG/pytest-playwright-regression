@@ -1,10 +1,10 @@
 # conftest.py
+from dotenv import load_dotenv
+load_dotenv()
 import os
 import pathlib
 from datetime import datetime
-
 import pytest
-from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright, Browser, BrowserContext, Page
 from utils.config import PW_HEADLESS, PW_TIMEOUT_MS
 

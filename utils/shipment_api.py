@@ -45,7 +45,7 @@ class ShipmentApiClient:
         payload = {
             "shippedDate": self._shipped_date(),
             "orderRef": order_ref,
-            "shipmentID": f"trackref4-{uuid.uuid4()}",
+            "shipmentID": "demo-1",
             "entries": [
                 {
                     "sku": sku,
