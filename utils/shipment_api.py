@@ -1,7 +1,4 @@
 # utils/shipment_api.py
-print("LOADED shipment_api.py FROM:", __file__)
-print("ShipmentApiClient methods:", [m for m in dir(ShipmentApiClient) if "shipment" in m])
-
 import os
 import uuid
 import time
