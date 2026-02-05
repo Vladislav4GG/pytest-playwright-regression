@@ -7,16 +7,10 @@ on:
         description: "E2E scenario"
         required: true
         type: choice
-        options:
-          - all
-          - registered_return
-          - registered_order
-          - guest_return
-          - guest_order
+        options: [all, registered_return, registered_order, guest_return, guest_order]
 
-      # -------- Registered profile selection --------
       registered_profile:
-        description: "Registered profile (ignored for guest_* сценарії)"
+        description: "Registered profile (required only for registered_* or all)"
         required: false
         type: choice
         options: [None, Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
@@ -32,9 +26,8 @@ on:
         required: false
         default: ""
 
-      # -------- Guest profile selection --------
       guest_profile:
-        description: "Guest profile (ignored for registered_* сценарії)"
+        description: "Guest profile (required only for guest_* or all)"
         required: false
         type: choice
         options: [None, Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
@@ -44,8 +37,6 @@ on:
         description: "Guest email (only if Custom)"
         required: false
         default: ""
-
-permissions: read-all
 
 jobs:
   run-e2e:
@@ -64,6 +55,30 @@ jobs:
       PW_HEADLESS: "true"
       PW_TIMEOUT_MS: "15000"
 
+      # --- Profiles from secrets (підтягуємо те, що реально є/буде в GitHub secrets) ---
+      REG_VLAD_EMAIL: ${{ secrets.REG_VLAD_EMAIL }}
+      REG_VLAD_PASS: ${{ secrets.REG_VLAD_PASSWORD }}
+
+      GUEST_VLAD_EMAIL: ${{ secrets.GUEST_VLAD_EMAIL }}
+
+      # (опційно: додаси пізніше, коли створиш такі secrets)
+      REG_NADEEM_EMAIL: ${{ secrets.REG_NADEEM_EMAIL }}
+      REG_NADEEM_PASS: ${{ secrets.REG_NADEEM_PASSWORD }}
+      REG_TUFAIL_EMAIL: ${{ secrets.REG_TUFAIL_EMAIL }}
+      REG_TUFAIL_PASS: ${{ secrets.REG_TUFAIL_PASSWORD }}
+      REG_JOHN_EMAIL: ${{ secrets.REG_JOHN_EMAIL }}
+      REG_JOHN_PASS: ${{ secrets.REG_JOHN_PASSWORD }}
+      REG_YULIA_EMAIL: ${{ secrets.REG_YULIA_EMAIL }}
+      REG_YULIA_PASS: ${{ secrets.REG_YULIA_PASSWORD }}
+      REG_IRYNA_EMAIL: ${{ secrets.REG_IRYNA_EMAIL }}
+      REG_IRYNA_PASS: ${{ secrets.REG_IRYNA_PASSWORD }}
+
+      GUEST_NADEEM_EMAIL: ${{ secrets.GUEST_NADEEM_EMAIL }}
+      GUEST_TUFAIL_EMAIL: ${{ secrets.GUEST_TUFAIL_EMAIL }}
+      GUEST_JOHN_EMAIL: ${{ secrets.GUEST_JOHN_EMAIL }}
+      GUEST_YULIA_EMAIL: ${{ secrets.GUEST_YULIA_EMAIL }}
+      GUEST_IRYNA_EMAIL: ${{ secrets.GUEST_IRYNA_EMAIL }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -72,40 +87,25 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: Resolve credentials based on scenario + profiles
+      - name: Resolve creds from profiles
         shell: bash
         env:
-          # Registered profiles (email/password)
-          REG_VLAD_EMAIL:   ${{ secrets.REG_VLAD_EMAIL }}
-          REG_VLAD_PASS:    ${{ secrets.REG_VLAD_PASS }}
-          REG_NADEEM_EMAIL: ${{ secrets.REG_NADEEM_EMAIL }}
-          REG_NADEEM_PASS:  ${{ secrets.REG_NADEEM_PASS }}
-          REG_TUFAIL_EMAIL: ${{ secrets.REG_TUFAIL_EMAIL }}
-          REG_TUFAIL_PASS:  ${{ secrets.REG_TUFAIL_PASS }}
-          REG_JOHN_EMAIL:   ${{ secrets.REG_JOHN_EMAIL }}
-          REG_JOHN_PASS:    ${{ secrets.REG_JOHN_PASS }}
-          REG_YULIA_EMAIL:  ${{ secrets.REG_YULIA_EMAIL }}
-          REG_YULIA_PASS:   ${{ secrets.REG_YULIA_PASS }}
-          REG_IRYNA_EMAIL:  ${{ secrets.REG_IRYNA_EMAIL }}
-          REG_IRYNA_PASS:   ${{ secrets.REG_IRYNA_PASS }}
+          SCENARIO: ${{ inputs.scenario }}
 
-          # Guest profiles (email only)
-          GUEST_VLAD_EMAIL:   ${{ secrets.GUEST_VLAD_EMAIL }}
-          GUEST_NADEEM_EMAIL: ${{ secrets.GUEST_NADEEM_EMAIL }}
-          GUEST_TUFAIL_EMAIL: ${{ secrets.GUEST_TUFAIL_EMAIL }}
-          GUEST_JOHN_EMAIL:   ${{ secrets.GUEST_JOHN_EMAIL }}
-          GUEST_YULIA_EMAIL:  ${{ secrets.GUEST_YULIA_EMAIL }}
-          GUEST_IRYNA_EMAIL:  ${{ secrets.GUEST_IRYNA_EMAIL }}
+          REG_PROFILE: ${{ inputs.registered_profile }}
+          REG_EMAIL_CUSTOM: ${{ inputs.registered_email_custom }}
+          REG_PASS_CUSTOM: ${{ inputs.registered_password_custom }}
+
+          GUEST_PROFILE: ${{ inputs.guest_profile }}
+          GUEST_EMAIL_CUSTOM: ${{ inputs.guest_email_custom }}
         run: |
           set -euo pipefail
-
-          SCENARIO="${{ inputs.scenario }}"
 
           NEED_REGISTERED="false"
           NEED_GUEST="false"
@@ -119,24 +119,21 @@ jobs:
 
           # ---------------- Registered ----------------
           if [ "$NEED_REGISTERED" = "true" ]; then
-            PROFILE="${{ inputs.registered_profile }}"
-
-            # Якщо юзер не вибрав профіль — впадемо з чіткою помилкою
-            if [ "$PROFILE" = "None" ] || [ -z "$PROFILE" ]; then
+            if [ "${REG_PROFILE:-None}" = "None" ] || [ -z "${REG_PROFILE:-}" ]; then
               echo "ERROR: registered_profile is required for scenario=$SCENARIO"
               exit 1
             fi
 
-            case "$PROFILE" in
-              Vlad)   REG_EMAIL="$REG_VLAD_EMAIL";   REG_PASS="$REG_VLAD_PASS" ;;
-              Nadeem) REG_EMAIL="$REG_NADEEM_EMAIL"; REG_PASS="$REG_NADEEM_PASS" ;;
-              Tufail) REG_EMAIL="$REG_TUFAIL_EMAIL"; REG_PASS="$REG_TUFAIL_PASS" ;;
-              John)   REG_EMAIL="$REG_JOHN_EMAIL";   REG_PASS="$REG_JOHN_PASS" ;;
-              Yulia)  REG_EMAIL="$REG_YULIA_EMAIL";  REG_PASS="$REG_YULIA_PASS" ;;
-              Iryna)  REG_EMAIL="$REG_IRYNA_EMAIL";  REG_PASS="$REG_IRYNA_PASS" ;;
+            case "$REG_PROFILE" in
+              Vlad)   REG_EMAIL="${REG_VLAD_EMAIL:-}";   REG_PASS="${REG_VLAD_PASS:-}" ;;
+              Nadeem) REG_EMAIL="${REG_NADEEM_EMAIL:-}"; REG_PASS="${REG_NADEEM_PASS:-}" ;;
+              Tufail) REG_EMAIL="${REG_TUFAIL_EMAIL:-}"; REG_PASS="${REG_TUFAIL_PASS:-}" ;;
+              John)   REG_EMAIL="${REG_JOHN_EMAIL:-}";   REG_PASS="${REG_JOHN_PASS:-}" ;;
+              Yulia)  REG_EMAIL="${REG_YULIA_EMAIL:-}";  REG_PASS="${REG_YULIA_PASS:-}" ;;
+              Iryna)  REG_EMAIL="${REG_IRYNA_EMAIL:-}";  REG_PASS="${REG_IRYNA_PASS:-}" ;;
               Custom)
-                REG_EMAIL="${{ inputs.registered_email_custom }}"
-                REG_PASS="${{ inputs.registered_password_custom }}"
+                REG_EMAIL="${REG_EMAIL_CUSTOM:-}"
+                REG_PASS="${REG_PASS_CUSTOM:-}"
                 if [ -z "$REG_EMAIL" ]; then
                   echo "ERROR: registered_email_custom is required when registered_profile=Custom"
                   exit 1
@@ -146,7 +143,7 @@ jobs:
                   exit 1
                 fi
                 ;;
-              *) echo "ERROR: Unknown registered_profile: $PROFILE"; exit 1 ;;
+              *) echo "ERROR: Unknown registered_profile: $REG_PROFILE"; exit 1 ;;
             esac
 
             if [ -z "${REG_EMAIL:-}" ] || [ -z "${REG_PASS:-}" ]; then
@@ -160,28 +157,26 @@ jobs:
 
           # ---------------- Guest ----------------
           if [ "$NEED_GUEST" = "true" ]; then
-            GPROFILE="${{ inputs.guest_profile }}"
-
-            if [ "$GPROFILE" = "None" ] || [ -z "$GPROFILE" ]; then
+            if [ "${GUEST_PROFILE:-None}" = "None" ] || [ -z "${GUEST_PROFILE:-}" ]; then
               echo "ERROR: guest_profile is required for scenario=$SCENARIO"
               exit 1
             fi
 
-            case "$GPROFILE" in
-              Vlad)   G_EMAIL="$GUEST_VLAD_EMAIL" ;;
-              Nadeem) G_EMAIL="$GUEST_NADEEM_EMAIL" ;;
-              Tufail) G_EMAIL="$GUEST_TUFAIL_EMAIL" ;;
-              John)   G_EMAIL="$GUEST_JOHN_EMAIL" ;;
-              Yulia)  G_EMAIL="$GUEST_YULIA_EMAIL" ;;
-              Iryna)  G_EMAIL="$GUEST_IRYNA_EMAIL" ;;
+            case "$GUEST_PROFILE" in
+              Vlad)   G_EMAIL="${GUEST_VLAD_EMAIL:-}" ;;
+              Nadeem) G_EMAIL="${GUEST_NADEEM_EMAIL:-}" ;;
+              Tufail) G_EMAIL="${GUEST_TUFAIL_EMAIL:-}" ;;
+              John)   G_EMAIL="${GUEST_JOHN_EMAIL:-}" ;;
+              Yulia)  G_EMAIL="${GUEST_YULIA_EMAIL:-}" ;;
+              Iryna)  G_EMAIL="${GUEST_IRYNA_EMAIL:-}" ;;
               Custom)
-                G_EMAIL="${{ inputs.guest_email_custom }}"
+                G_EMAIL="${GUEST_EMAIL_CUSTOM:-}"
                 if [ -z "$G_EMAIL" ]; then
                   echo "ERROR: guest_email_custom is required when guest_profile=Custom"
                   exit 1
                 fi
                 ;;
-              *) echo "ERROR: Unknown guest_profile: $GPROFILE"; exit 1 ;;
+              *) echo "ERROR: Unknown guest_profile: $GUEST_PROFILE"; exit 1 ;;
             esac
 
             if [ -z "${G_EMAIL:-}" ]; then
@@ -194,11 +189,9 @@ jobs:
 
           echo "Credentials resolved for scenario=$SCENARIO"
 
-      - name: Run E2E tests
-        shell: bash
+      - name: Run E2E
         run: |
           set -e
-
           case "${{ inputs.scenario }}" in
             all)
               pytest -m e2e -q --alluredir=allure-results
@@ -214,10 +207,6 @@ jobs:
               ;;
             guest_order)
               pytest -m "e2e and e2e_guest and e2e_order" -q --alluredir=allure-results
-              ;;
-            *)
-              echo "Unknown scenario: ${{ inputs.scenario }}"
-              exit 1
               ;;
           esac
 
