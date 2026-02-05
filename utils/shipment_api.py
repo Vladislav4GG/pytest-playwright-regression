@@ -1,6 +1,10 @@
 # utils/shipment_api.py
+print("LOADED shipment_api.py FROM:", __file__)
+print("ShipmentApiClient methods:", [m for m in dir(ShipmentApiClient) if "shipment" in m])
+
 import os
 import uuid
+import time
 import datetime as dt
 import requests
 
@@ -85,3 +89,23 @@ class ShipmentApiClient:
         print(f"[ShipmentAPI] text = {resp.text[:1000]}")
 
         return resp
+    
+    def notify_shipment_with_retry(self, *, order_ref: str, sku: str, shipped_qty: int = 1, timeout_s: int = 180, poll_s: int = 10):
+        deadline = time.time() + timeout_s
+        last = None
+
+        while time.time() < deadline:
+            resp = self.notify_shipment(order_ref=order_ref, sku=sku, shipped_qty=shipped_qty)
+            last = resp
+
+            if resp.status_code < 400:
+                return resp
+
+            txt = (resp.text or "").lower()
+            if resp.status_code == 400 and "order not found in commerce" in txt:
+                time.sleep(poll_s)
+                continue
+
+            return resp
+
+        return last
