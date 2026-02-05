@@ -15,7 +15,9 @@ class ShipmentApiClient:
     """
 
     def __init__(self):
-        self.base_url = os.getenv("SHIPMENT_API_BASE_URL", "").rstrip("/")
+        self.base_url = os.getenv("SHIPMENT_API_URL", "").rstrip("/")
+        if not self.base_url:
+            raise RuntimeError("SHIPMENT_API_URL is missing. Workflow must set it (S1/S2).")
         self.user = os.getenv("SHIPMENT_API_USER")
         self.password = os.getenv("SHIPMENT_API_PASSWORD")
         self.integration_key = os.getenv("SHIPMENT_INTEGRATION_KEY")

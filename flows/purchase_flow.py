@@ -1,4 +1,5 @@
 import re
+import os
 from playwright.sync_api import Page, expect
 from utils.consent import dismiss_onetrust
 from pages.pdp_page import PDPPage
@@ -35,9 +36,8 @@ class PurchaseFlow:
             if checkout_btn.is_visible():
                 checkout_btn.click()
             else:
-                self.page.goto(
-                    "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB/cart"
-                )
+                ui_base = os.getenv("UI_BASE_URL", "").rstrip("/")
+                self.page.goto(f"{ui_base}/en_GB/cart")
 
         dismiss_onetrust(self.page)
         CartPage(self.page).click_checkout()
@@ -210,7 +210,8 @@ class PurchaseFlow:
         Чекаємо поки /returns реально відкривається без фейлу.
         Це прибирає флапи через асинхронний бек-процесинг після Shipment API.
         """
-        url_returns = f"https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB/customer/order/{order_code}/returns"
+        ui_base = os.getenv("UI_BASE_URL", "").rstrip("/")
+        url_returns = f"{ui_base}/en_GB/customer/order/{order_code}/returns"
         deadline = time.time() + timeout_s
         last_url = None
 

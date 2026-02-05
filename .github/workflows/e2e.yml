@@ -3,6 +3,25 @@ name: E2E tests
 on:
   workflow_dispatch:
     inputs:
+      env:
+        description: "Environment"
+        required: true
+        type: choice
+        options: [S1, S2]
+        default: S1
+
+      product:
+        description: "Product"
+        required: true
+        type: choice
+        options: [Default, Custom]
+        default: Default
+
+      sku_custom:
+        description: "Custom SKU (used only if Product=Custom)"
+        required: false
+        type: string
+    
       scenario:
         description: "E2E scenario"
         required: true
@@ -43,10 +62,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BASE_URL: ${{ secrets.BASE_URL }}
-
-      # Shipment API
-      SHIPMENT_API_URL: ${{ secrets.SHIPMENT_API_URL }}
       SHIPMENT_API_USER: ${{ secrets.SHIPMENT_API_USER }}
       SHIPMENT_API_PASSWORD: ${{ secrets.SHIPMENT_API_PASSWORD }}
       SHIPMENT_INTEGRATION_KEY: ${{ secrets.SHIPMENT_INTEGRATION_KEY }}
@@ -55,13 +70,11 @@ jobs:
       PW_HEADLESS: "true"
       PW_TIMEOUT_MS: "15000"
 
-      # --- Profiles from secrets (підтягуємо те, що реально є/буде в GitHub secrets) ---
       REG_VLAD_EMAIL: ${{ secrets.REG_VLAD_EMAIL }}
       REG_VLAD_PASS: ${{ secrets.REG_VLAD_PASSWORD }}
 
       GUEST_VLAD_EMAIL: ${{ secrets.GUEST_VLAD_EMAIL }}
 
-      # (опційно: додаси пізніше, коли створиш такі secrets)
       REG_NADEEM_EMAIL: ${{ secrets.REG_NADEEM_EMAIL }}
       REG_NADEEM_PASS: ${{ secrets.REG_NADEEM_PASSWORD }}
       REG_TUFAIL_EMAIL: ${{ secrets.REG_TUFAIL_EMAIL }}
@@ -79,6 +92,13 @@ jobs:
       GUEST_YULIA_EMAIL: ${{ secrets.GUEST_YULIA_EMAIL }}
       GUEST_IRYNA_EMAIL: ${{ secrets.GUEST_IRYNA_EMAIL }}
 
+      TEST_ENV: ${{ inputs.env }}
+      PRODUCT_MODE: ${{ inputs.product }}
+      SKU_CUSTOM: ${{ inputs.sku_custom }}
+      SCENARIO: ${{ inputs.scenario }}
+      REGISTERED_PROFILE: ${{ inputs.registered_profile }}
+      GUEST_PROFILE: ${{ inputs.guest_profile }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -92,6 +112,65 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
+
+      - name: Resolve env & product
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ENV_NAME="${TEST_ENV:-S1}"           # S1 | S2
+          PRODUCT_MODE="${PRODUCT_MODE:-Default}"
+          SKU_CUSTOM="${SKU_CUSTOM:-}"
+
+          case "$ENV_NAME" in
+            S1)
+              UI_HOST="epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com"
+              SHIPMENT_HOST="api.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com"
+              ;;
+            S2)
+              UI_HOST="epson-gb.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com"
+              SHIPMENT_HOST="api.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com"
+              ;;
+            *) echo "ERROR: Unknown TEST_ENV=$ENV_NAME"; exit 1 ;;
+          esac
+
+          UI_BASE_URL="https://${UI_HOST}"
+          SHIPMENT_API_URL="https://${SHIPMENT_HOST}"
+
+          echo "UI_BASE_URL=$UI_BASE_URL" >> "$GITHUB_ENV"
+          echo "SHIPMENT_API_URL=$SHIPMENT_API_URL" >> "$GITHUB_ENV"
+          echo "TEST_ENV=$ENV_NAME" >> "$GITHUB_ENV"
+
+          DEFAULT_SKU="C13T03R140"
+          DEFAULT_PDP_PATH="/en_GB/products/ink-and-paper/ink-consumables/102-ecotank-pigment-black-ink-bottle/p/${DEFAULT_SKU}"
+
+          # Seed prefix = everything before the last "/p/<something>"
+          # -> "/en_GB/products/ink-and-paper/ink-consumables/102-ecotank-pigment-black-ink-bottle"
+          SEED_PREFIX="${DEFAULT_PDP_PATH%/p/*}"
+
+          if [ "$PRODUCT_MODE" = "Default" ]; then
+            SKU="$DEFAULT_SKU"
+            PDP_URL="${UI_BASE_URL}${DEFAULT_PDP_PATH}"
+
+          elif [ "$PRODUCT_MODE" = "Custom" ]; then
+            [ -n "$SKU_CUSTOM" ] || { echo "ERROR: sku_custom is required when Product=Custom"; exit 1; }
+            SKU="$SKU_CUSTOM"
+
+            # This is the key: use an existing PDP prefix + /p/<SKU> and rely on redirect to canonical product URL
+            PDP_URL="${UI_BASE_URL}${SEED_PREFIX}/p/${SKU}"
+
+          else
+            echo "ERROR: Unknown PRODUCT_MODE=$PRODUCT_MODE"; exit 1
+          fi
+
+          echo "SKU=$SKU" >> "$GITHUB_ENV"
+          echo "PDP_URL=$PDP_URL" >> "$GITHUB_ENV"
+
+          echo "Resolved:"
+          echo "  UI_BASE_URL=$UI_BASE_URL"
+          echo "  PDP_URL=$PDP_URL"
+          echo "  SKU=$SKU"
+          echo "  SHIPMENT_API_URL=$SHIPMENT_API_URL"    
 
       - name: Resolve creds from profiles
         shell: bash

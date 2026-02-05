@@ -7,11 +7,9 @@ from flows.purchase_flow import PurchaseFlow
 from pages.confirmation_page import ConfirmationPage
 from utils.shipment_api import ShipmentApiClient
 
-PDP_INK_URL = (
-    "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com"
-    "/en_GB/products/ink-and-paper/ink-consumables/102-ecotank-pigment-black-ink-bottle/p/22050"
-)
-
+PDP_URL = os.getenv("PDP_URL", "").strip()
+if not PDP_URL:
+    raise RuntimeError("PDP_URL env var is empty. Workflow must set it.")
 
 def _registered_data():
     address = {
@@ -54,7 +52,7 @@ def test_registered_place_order_card_only(page):
     address, user_email, user_password, card = _registered_data()
 
     flow.go_pdp_and_reach_billing_info_as_registered(
-        pdp_url=PDP_INK_URL,
+        pdp_url=PDP_URL,
         user_email=user_email,
         user_password=user_password,
         address=address,
@@ -79,7 +77,7 @@ def test_registered_place_order_card_and_return(page):
     address, user_email, user_password, card = _registered_data()
 
     flow.go_pdp_and_reach_billing_info_as_registered(
-        pdp_url=PDP_INK_URL,
+        pdp_url=PDP_URL,
         user_email=user_email,
         user_password=user_password,
         address=address,

@@ -6,10 +6,9 @@ import allure
 from flows.purchase_flow import PurchaseFlow
 from pages.confirmation_page import ConfirmationPage
 
-PDP_INK_URL = (
-    "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com"
-    "/en_GB/products/ink-and-paper/ink-consumables/102-ecotank-pigment-black-ink-bottle/p/22050"
-)
+PDP_URL = os.getenv("PDP_URL", "").strip()
+if not PDP_URL:
+    raise RuntimeError("PDP_URL env var is empty. Workflow must set it.")
 
 
 def _guest_data():
@@ -44,7 +43,7 @@ def test_guest_place_order_card_only(page):
     address, guest_email, card = _guest_data()
 
     flow.go_pdp_and_reach_billing_info_as_guest(
-        pdp_url=PDP_INK_URL,
+        pdp_url=PDP_URL,
         guest_email=guest_email,
         address=address,
     )
@@ -68,7 +67,7 @@ def test_guest_place_order_card_and_return(page):
     address, guest_email, card = _guest_data()
 
     flow.go_pdp_and_reach_billing_info_as_guest(
-        pdp_url=PDP_INK_URL,
+        pdp_url=PDP_URL,
         guest_email=guest_email,
         address=address,
     )
