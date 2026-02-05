@@ -8,7 +8,6 @@ import pytest
 from playwright.sync_api import sync_playwright, Browser, BrowserContext, Page
 from utils.config import PW_HEADLESS, PW_TIMEOUT_MS
 
-# ✅ ВАЖЛИВО: спочатку вантажимо .env ОДИН раз
 load_dotenv(dotenv_path=".env", override=False)
 
 ARTIFACTS = pathlib.Path("artifacts")
@@ -47,7 +46,6 @@ def pytest_runtest_makereport(item, call):
     rep = outcome.get_result()
     setattr(item, "rep_" + rep.when, rep)
 
-    # нас цікавить саме результат тесту, не setup/teardown
     if rep.when != "call":
         return
 
@@ -61,7 +59,6 @@ def pytest_runtest_makereport(item, call):
         test_name = _safe_name(item.nodeid)
         path = SCREENSHOTS_DIR / f"{test_name}_{status}_{ts}.png"
 
-        # якщо сторінка закрита — не падаємо
         if not page.is_closed():
             page.screenshot(path=str(path), full_page=True)
             print(f"\n📸 Screenshot saved: {path}")
