@@ -1,4 +1,5 @@
 # tests/ui/test_e2e_registered_payment_card.py
+import os
 import pytest
 import allure
 
@@ -21,8 +22,18 @@ def _registered_data():
         "postcode": "TR8 4XW",
     }
 
-    user_email = "vlad.ponomarenko@keenethics.com"
-    user_password = "Testpass111!"
+    # береться з env, щоб GitHub Actions міг підставляти
+    user_email = os.getenv("STAGE_EMAIL", "").strip()
+    user_password = os.getenv("STAGE_PASSWORD", "").strip()
+
+    # якщо запускаєш локально і хочеш дефолт — можеш лишити, але краще НЕ хардкодити
+    # user_email = user_email or "your_default_email@example.com"
+    # user_password = user_password or "your_default_password"
+
+    if not user_email or not user_password:
+        raise RuntimeError(
+            "Registered credentials are empty. Set STAGE_EMAIL and STAGE_PASSWORD env vars."
+        )
 
     card = {
         "number": "5555 4444 3333 1111",
@@ -60,7 +71,7 @@ def test_registered_place_order_card_only(page):
 
 
 @pytest.mark.e2e
-@pytest.mark.e2e_registered_return
+@pytest.mark.e2e_registered
 @pytest.mark.e2e_return
 @allure.title("E2E (Registered): Place order + Shipment API + Return flow")
 def test_registered_place_order_card_and_return(page):

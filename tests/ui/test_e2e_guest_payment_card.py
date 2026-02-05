@@ -1,4 +1,5 @@
 # tests/ui/test_e2e_guest_payment_card.py
+import os
 import pytest
 import allure
 
@@ -20,7 +21,9 @@ def _guest_data():
         "postcode": "TR8 4XW",
     }
 
-    guest_email = "vlad.ponomarenko@keenethics.com"
+    guest_email = os.getenv("GUEST_EMAIL", "").strip()
+    if not guest_email:
+        raise RuntimeError("Guest email is empty. Set GUEST_EMAIL env var.")
 
     card = {
         "number": "5555 4444 3333 1111",
@@ -57,7 +60,7 @@ def test_guest_place_order_card_only(page):
 
 
 @pytest.mark.e2e
-@pytest.mark.e2e_guest_return
+@pytest.mark.e2e_guest
 @pytest.mark.e2e_return
 @allure.title("E2E (Guest): Place order + Shipment API + Return flow")
 def test_guest_place_order_card_and_return(page):
