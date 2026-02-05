@@ -1,17 +1,16 @@
+import os
 from playwright.sync_api import Page, expect
 
 
 class GuestOrderLookupPage:
-    URL = "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB/guest/order"
-
-    def __init__(self, page: Page):
+    def __init__(self, page):
         self.page = page
 
     def open(self):
-        self.page.goto(self.URL)
-        form = self.page.locator("#epsonGuestReturnForm")
-        expect(form).to_be_visible(timeout=20000)
-        return form
+        base = os.getenv("UI_BASE_URL")
+        if not base:
+            raise RuntimeError("UI_BASE_URL is missing")
+        self.page.goto(f"{base}/en_GB/guest/order", wait_until="domcontentloaded")
 
     def retrieve_order(self, email: str, order_code: str):
         form = self.page.locator("#epsonGuestReturnForm")
