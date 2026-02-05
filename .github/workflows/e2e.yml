@@ -2,6 +2,27 @@ name: E2E tests
 
 on:
   workflow_dispatch:
+    inputs:
+      scenario:
+        description: "E2E scenario"
+        required: true
+        type: choice
+        options:
+          - all
+          - registered_return
+          - registered_order
+          - guest_return
+          - guest_order
+
+      registered_email:
+        description: "Registered user email (optional, overrides secret STAGE_EMAIL)"
+        required: false
+        default: ""
+
+      guest_email:
+        description: "Guest email (optional, overrides secret GUEST_EMAIL)"
+        required: false
+        default: ""
 
 jobs:
   run-e2e:
@@ -9,13 +30,17 @@ jobs:
 
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
+
+      # Defaults (can be overridden by workflow_dispatch inputs below)
       STAGE_EMAIL: ${{ secrets.STAGE_EMAIL }}
       STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
+      GUEST_EMAIL: ${{ secrets.GUEST_EMAIL }}
 
+      # Shipment API
+      SHIPMENT_API_URL: ${{ secrets.SHIPMENT_API_URL }}
       SHIPMENT_API_USER: ${{ secrets.SHIPMENT_API_USER }}
       SHIPMENT_API_PASSWORD: ${{ secrets.SHIPMENT_API_PASSWORD }}
       SHIPMENT_INTEGRATION_KEY: ${{ secrets.SHIPMENT_INTEGRATION_KEY }}
-      SHIPMENT_API_URL: ${{ secrets.SHIPMENT_API_URL }}
       SHIPMENT_POST_PERSIST_HOOK: ${{ secrets.SHIPMENT_POST_PERSIST_HOOK }}
 
       PW_HEADLESS: "true"
@@ -36,9 +61,41 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
+      - name: Override emails from inputs (optional)
+        run: |
+          if [ -n "${{ inputs.registered_email }}" ]; then
+            echo "STAGE_EMAIL=${{ inputs.registered_email }}" >> $GITHUB_ENV
+          fi
+
+          if [ -n "${{ inputs.guest_email }}" ]; then
+            echo "GUEST_EMAIL=${{ inputs.guest_email }}" >> $GITHUB_ENV
+          fi
+
       - name: Run E2E tests
         run: |
-          pytest -m e2e -q --alluredir=allure-results
+          set -e
+
+          case "${{ inputs.scenario }}" in
+            all)
+              pytest -m e2e -q --alluredir=allure-results
+              ;;
+            registered_return)
+              pytest -m "e2e and e2e_registered and e2e_return" -q --alluredir=allure-results
+              ;;
+            registered_order)
+              pytest -m "e2e and e2e_registered and e2e_order" -q --alluredir=allure-results
+              ;;
+            guest_return)
+              pytest -m "e2e and e2e_guest and e2e_return" -q --alluredir=allure-results
+              ;;
+            guest_order)
+              pytest -m "e2e and e2e_guest and e2e_order" -q --alluredir=allure-results
+              ;;
+            *)
+              echo "Unknown scenario: ${{ inputs.scenario }}"
+              exit 1
+              ;;
+          esac
 
       - name: Upload artifacts
         if: always()
