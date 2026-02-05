@@ -14,12 +14,13 @@ on:
           - guest_return
           - guest_order
 
+      # -------- Registered profile selection --------
       registered_profile:
-        description: "Registered profile"
-        required: true
+        description: "Registered profile (ignored for guest_* сценарії)"
+        required: false
         type: choice
-        options: [Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
-        default: Vlad
+        options: [None, Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
+        default: None
 
       registered_email_custom:
         description: "Registered email (only if Custom)"
@@ -31,12 +32,13 @@ on:
         required: false
         default: ""
 
+      # -------- Guest profile selection --------
       guest_profile:
-        description: "Guest profile"
-        required: true
+        description: "Guest profile (ignored for registered_* сценарії)"
+        required: false
         type: choice
-        options: [Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
-        default: Vlad
+        options: [None, Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
+        default: None
 
       guest_email_custom:
         description: "Guest email (only if Custom)"
@@ -76,7 +78,7 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: Resolve credentials from profiles
+      - name: Resolve credentials based on scenario + profiles
         shell: bash
         env:
           # Registered profiles (email/password)
@@ -103,69 +105,94 @@ jobs:
         run: |
           set -euo pipefail
 
-          # -------- Registered --------
-          case "${{ inputs.registered_profile }}" in
-            Vlad)   REG_EMAIL="$REG_VLAD_EMAIL";   REG_PASS="$REG_VLAD_PASS" ;;
-            Nadeem) REG_EMAIL="$REG_NADEEM_EMAIL"; REG_PASS="$REG_NADEEM_PASS" ;;
-            Tufail) REG_EMAIL="$REG_TUFAIL_EMAIL"; REG_PASS="$REG_TUFAIL_PASS" ;;
-            John)   REG_EMAIL="$REG_JOHN_EMAIL";   REG_PASS="$REG_JOHN_PASS" ;;
-            Yulia)  REG_EMAIL="$REG_YULIA_EMAIL";  REG_PASS="$REG_YULIA_PASS" ;;
-            Iryna)  REG_EMAIL="$REG_IRYNA_EMAIL";  REG_PASS="$REG_IRYNA_PASS" ;;
-            Custom)
-              REG_EMAIL="${{ inputs.registered_email_custom }}"
-              REG_PASS="${{ inputs.registered_password_custom }}"
-              if [ -z "$REG_EMAIL" ]; then
-                echo "ERROR: registered_email_custom is required when registered_profile=Custom"
-                exit 1
-              fi
-              if [ -z "$REG_PASS" ]; then
-                echo "ERROR: registered_password_custom is required when registered_profile=Custom"
-                exit 1
-              fi
-              ;;
-            *)
-              echo "ERROR: Unknown registered_profile: ${{ inputs.registered_profile }}"
-              exit 1
-              ;;
+          SCENARIO="${{ inputs.scenario }}"
+
+          NEED_REGISTERED="false"
+          NEED_GUEST="false"
+
+          case "$SCENARIO" in
+            all) NEED_REGISTERED="true"; NEED_GUEST="true" ;;
+            registered_return|registered_order) NEED_REGISTERED="true" ;;
+            guest_return|guest_order) NEED_GUEST="true" ;;
+            *) echo "ERROR: Unknown scenario: $SCENARIO"; exit 1 ;;
           esac
 
-          if [ -z "${REG_EMAIL:-}" ] || [ -z "${REG_PASS:-}" ]; then
-            echo "ERROR: Registered credentials are empty. Check secrets or Custom inputs."
-            exit 1
-          fi
+          # ---------------- Registered ----------------
+          if [ "$NEED_REGISTERED" = "true" ]; then
+            PROFILE="${{ inputs.registered_profile }}"
 
-          echo "STAGE_EMAIL=$REG_EMAIL" >> "$GITHUB_ENV"
-          echo "STAGE_PASSWORD=$REG_PASS" >> "$GITHUB_ENV"
-
-          # -------- Guest --------
-          case "${{ inputs.guest_profile }}" in
-            Vlad)   G_EMAIL="$GUEST_VLAD_EMAIL" ;;
-            Nadeem) G_EMAIL="$GUEST_NADEEM_EMAIL" ;;
-            Tufail) G_EMAIL="$GUEST_TUFAIL_EMAIL" ;;
-            John)   G_EMAIL="$GUEST_JOHN_EMAIL" ;;
-            Yulia)  G_EMAIL="$GUEST_YULIA_EMAIL" ;;
-            Iryna)  G_EMAIL="$GUEST_IRYNA_EMAIL" ;;
-            Custom)
-              G_EMAIL="${{ inputs.guest_email_custom }}"
-              if [ -z "$G_EMAIL" ]; then
-                echo "ERROR: guest_email_custom is required when guest_profile=Custom"
-                exit 1
-              fi
-              ;;
-            *)
-              echo "ERROR: Unknown guest_profile: ${{ inputs.guest_profile }}"
+            # Якщо юзер не вибрав профіль — впадемо з чіткою помилкою
+            if [ "$PROFILE" = "None" ] || [ -z "$PROFILE" ]; then
+              echo "ERROR: registered_profile is required for scenario=$SCENARIO"
               exit 1
-              ;;
-          esac
+            fi
 
-          if [ -z "${G_EMAIL:-}" ]; then
-            echo "ERROR: Guest email is empty. Check secrets or Custom input."
-            exit 1
+            case "$PROFILE" in
+              Vlad)   REG_EMAIL="$REG_VLAD_EMAIL";   REG_PASS="$REG_VLAD_PASS" ;;
+              Nadeem) REG_EMAIL="$REG_NADEEM_EMAIL"; REG_PASS="$REG_NADEEM_PASS" ;;
+              Tufail) REG_EMAIL="$REG_TUFAIL_EMAIL"; REG_PASS="$REG_TUFAIL_PASS" ;;
+              John)   REG_EMAIL="$REG_JOHN_EMAIL";   REG_PASS="$REG_JOHN_PASS" ;;
+              Yulia)  REG_EMAIL="$REG_YULIA_EMAIL";  REG_PASS="$REG_YULIA_PASS" ;;
+              Iryna)  REG_EMAIL="$REG_IRYNA_EMAIL";  REG_PASS="$REG_IRYNA_PASS" ;;
+              Custom)
+                REG_EMAIL="${{ inputs.registered_email_custom }}"
+                REG_PASS="${{ inputs.registered_password_custom }}"
+                if [ -z "$REG_EMAIL" ]; then
+                  echo "ERROR: registered_email_custom is required when registered_profile=Custom"
+                  exit 1
+                fi
+                if [ -z "$REG_PASS" ]; then
+                  echo "ERROR: registered_password_custom is required when registered_profile=Custom"
+                  exit 1
+                fi
+                ;;
+              *) echo "ERROR: Unknown registered_profile: $PROFILE"; exit 1 ;;
+            esac
+
+            if [ -z "${REG_EMAIL:-}" ] || [ -z "${REG_PASS:-}" ]; then
+              echo "ERROR: Registered credentials are empty. Check secrets or Custom inputs."
+              exit 1
+            fi
+
+            echo "STAGE_EMAIL=$REG_EMAIL" >> "$GITHUB_ENV"
+            echo "STAGE_PASSWORD=$REG_PASS" >> "$GITHUB_ENV"
           fi
 
-          echo "GUEST_EMAIL=$G_EMAIL" >> "$GITHUB_ENV"
+          # ---------------- Guest ----------------
+          if [ "$NEED_GUEST" = "true" ]; then
+            GPROFILE="${{ inputs.guest_profile }}"
 
-          echo "Credentials resolved OK."
+            if [ "$GPROFILE" = "None" ] || [ -z "$GPROFILE" ]; then
+              echo "ERROR: guest_profile is required for scenario=$SCENARIO"
+              exit 1
+            fi
+
+            case "$GPROFILE" in
+              Vlad)   G_EMAIL="$GUEST_VLAD_EMAIL" ;;
+              Nadeem) G_EMAIL="$GUEST_NADEEM_EMAIL" ;;
+              Tufail) G_EMAIL="$GUEST_TUFAIL_EMAIL" ;;
+              John)   G_EMAIL="$GUEST_JOHN_EMAIL" ;;
+              Yulia)  G_EMAIL="$GUEST_YULIA_EMAIL" ;;
+              Iryna)  G_EMAIL="$GUEST_IRYNA_EMAIL" ;;
+              Custom)
+                G_EMAIL="${{ inputs.guest_email_custom }}"
+                if [ -z "$G_EMAIL" ]; then
+                  echo "ERROR: guest_email_custom is required when guest_profile=Custom"
+                  exit 1
+                fi
+                ;;
+              *) echo "ERROR: Unknown guest_profile: $GPROFILE"; exit 1 ;;
+            esac
+
+            if [ -z "${G_EMAIL:-}" ]; then
+              echo "ERROR: Guest email is empty. Check secrets or Custom input."
+              exit 1
+            fi
+
+            echo "GUEST_EMAIL=$G_EMAIL" >> "$GITHUB_ENV"
+          fi
+
+          echo "Credentials resolved for scenario=$SCENARIO"
 
       - name: Run E2E tests
         shell: bash
