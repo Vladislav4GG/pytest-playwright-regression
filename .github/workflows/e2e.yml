@@ -14,15 +14,36 @@ on:
           - guest_return
           - guest_order
 
-      registered_email:
-        description: "Registered user email (optional, overrides secret STAGE_EMAIL)"
+      registered_profile:
+        description: "Registered profile"
+        required: true
+        type: choice
+        options: [Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
+        default: Vlad
+
+      registered_email_custom:
+        description: "Registered email (only if Custom)"
         required: false
         default: ""
 
-      guest_email:
-        description: "Guest email (optional, overrides secret GUEST_EMAIL)"
+      registered_password_custom:
+        description: "Registered password (only if Custom)"
         required: false
         default: ""
+
+      guest_profile:
+        description: "Guest profile"
+        required: true
+        type: choice
+        options: [Vlad, Nadeem, Tufail, John, Yulia, Iryna, Custom]
+        default: Vlad
+
+      guest_email_custom:
+        description: "Guest email (only if Custom)"
+        required: false
+        default: ""
+
+permissions: read-all
 
 jobs:
   run-e2e:
@@ -30,11 +51,6 @@ jobs:
 
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
-
-      # Defaults (can be overridden by workflow_dispatch inputs below)
-      STAGE_EMAIL: ${{ secrets.STAGE_EMAIL }}
-      STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
-      GUEST_EMAIL: ${{ secrets.GUEST_EMAIL }}
 
       # Shipment API
       SHIPMENT_API_URL: ${{ secrets.SHIPMENT_API_URL }}
@@ -47,8 +63,7 @@ jobs:
       PW_TIMEOUT_MS: "15000"
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -61,17 +76,99 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: Override emails from inputs (optional)
+      - name: Resolve credentials from profiles
+        shell: bash
+        env:
+          # Registered profiles (email/password)
+          REG_VLAD_EMAIL:   ${{ secrets.REG_VLAD_EMAIL }}
+          REG_VLAD_PASS:    ${{ secrets.REG_VLAD_PASS }}
+          REG_NADEEM_EMAIL: ${{ secrets.REG_NADEEM_EMAIL }}
+          REG_NADEEM_PASS:  ${{ secrets.REG_NADEEM_PASS }}
+          REG_TUFAIL_EMAIL: ${{ secrets.REG_TUFAIL_EMAIL }}
+          REG_TUFAIL_PASS:  ${{ secrets.REG_TUFAIL_PASS }}
+          REG_JOHN_EMAIL:   ${{ secrets.REG_JOHN_EMAIL }}
+          REG_JOHN_PASS:    ${{ secrets.REG_JOHN_PASS }}
+          REG_YULIA_EMAIL:  ${{ secrets.REG_YULIA_EMAIL }}
+          REG_YULIA_PASS:   ${{ secrets.REG_YULIA_PASS }}
+          REG_IRYNA_EMAIL:  ${{ secrets.REG_IRYNA_EMAIL }}
+          REG_IRYNA_PASS:   ${{ secrets.REG_IRYNA_PASS }}
+
+          # Guest profiles (email only)
+          GUEST_VLAD_EMAIL:   ${{ secrets.GUEST_VLAD_EMAIL }}
+          GUEST_NADEEM_EMAIL: ${{ secrets.GUEST_NADEEM_EMAIL }}
+          GUEST_TUFAIL_EMAIL: ${{ secrets.GUEST_TUFAIL_EMAIL }}
+          GUEST_JOHN_EMAIL:   ${{ secrets.GUEST_JOHN_EMAIL }}
+          GUEST_YULIA_EMAIL:  ${{ secrets.GUEST_YULIA_EMAIL }}
+          GUEST_IRYNA_EMAIL:  ${{ secrets.GUEST_IRYNA_EMAIL }}
         run: |
-          if [ -n "${{ inputs.registered_email }}" ]; then
-            echo "STAGE_EMAIL=${{ inputs.registered_email }}" >> $GITHUB_ENV
+          set -euo pipefail
+
+          # -------- Registered --------
+          case "${{ inputs.registered_profile }}" in
+            Vlad)   REG_EMAIL="$REG_VLAD_EMAIL";   REG_PASS="$REG_VLAD_PASS" ;;
+            Nadeem) REG_EMAIL="$REG_NADEEM_EMAIL"; REG_PASS="$REG_NADEEM_PASS" ;;
+            Tufail) REG_EMAIL="$REG_TUFAIL_EMAIL"; REG_PASS="$REG_TUFAIL_PASS" ;;
+            John)   REG_EMAIL="$REG_JOHN_EMAIL";   REG_PASS="$REG_JOHN_PASS" ;;
+            Yulia)  REG_EMAIL="$REG_YULIA_EMAIL";  REG_PASS="$REG_YULIA_PASS" ;;
+            Iryna)  REG_EMAIL="$REG_IRYNA_EMAIL";  REG_PASS="$REG_IRYNA_PASS" ;;
+            Custom)
+              REG_EMAIL="${{ inputs.registered_email_custom }}"
+              REG_PASS="${{ inputs.registered_password_custom }}"
+              if [ -z "$REG_EMAIL" ]; then
+                echo "ERROR: registered_email_custom is required when registered_profile=Custom"
+                exit 1
+              fi
+              if [ -z "$REG_PASS" ]; then
+                echo "ERROR: registered_password_custom is required when registered_profile=Custom"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "ERROR: Unknown registered_profile: ${{ inputs.registered_profile }}"
+              exit 1
+              ;;
+          esac
+
+          if [ -z "${REG_EMAIL:-}" ] || [ -z "${REG_PASS:-}" ]; then
+            echo "ERROR: Registered credentials are empty. Check secrets or Custom inputs."
+            exit 1
           fi
 
-          if [ -n "${{ inputs.guest_email }}" ]; then
-            echo "GUEST_EMAIL=${{ inputs.guest_email }}" >> $GITHUB_ENV
+          echo "STAGE_EMAIL=$REG_EMAIL" >> "$GITHUB_ENV"
+          echo "STAGE_PASSWORD=$REG_PASS" >> "$GITHUB_ENV"
+
+          # -------- Guest --------
+          case "${{ inputs.guest_profile }}" in
+            Vlad)   G_EMAIL="$GUEST_VLAD_EMAIL" ;;
+            Nadeem) G_EMAIL="$GUEST_NADEEM_EMAIL" ;;
+            Tufail) G_EMAIL="$GUEST_TUFAIL_EMAIL" ;;
+            John)   G_EMAIL="$GUEST_JOHN_EMAIL" ;;
+            Yulia)  G_EMAIL="$GUEST_YULIA_EMAIL" ;;
+            Iryna)  G_EMAIL="$GUEST_IRYNA_EMAIL" ;;
+            Custom)
+              G_EMAIL="${{ inputs.guest_email_custom }}"
+              if [ -z "$G_EMAIL" ]; then
+                echo "ERROR: guest_email_custom is required when guest_profile=Custom"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "ERROR: Unknown guest_profile: ${{ inputs.guest_profile }}"
+              exit 1
+              ;;
+          esac
+
+          if [ -z "${G_EMAIL:-}" ]; then
+            echo "ERROR: Guest email is empty. Check secrets or Custom input."
+            exit 1
           fi
+
+          echo "GUEST_EMAIL=$G_EMAIL" >> "$GITHUB_ENV"
+
+          echo "Credentials resolved OK."
 
       - name: Run E2E tests
+        shell: bash
         run: |
           set -e
 
