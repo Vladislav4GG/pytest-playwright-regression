@@ -96,7 +96,7 @@ def test_registered_place_order_card_and_return(page):
 
     # 2) Shipment API
     api = ShipmentApiClient()
-    resp = api.notify_shipment(order_ref=order_code, sku=sku, shipped_qty=1)
+    resp = api.notify_shipment_with_retry(order_ref=order_code, sku=sku, shipped_qty=1, timeout_s=180, poll_s=10)
     assert resp.status_code < 400, f"Shipment API failed: {resp.status_code} {resp.text}"
 
     # 3) Registered return flow
