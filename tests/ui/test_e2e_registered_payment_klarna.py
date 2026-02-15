@@ -20,8 +20,8 @@ def _registered_data():
         "postcode": "TR8 4XW",
     }
 
-    user_email = os.getenv("REG_EMAIL", "").strip()
-    user_password = os.getenv("REG_PASS", "").strip()
+    user_email = os.getenv("STAGE_EMAIL", "").strip()
+    user_password = os.getenv("STAGE_PASSWORD", "").strip()
     if not user_email or not user_password:
         raise RuntimeError("Registered credentials are empty. Set REG_EMAIL and REG_PASS env vars.")
 
