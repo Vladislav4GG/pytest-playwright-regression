@@ -105,6 +105,8 @@ jobs:
       SCENARIO: ${{ inputs.scenario }}
       REGISTERED_PROFILE: ${{ inputs.registered_profile }}
       GUEST_PROFILE: ${{ inputs.guest_profile }}
+      PAYPAL_TEST_EMAIL: ${{ secrets.PAYPAL_TEST_EMAIL }}
+      PAYPAL_TEST_PASSWORD: ${{ secrets.PAYPAL_TEST_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
