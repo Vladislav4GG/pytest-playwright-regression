@@ -11,6 +11,17 @@ class PaymentMethodPage:
         "encryptedSecurityCode": "Iframe for secured card security code",
     }
 
+    def select_paypal(self, timeout: int = 60000):
+        self._click_payment_label(r"^\s*PayPal\s*$", timeout=timeout)
+        details = self.page.locator("#adyen_hpp_paypal_container").first
+        self._wait_details_open(details, timeout=timeout)
+
+    def select_klarna(self, timeout: int = 60000):
+        # label: "Pay later with Klarna."
+        self._click_payment_label(r"Pay\s+later\s+with\s+Klarna", timeout=timeout)
+        details = self.page.locator("#adyen_hpp_klarna_container").first
+        self._wait_details_open(details, timeout=timeout)
+
     def __init__(self, page: Page):
         self.page = page
         self._mode: Optional[CardMode] = None

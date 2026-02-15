@@ -28,6 +28,13 @@ on:
         type: choice
         options: [all, registered_return, registered_order, guest_return, guest_order]
 
+      payment:
+        description: "Payment method"
+        required: true
+        type: choice
+        options: [all, card, paypal, klarna]
+        default: all
+
       registered_profile:
         description: "Registered profile (required only for registered_* or all)"
         required: false
@@ -98,6 +105,8 @@ jobs:
       SCENARIO: ${{ inputs.scenario }}
       REGISTERED_PROFILE: ${{ inputs.registered_profile }}
       GUEST_PROFILE: ${{ inputs.guest_profile }}
+      PAYPAL_TEST_EMAIL: ${{ secrets.PAYPAL_TEST_EMAIL }}
+      PAYPAL_TEST_PASSWORD: ${{ secrets.PAYPAL_TEST_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
@@ -269,25 +278,39 @@ jobs:
           echo "Credentials resolved for scenario=$SCENARIO"
 
       - name: Run E2E
+        shell: bash
         run: |
-          set -e
-          case "${{ inputs.scenario }}" in
-            all)
-              pytest -m e2e -q --alluredir=allure-results
-              ;;
-            registered_return)
-              pytest -m "e2e and e2e_registered and e2e_return" -q --alluredir=allure-results
-              ;;
-            registered_order)
-              pytest -m "e2e and e2e_registered and e2e_order" -q --alluredir=allure-results
-              ;;
-            guest_return)
-              pytest -m "e2e and e2e_guest and e2e_return" -q --alluredir=allure-results
-              ;;
-            guest_order)
-              pytest -m "e2e and e2e_guest and e2e_order" -q --alluredir=allure-results
-              ;;
+          set -euo pipefail
+    
+          SCENARIO="${SCENARIO:-all}"
+          PAYMENT="${PAYMENT:-all}"
+      
+          BASE_MARK="e2e"
+          TYPE_MARK=""
+          MODE_MARK=""
+      
+          case "$SCENARIO" in
+            all) TYPE_MARK="" ;;
+            registered_return) TYPE_MARK="and e2e_registered and e2e_return" ;;
+            registered_order)  TYPE_MARK="and e2e_registered and e2e_order" ;;
+            guest_return)      TYPE_MARK="and e2e_guest and e2e_return" ;;
+            guest_order)       TYPE_MARK="and e2e_guest and e2e_order" ;;
+            *) echo "Unknown scenario: $SCENARIO"; exit 1 ;;
           esac
+      
+          case "$PAYMENT" in
+            all) MODE_MARK="" ;;
+            card) MODE_MARK="and e2e_card" ;;
+            paypal) MODE_MARK="and e2e_paypal" ;;
+            klarna) MODE_MARK="and e2e_klarna" ;;
+            *) echo "Unknown payment: $PAYMENT"; exit 1 ;;
+          esac
+      
+          if [ -z "$TYPE_MARK" ] && [ -z "$MODE_MARK" ]; then
+            pytest -m "$BASE_MARK" -q --alluredir=allure-results
+          else
+            pytest -m "$BASE_MARK $TYPE_MARK $MODE_MARK" -q --alluredir=allure-results
+          fi
 
       - name: Upload artifacts
         if: always()
