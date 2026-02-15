@@ -1,6 +1,7 @@
 import re
 import os
 from playwright.sync_api import Page, expect
+from playwright.sync_api import expect
 from utils.consent import dismiss_onetrust
 from pages.pdp_page import PDPPage
 from pages.cart_page import CartPage
@@ -9,6 +10,8 @@ from pages.delivery_address_page import DeliveryAddressPage
 from pages.delivery_method_page import DeliveryMethodPage
 from pages.billing_info_page import BillingInfoPage
 from pages.payment_method_page import PaymentMethodPage
+from pages.paypal_popup_page import PayPalPopupPage
+from pages.klarna_popup_page import KlarnaPopupPage
 from pages.summary_page import SummaryPage
 from pages.confirmation_page import ConfirmationPage
 from pages.guest_order_lookup_page import GuestOrderLookupPage
@@ -19,6 +22,7 @@ from pages.my_account_orders_page import MyAccountOrdersPage
 from pages.order_details_registered_page import OrderDetailsRegisteredPage
 import time
 
+ORDER_CONFIRM_URL_RE = re.compile(r".*/(checkout/)?orderConfirmation.*", re.I)
 
 class PurchaseFlow:
     def __init__(self, page: Page):
@@ -238,3 +242,123 @@ class PurchaseFlow:
             time.sleep(poll_s)
 
         raise AssertionError(f"Return page not ready for order {order_code}. Last url={last_url}")
+    
+    def pay_by_paypal_and_place_order(
+        self, *, paypal_email: str, paypal_password: str, timeout: int = 60000
+    ):
+        p = PaymentMethodPage(self.page)
+        p.select_paypal()
+        p.click_next()
+
+        expect(self.page).to_have_url(re.compile(r".*/adyen/summary/view.*"), timeout=20000)
+
+        s = SummaryPage(self.page)
+        s.accept_terms()
+
+        popup = s.click_paypal_and_wait_page(timeout=timeout)
+        PayPalPopupPage(popup).login_and_approve(email=paypal_email, password=paypal_password)
+
+        # чекати або confirmation url, або DOM-маркер
+        deadline = time.time() + 90
+        last_url = None
+        while time.time() < deadline:
+            last_url = self.page.url or ""
+
+            if ORDER_CONFIRM_URL_RE.search(last_url):
+                break
+
+            link = self.page.locator("a[href*='/customer/order/']").first
+            try:
+                if link.count() > 0 and link.is_visible():
+                    break
+            except Exception:
+                pass
+
+            time.sleep(0.3)
+        else:
+            raise AssertionError(
+                f"Did not reach order confirmation after PayPal within 90s. Last url={last_url}"
+            )
+
+        conf = ConfirmationPage(self.page)
+        return conf.get_order_code()
+    
+    def pay_by_klarna_and_place_order(
+        self,
+        *,
+        phone: str = "+447400123456",
+        otp: str = "111111",
+        email: str | None = None,
+        first_name: str = "Vlad",
+        last_name: str = "Ponomarenko",
+        dob: str = "11.11.1990",
+        timeout_s: int = 120,
+    ):
+        # стабілізація
+        self.page.wait_for_load_state("domcontentloaded")
+        self.page.wait_for_timeout(1500)
+
+        p = PaymentMethodPage(self.page)
+        p.select_klarna()
+        p.click_next()
+
+        expect(self.page).to_have_url(re.compile(r".*/adyen/summary/view.*"), timeout=20000)
+
+        s = SummaryPage(self.page)
+        s.accept_terms()
+
+        # ВАЖЛИВО: Klarna проходиться рівно 1 раз
+        klarna_page = s.click_klarna_and_wait_page(timeout=timeout_s * 1000)
+        KlarnaPopupPage(klarna_page).complete_payment(
+            phone=phone,
+            otp=otp,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            dob=dob,
+            timeout=timeout_s * 1000,
+        )
+
+        # Далі чекаємо, поки головна сторінка дійде до order confirmation
+        deadline = time.time() + timeout_s
+        last_url = None
+
+        while time.time() < deadline:
+            try:
+                # якщо йде навігація — будь-які локатори можуть падати
+                self.page.wait_for_load_state("domcontentloaded", timeout=2000)
+
+                last_url = self.page.url or ""
+
+                # Варіант A: URL вже confirmation
+                if ORDER_CONFIRM_URL_RE.search(last_url):
+                    break
+
+                # Варіант B: URL ще не змінився, але DOM вже містить лінк на order
+                link = self.page.locator("a[href*='/customer/order/']").first
+                try:
+                    if link.is_visible(timeout=250):
+                        break
+                except PWError as e:
+                    # під час redirect-а інколи вилітає execution context destroyed
+                    if "Execution context was destroyed" in str(e):
+                        time.sleep(0.25)
+                        continue
+                    raise
+
+                time.sleep(0.25)
+
+            except PWError as e:
+                # Глобальний хендл для "navigation in progress"
+                msg = str(e)
+                if "Execution context was destroyed" in msg or "navigation" in msg.lower():
+                    time.sleep(0.25)
+                    continue
+                raise
+
+        else:
+            raise AssertionError(
+                f"Did not reach order confirmation after Klarna within {timeout_s}s. Last url={last_url}"
+            )
+
+        return ConfirmationPage(self.page).get_order_code()
