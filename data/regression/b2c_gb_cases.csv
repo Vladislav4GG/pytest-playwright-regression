@@ -1,0 +1,235 @@
+id,priority,area,function,action,test_data,source_row
+1,High,Site,Cookie > Accept,Accept Cookie,,6
+2,Medium,Site,Cookie > Manage Cookie,Toggle options On/Off and confirm selection and Cookie,,7
+3,High,Header,Country Selector,"Change to different Country (ideally a dual/tri lingual site like ME, BE or CH)",,8
+4,High,Header,Country Selector,"Once changed to dual/tri lingual site, change Locale (language)",,9
+5,High,Header,Sign In,Sign In as registered user,,10
+6,High,Header,Sign Out,Sign out as registered user,,11
+7,High,Header,Create an Account,Register as a User,,12
+8,High,Header,Basket Icon,Click to navigate to Basket page,,13
+9,High,Menu,Epson Logo,Click to navigate to homepage,,14
+10,Medium,Menu,Menu Links,"Ensure all Menu Links (at Parent, Child and Sub child level) point to a page and do not display Error 404, Server Error etc or redirect back to homepage",,15
+11,High,Homepage,Content,Homepage renders correctly and Amplience/Smartedit components created can be scrolled and interacted with,,16
+12,Medium,Footer,Epson Registration,User can complete registration for ECRM/Marketing purposes,,17
+13,Low,Footer,Social Media Links,Clicking Links redirect User to the correct social media platform,,18
+14,Low,Footer,Footer Links,"Ensure Footer Links point to a page and do not display Error 404, Server Error etc or redirect back to homepage",,19
+15,Medium,Search,Search via SOLR,Search Bar displayed and user able to enter Text,,20
+16,Medium,Search,Search via SOLR,Matches displayed Left side for Keyword suggestions and Right side for Product suggestions,,21
+17,Medium,Search,Search via SOLR,Clicking Keyword suggestion displays PLP page with matches similar to search criteria,,22
+18,Medium,Search,Search via SOLR,Clicking Product suggestion displays PDP page for product,,23
+19,Medium,Search,Search via SOLR,Close Search,,24
+20,High,Search,Search via Attraqt,Search Bar displayed and user able to enter Text,,25
+21,High,Search,Search via Attraqt,Matches displayed Left side for Keyword suggestions and Right side for Product suggestions,,26
+22,High,Search,Search via Attraqt,Clicking Keyword suggestion displays PLP page with matches similar to search criteria,,27
+23,High,Search,Search via Attraqt,Clicking Product suggestion displays PDP page for product,,28
+24,High,Search,Search via Attraqt,Close Search,,29
+25,High,PLP,Attraqt Facets,"Ensure the various facets available when using Attraqt still work as expected e.g. Sliders, input boxes, radio filters, checkbox filters",,30
+26,High,PLP,Remove Facets,Remove some selected filters from the Left Hand panel and ensure results are updated accordingly,,31
+27,High,PLP,Reset Filters,Click on 'Reset' to ensure all filters are removed and ensure results are updated accordingly,,32
+28,Medium,PLP,Click on Printers > Inkjet > Consumer from the main menu,"Once page loads, click on 3rd level breadcrumb option to ensure breadcrumb is correct",,33
+29,Medium,PLP,Click on Printers > Inkjet > Consumer from the main menu,"Once page loads, click on 2nd level breadcrumb option to ensure breadcrumb is correct",,34
+30,Medium,PLP,Click on Printers > Inkjet > Consumer from the main menu,"Once page loads, click on 1st level breadcrumb option to ensure breadcrumb is correct",,35
+31,High,PLP,Product Listing,"Ensure highlights, images, prices, currency symbol, Vat Incl. and Excl. are displayed",,36
+32,High,PLP,Product Listing,Ensure when Promotions are applied they are shown in PLP page as Strike Through's,,37
+33,High,PLP,Product Listing,Ensure when Referrer Promotions are applied they are shown in PLP page as Strike Through's,,38
+34,High,PLP,Product Listing,"Stock Label for ""In stock"" is shown with the 'Buy Now' button",,39
+35,High,PLP,Pagination,"Click on Next, Previous",,40
+36,High,PLP,Sort By,"Sort by Newest, Higher etc",,41
+37,High,PLP,Sort By,Click on 'Learn More' for a Product,,42
+38,High,PLP,Sort By,Click on 'Find a Dealer' for a Product,,43
+39,High,PLP,Sort By,Click on 'Request Callback' for a Product,,44
+40,High,PLP,Sort By,Click on 'ReadyPrint' link for a Product,,45
+41,High,PLP,Add to Compare,Compare 2 or 3 Products,,46
+42,High,PLP,Add to Compare,Remove from Compare List,,47
+43,High,PLP,Add to Compare,Click on 'Learn More' for a Product,,48
+44,High,PLP,Add to Compare,Click on 'Find a Dealer' for a Product,,49
+45,High,PLP,Add to Compare,Click on 'Request Callback' for a Product,,50
+46,High,PLP,Add to Compare,Click on 'Support' for a Product,,51
+47,High,PLP,Add to Compare,Click on Print,,52
+48,High,PLP,Add to Compare,Go back to Listings,,53
+49,High,PLP,Add to Compare,Hide Compare Box,,54
+50,High,PLP,Quick View,Ensure clicking on 'Quick View' displays details as per PDP page including Buy Box features,,55
+51,High,PLP,Badges,Ensure that Badges images can be assigned to a Product and viewed on a PLP,,56
+52,High,PDP,Awards,Ensure that Award images can be assigned to a Product and viewed on a PDP,,57
+53,High,PDP,Badges,Ensure that Badges images can be assigned to a Product and viewed on a PDP,,58
+54,High,PLP,Discontinued,Check to ensure Discontinued products do not show in the PLP page,,59
+55,High,SLP,Discontinued,Check to ensure Discontinued products are displayed in the SLP page,,60
+56,High,PDP,Discontinued,Check to ensure PDP page for a Discontinued product shows limited information,,61
+57,High,PDP,CTA Logic,"Check to ensure the PDP pages display the correct CTA's for:
+Buy Now - Available to Purchase
+Request Callback - Not Available to Purchase & Request Callback = True
+Find a Dealer - Discontinued = true & Not Available to Purchase
+Notify me when available - Available to Purchase & Stock level <=0
+Stop notifying me - Option available when 'Notify me when available' is selected
+Learn More - 
+Buy Online - 
+Where to Buy - 
+Find a Repair Centre - Discontinued = true & Not Available to Purchase",,62
+58,High,PDP,Product Details Page,"Ensure Heading Title, Subheading tile, overview text, SKU, Stock Labels, gallery, prices, currency symbol, Vat Incl. and Excl. are displayed",,63
+59,High,PDP,Product Details Page,Ensure when Promotions are applied they are shown in PDP as Strike Through's,,64
+60,High,PDP,Product Details Page,Ensure when Referrer Promotions are applied they are shown in PDP as Strike Through's,,65
+61,High,PDP,Product Details Page,Click on 'Find a Dealer',,66
+62,High,PDP,Gallery,"Ensure the Product Gallery images and carousels can be zoomed in, viewed and scrolled",,67
+63,High,PDP,Buy Box,Ensure CoverPlus can be added to the Basket from the Buy Box section using the Checkboxes and clicking on 'Buy Now',,68
+64,High,PDP,Buy Box,Ensure Mains product can be added to the Basket from the Buy Box section by clicking on 'Buy Now',,69
+65,High,PDP,Buy Box,Ensure Support page for Mains product can be accessed by clicking on the Support link,,70
+66,High,PDP,Buy Box,Verify if Badges/Banners are setup they are showing against the product within the Buy Box,,71
+67,Medium,PDP,Buy Box,Verify if colour variants are setup they are showing against the product within the Buy Box and clicking on them takes the user to the relevant PDP page,,72
+68,High,PDP,Product Details Page,Click on 'Request Callback',,73
+69,Medium,PDP,Product Details Page,Click on 'ReadyPrint' link,,74
+70,High,PDP,Product Details Page,"Stock Label for ""In stock"" is shown with the 'Buy Now' button",,75
+71,High,PDP,Anchor Bar,"Ensure Anchor bar links for 'Overview', 'Tech Specs', Accessories, 'Support' jump to correct section on PDP page",,76
+72,High,PDP,Anchor Bar,Ensure Anchor bar updates to show section User is on when scrolling down,,77
+73,High,PDP,Anchor Bar,Ensure Anchor bar sticks to the top of the page when User is scrolling down,,78
+74,High,PDP,What's in the Box,Ensure the 'What's in the Box' section is displayed when User is scrolling down,,79
+75,High,PDP,Tech Specs,Ensure all +/- accordion buttons in Tech Spec work and expand and collapse sections correctly,,80
+76,High,PDP,Accessories,Ensure accessories can be added to the Basket from the 'Consumables' tab,,81
+77,High,PDP,Accessories,Ensure accessories can be added to the Basket from the 'Media' tab,,82
+78,High,PDP,Accessories,Ensure accessories can be added to the Basket from the 'Ext. with Cover+' tab,,83
+79,High,PDP,Accessories,Ensure accessories can be added to the Basket from the 'Options' tab (available for Projectors etc),,84
+80,High,PDP,Support,Ensure Support displays Recommended Links for Product,,85
+81,High,PDP,Support,Click on 'Go to Support' - Takes you to the Support page for the selected Product,,86
+82,High,PDP,Support,Click on 'Drivers & Software' - Takes you to the Downloads section on Support page for the selected Product,,87
+83,High,PDP,Support,Click on 'FAQ's' - Takes you to the FAQ's section on Support page for the selected Product,,88
+84,High,PDP,Support,Click on 'Manuals & Documentation' - Takes you to the Manuals & Documentation section on Support page for the selected Product,,89
+85,High,PDP,Support,Click on 'Repairs Services' - Takes you to the Contact Us section on Support page for the selected Product,,90
+86,High,Add Consum. & Access.,Accessories,"From PDP page, click on the 'Buy Now' button to display Add Consum. & Access. page",,91
+87,High,Add Consum. & Access.,Accessories,Click on 'Go To Checkout' button,,92
+88,High,Add Consum. & Access.,Accessories,Ensure Accessories can be added using the Qty and 'Buy Now' buttons,,93
+89,High,Add Consum. & Access.,Accessories,Ensure CoverPlus can be added using the Qty and 'Buy Now' buttons,,94
+90,High,Basket,Basket,Click on the 'Continue Shopping' button,,95
+91,Medium,Basket,PDP,"Ensure user can click on PDP page, by clicking on Product Name",,96
+92,High,Basket,Cover+ Sell On,Ensure user can add Cover+ products for their mains item from the Basket page,,97
+93,High,Basket,Basket,Ensure User can Delete Line Items,,98
+94,High,Basket,Basket,Ensure Prices are displayed Incl. of VAT,,99
+95,High,Basket,Basket,"Ensure for Products with Promotions applied to them, Promotional Prices are shown",,100
+96,High,Basket,Basket,Ensure User can increase/decrease Line Items,,101
+97,High,Basket,Basket,Ensure Totals are correct and adjusted accordingly when Qty is changed,,102
+98,High,Basket,Basket,Ensure a Valid Amount based voucher can be redeemed and adjusts price accordingly,,103
+99,High,Basket,Basket,Ensure a Valid Percentage based voucher can be redeemed and adjusts price accordingly,,104
+100,High,Basket,Basket,Ensure Vouchers can be removed from the Basket adjusts price accordingly,,105
+101,High,Basket,Wishlist,Ensure items added to the Wishlist can be added to the Basket,,106
+102,High,Basket,Wishlist,Ensure items added to the Wishlist can be removed from the Wishlist,,107
+103,High,Basket,Wishlist,"Ensure user can view the Product PDP page, by clicking Wishlist item",,108
+104,High,Checkout,Delivery,Ensure user is able to auto populate an Address using Loqate Post Code finder,,109
+105,High,Checkout,Delivery,Ensure user is able to insert an Address manually,,110
+106,High,Checkout,Delivery,Ensure validation is displayed when mandatory fields are left empty,,111
+107,High,Checkout,Collection - UPS Access Point,"Check to ensure a User is able to complete an Order by:
+
+. Selecting the 'Collection' option
+. Entering a Post Code relevant to the Country and clicking on 'Choose Access Point'
+. With the popup displayed, user is able to click on the 'Select' button to choose an Access Point
+. Ensure that once an Address is chosen, as you progress through Checkout, the right hand panel displays the UPS Access Point ID e.g. UPS Access Point ID: U26980338 all through to the Order Confirmation page",,112
+108,High,Checkout,Collection - UPS Access Point,Ensure validation is displayed when mandatory fields are left empty,,113
+109,High,Checkout,Shipping Method,Choose a shipping method from drop down list,,114
+110,Medium,Checkout,Shipping Method,Set 'Use my shipping address' to TRUE,,115
+111,Medium,Checkout,Shipping Method,Set 'Use my shipping address' to FALSE,,116
+112,High,Checkout,Shipping Method,Ensure user is able to auto populate an Address using Loqate Post Code finder,,117
+113,High,Checkout,Shipping Method,Ensure user is able to insert an Address manually,,118
+114,High,Checkout,Shipping Method,Ensure validation is displayed when mandatory fields are left empty,,119
+115,High,Checkout,Payment Method - Credit Card,"Using Credit Card details from the 'Payment Info' tab, complete Orders using various Credit Cards e.g. VISA, AMEX, Mastercard, Bancaire (FR), Dankort (DK)",,120
+116,High,Checkout,Payment Method - Tokenisation,"Using tokenisation details from the 'Payment Info' tab, complete Orders using various Credit Cards e.g. VISA, AMEX, Mastercard, Bancaire (FR), Dankort (DK)",,121
+117,High,Checkout,Payment Method - PayPal,"If available, using PayPal details from the 'Payment Info' tab, complete Orders using country specific PayPal account",,122
+118,High,Checkout,Payment Method - Klarna,"If available, using Klarna details from the 'Payment Info' tab, complete Orders using country specific Klarna account",,123
+119,High,Checkout,Payment Method - DotPay,"If available, using Dotpay details from the 'Payment Info' tab, complete Orders using country specific Dotpay account",,124
+120,High,Checkout,Payment Method - GiroPay,"If available, using Giropay details from the 'Payment Info' tab, complete Orders using country specific Giropay account",,125
+121,High,Checkout,Payment Method - Ideal,"If available, using iDeal details from the 'Payment Info' tab, complete Orders using country specific iDeal account",,126
+122,High,Checkout,Payment Method - Blik,"If available, using Blik details from the 'Payment Info' tab, complete an Order for PL using Blik",,127
+123,High,Checkout,Payment Method - Sofort,"If available, using Sofort details from the 'Payment Info' tab, complete Orders using country specific Sofort account",,128
+124,High,Checkout,Payment Method - Trustly,"If available, using Trustly details from the 'Payment Info' tab, complete Orders using country specific Trustly account",,129
+125,High,Checkout,Final Review,Attempt to place an Order without setting T&C checkbox to TRUE,,130
+126,High,Checkout,Final Review,Ensure all information within Order Summary is correct,,131
+127,Medium,Checkout,Final Review,Click on Product Name to view product PDP page,,132
+128,High,Checkout,Order Confirmation,Ensure Order Confirmation No. and Date of Order is shown,,133
+129,High,Checkout,Order Confirmation,Ensure all details displayed match those entered during Checkout,,134
+130,High,Checkout,Order Confirmation,Ensure Prices are displayed Incl. of VAT,,135
+131,High,Checkout,Order Confirmation,"Ensure for Products with Promotions applied to them, Promotional Prices are shown",,136
+132,High,Checkout,Order Confirmation,Ensure Totals are correct and match those in Final Review section,,137
+133,Medium,Checkout,Order Confirmation,Click on Product Name to view product PDP page,,138
+134,Medium,Checkout,Order Confirmation,Click on Print button,,139
+135,Medium,Checkout,Order Confirmation,Click on 'Return to Store' button,,140
+136,High,Checkout,ASM Agent,Ensure that an ASM Agent can complete an Order on behalf of a Registered Customer,,141
+137,High,Checkout,ASM Agent,Ensure that an ASM Agent can complete an Order on behalf of a Guest Customer,,142
+138,High,Orders,Registered Users,Check to ensure that a Registered User can place a Normal Order,,143
+139,High,Orders,Registered Users,Check to ensure that a Registered User can place an Order containing a Promotion,,144
+140,High,Orders,Registered Users,"Check to ensure that a Registered User can place an Order containing a CUG Discount:
+
+Steps for ""Check to ensure that a Registered User can place an Order containing a CUG Discount"":
+1. Go to BO
+2. Open the ""Promotion Rules"" page
+3. Add new ""Promotion Rule""
+4. Add ""promogroup-epson-gb"" in ""Website"" field
+5. Change ""Priority"" to 1 and save it
+6. Open ‘CONDITIONS & ACTIONS’ tab
+7. Drag the ""Target customers"" field from ""Available Conditions"" to ""Conditions"" column
+8. Select the group that includes the customer in the ""Customer group"" field
+9. Select the your own customer in the ""Customers"" field
+10. Add some action (e.g. Percentage discount value = 50%)
+11. Save and Publish (need to use another account)
+
+NOTE: This test case can be applied to the specific users &/or groups",,145
+141,High,Orders,Registered Users,Check to ensure that a Registered User can place an Order containing a Amount based Voucher,,146
+142,High,Orders,Registered Users,Check to ensure that a Registered User can place an Order containing a Percentage based Voucher,,147
+143,High,Orders,Registered Users,Check to ensure that a Registered User can place an Order containing a Promotion and a Voucher (any),,148
+144,High,Orders,Guest Users,Check to ensure that a Guest User place a Normal Order,,149
+145,High,Orders,Guest Users,Check to ensure that a Guest User can place an Order containing a Promotion,,150
+146,High,Orders,Guest Users,Check to ensure that a Guest User can place an Order containing a Amount based Voucher,,151
+147,High,Orders,Guest Users,Check to ensure that a Guest User can place an Order containing a Percentage based Voucher,,152
+148,High,Orders,Guest Users,Check to ensure that a Guest User can place an Order containing a Promotion and a Voucher (any),,153
+149,High,Ink Page,Buy Accessories for My Products,Click on the Ink link within the Menu to be taken to the Ink finder page,,154
+150,High,Ink Page,Buy Accessories for My Products,"Enter text of ""XP-"" and click on the Search button. The results page should be shown for all matches where Product Name starts with ""XP-""",,155
+151,High,Ink Page,Buy Accessories for My Products,"Enter text of ""XP-9"" and select the XP-960 match from the suggestive products. The PDP page for XP-960 is shown with the page anchoring at the 'Accessories' section",,156
+152,High,Email,Registration,Check to ensure the Registered Confirmation email can be triggered upon a successful registration,,157
+153,High,Email,Forgot Password,Check to ensure the Forgot Password Confirmation email can be triggered using the reset link,,158
+154,High,Email,Order Confirmation,Check to ensure the Order Confirmation email can be triggered upon a successful Order for Registered users,,159
+155,High,Email,Order Confirmation,Check to ensure the Order Confirmation email can be triggered upon a successful Order for Guest users,,160
+156,High,Email,Pay By Link,Check to ensure the Pay By Link email can be triggered by an ASM Agent after placing a successful Order for Registered users,,161
+157,High,Email,Pay By Link,Check to ensure the Pay By Link email can be triggered by an ASM Agent after placing a successful Order for Guest users,,162
+158,High,Email,Return 1,Check to ensure the Return Opt. 1 (With Label) email can be triggered,,163
+159,High,Email,Return 2,Check to ensure the Return Opt. 2 (Digital/QR Code) email can be triggered and it contains the Digital Label,,164
+160,High,Email,Back in Stock,Check to ensure the Back in Stock Notification email can be triggered for a product which is Out of Stock,,165
+161,Medium,Cover+,Cover+ Registration,Check to ensure Cover+ registration can be completed and a Successful CoverPlus Registration email is sent,,166
+162,High,Case Management,Payment,"Ensure an Order which is stuck in Adyen under Case Management rule, can be released and sent to SAP ECC",,167
+163,High,My Account,Order History,"Within the My Account section, click on the Order History link",,168
+164,Medium,My Account,Order History,Sort by Date,,169
+165,Medium,My Account,Order History,Sort by Order No,,170
+166,High,My Account,Order History,Click on an Order to view the details and ensure details captured are correct and displayed correctly,,171
+167,High,My Account,Order History,Click on the 'Reorder' button to place the items in your Basket (If still available),,172
+168,Medium,My Account,Order History,Click on the 'Back to Your Account' link to go back to My Account,,173
+169,High,My Account,Update Personal Details,Ensure valid details can be changed and saved,,174
+170,High,My Account,Update Personal Details,Ensure validation errors are displayed when mandatory fields are left empty,,175
+171,High,My Account,Update Email Address,Ensure valid details can be changed and saved,,176
+172,High,My Account,Update Email Address,Ensure validation errors are displayed when mandatory fields are left empty,,177
+173,High,My Account,Update Password,Ensure valid details can be changed and saved,,178
+174,High,My Account,Update Password,Ensure validation errors are displayed when mandatory fields are left empty,,179
+175,High,My Account,Address Book > Delete,Ensure an existing Address can be Deleted,,180
+176,High,My Account,Address Book > Edit,Ensure an existing Address can be Edited,,181
+177,High,My Account,Address Book > Edit,"When Editing an existing address, valid details can be changed and saved",,182
+178,High,My Account,Address Book > Edit,"When Editing an existing address, ensure validation errors are displayed when mandatory fields are left empty",,183
+179,High,My Account,Address Book > Edit,Ensure user is able to auto populate an Address using Loqate Post Code finder,,184
+180,High,My Account,Address Book > Add,Ensure user is able to auto populate an Address using Loqate Post Code finder,,185
+181,Medium,My Account,Address Book > Add,Ensure user is able to insert an Address manually,,186
+182,High,My Account,Address Book > Add,Ensure validation is displayed when mandatory fields are left empty,,187
+183,High,My Account,Address Book > Add,Ensure new Address can be Saved,,188
+184,High,My Account,Address Book > Add,Ensure new Address can be Cancelled and is not Saved,,189
+185,Medium,My Account,Buy Accessories for My Products,"Pre-requisite: for My Products > Register (dependent on ECRM connectivity)
+
+Ensure User is able to Register a Product by clicking on 'Register a New Device'",,190
+186,Medium,My Account,Buy Accessories for My Products,Ensure existing Products Registered are displayed correctly,,191
+187,Medium,My Account,Buy Accessories for My Products,Click on the 'Back to Your Account' link to go back to My Account,,192
+188,High,My Account,Wishlist,Ensure items added to the Wishlist can be removed from the Wishlist,,193
+189,High,My Account,Wishlist,"Ensure user can view the Product PDP page, by clicking Wishlist item",,194
+190,High,My Account,Wishlist,Ensure items added to the Wishlist can be added to the Basket,,195
+191,High,Support,Search by Product Name > Search all,Click on the Support link within the Menu to be taken to the Support page,,196
+192,High,Support,Search by Product Name > Search all,"Enter text of ""XP-"" and click on the Search button. The results should be shown below the Search bar, for all matches where Product Name starts with ""XP-""",,197
+193,High,Support,Search by Product Name > Search all,"Clicking on the a Product from the matches, takes the User to the Support page showing all available Support related articles and items e.g. Drivers, FAQ's, Manuals etc",,198
+194,High,Support,Search by Product Name > Suggested Match,Click on the Support link within the Menu to be taken to the Support page,,199
+195,High,Support,Search by Product Name > Suggested Match,"Enter text of ""XP-9"" and select the XP-960 match from the suggestive products. The Support page showing all available Support related articles and items e.g. Drivers, FAQ's, Manuals etc",,200
+196,High,Support,Search by Product Name > Suggested Match,Ensure all +/- accordion buttons in Downloads section expand and collapse sections correctly,,201
+197,High,Support,Search by Product Name > Suggested Match,"Ensure changing the Operating System from the drop down list, updates the articles within the 'Downloads' and 'FAQ' sections so to be relevant to the OS chosen",,202
+198,High,Support,Search by Serial Number,Click on the Support link within the Menu to be taken to the Support page,,203
+199,High,Support,Search by Serial Number,"Enter Test Data and click on the 'Check' button and ensure details of the Product, Warranty and Extended Warranty information are displayed",X3B8030324,204
+200,High,Support,Search by Serial Number,Enter Test Data and click on the 'Check' button and only Product information is displayed,X59U001243,205
+201,High,Support,Search by Serial Number,Enter Test Data and click on the 'Check' button and only Product information and 1 EPP Subscription is displayed,UV4Y030323,206
+202,High,Support,Search by Serial Number,Enter Test Data and click on the 'Check' button and ensure a Technical Error message is displayed,X576037640,207
+203,High,Support,Search by Serial Number,Enter Test Data and click on the 'Check' button and only Product information and 3 Subscription are displayed,X3B8030324,208

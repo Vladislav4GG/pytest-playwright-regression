@@ -1,0 +1,153 @@
+name: Regression
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Environment"
+        required: true
+        type: choice
+        options: [S1, S2]
+        default: S1
+
+      run_all:
+        description: "Run all regression functional tests"
+        required: true
+        type: boolean
+        default: true
+
+      case_cookie_management:
+        description: "cookie_banner_page.py"
+        required: false
+        type: boolean
+        default: false
+
+      case_country_locale:
+        description: "site_selector_page.py"
+        required: false
+        type: boolean
+        default: false
+
+      case_auth_navigation:
+        description: "auth_page.py"
+        required: false
+        type: boolean
+        default: false
+
+      case_menu_links:
+        description: "menu_navigation_page.py"
+        required: false
+        type: boolean
+        default: false
+
+      menu_links_limit:
+        description: "Optional limit for menu links test (0 = no limit)"
+        required: false
+        type: string
+        default: "0"
+
+jobs:
+  run-regression:
+    runs-on: ubuntu-latest
+
+    env:
+      TEST_ENV: ${{ inputs.env }}
+      MENU_LINKS_LIMIT: ${{ inputs.menu_links_limit }}
+
+      PW_HEADLESS: "true"
+      PW_TIMEOUT_MS: "60000"
+      PYTHONUNBUFFERED: "1"
+
+      STAGE_EMAIL: ${{ secrets.STAGE_EMAIL }}
+      STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
+      REG_EMAIL: ${{ secrets.STAGE_EMAIL }}
+      REG_PASS: ${{ secrets.STAGE_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Resolve environment URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          case "${TEST_ENV}" in
+            S1)
+              UI_HOST="epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com"
+              SHIPMENT_HOST="api.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com"
+              ;;
+            S2)
+              UI_HOST="epson-gb.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com"
+              SHIPMENT_HOST="api.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com"
+              ;;
+            *)
+              echo "Unknown TEST_ENV=${TEST_ENV}"
+              exit 1
+              ;;
+          esac
+
+          echo "UI_BASE_URL=https://${UI_HOST}" >> "$GITHUB_ENV"
+          echo "SHIPMENT_API_URL=https://${SHIPMENT_HOST}" >> "$GITHUB_ENV"
+
+      - name: Resolve selected regression cases
+        id: cases
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          declare -a TARGETS
+
+          if [ "${{ inputs.run_all }}" = "true" ]; then
+            TARGETS+=(
+              "tests/functional/test_cookie_banner.py"
+              "tests/functional/test_site_selector_locale.py"
+              "tests/functional/test_account_access_navigation.py"
+              "tests/functional/test_menu_links.py"
+            )
+          else
+            [ "${{ inputs.case_cookie_management }}" = "true" ] && TARGETS+=("tests/functional/test_cookie_banner.py")
+            [ "${{ inputs.case_country_locale }}" = "true" ] && TARGETS+=("tests/functional/test_site_selector_locale.py")
+            [ "${{ inputs.case_auth_navigation }}" = "true" ] && TARGETS+=("tests/functional/test_account_access_navigation.py")
+            [ "${{ inputs.case_menu_links }}" = "true" ] && TARGETS+=("tests/functional/test_menu_links.py")
+          fi
+
+          if [ ${#TARGETS[@]} -eq 0 ]; then
+            echo "No regression cases selected. Enable run_all or pick at least one checkbox."
+            exit 1
+          fi
+
+          {
+            echo "targets<<EOF"
+            printf '%s\n' "${TARGETS[@]}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Selected targets:"
+          printf ' - %s\n' "${TARGETS[@]}"
+
+      - name: Run selected regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t TARGETS <<< "${{ steps.cases.outputs.targets }}"
+          pytest -vv -s "${TARGETS[@]}" --alluredir=allure-results
+
+      - name: Upload regression artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-artifacts
+          path: |
+            allure-results
+            artifacts

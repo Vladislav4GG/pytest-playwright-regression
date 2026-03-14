@@ -1,0 +1,1836 @@
+{
+  "source_file": "/Users/a1111/Documents/codex/epson/Py_Test_Regex.xlsx",
+  "sheet": "B2C GB",
+  "generated_at_utc": "2026-03-01T04:23:04+00:00",
+  "header_row": 5,
+  "case_count": 203,
+  "cases": [
+    {
+      "id": 1,
+      "priority": "High",
+      "area": "Site",
+      "function": "Cookie > Accept",
+      "action": "Accept Cookie",
+      "test_data": "",
+      "source_row": 6
+    },
+    {
+      "id": 2,
+      "priority": "Medium",
+      "area": "Site",
+      "function": "Cookie > Manage Cookie",
+      "action": "Toggle options On/Off and confirm selection and Cookie",
+      "test_data": "",
+      "source_row": 7
+    },
+    {
+      "id": 3,
+      "priority": "High",
+      "area": "Header",
+      "function": "Country Selector",
+      "action": "Change to different Country (ideally a dual/tri lingual site like ME, BE or CH)",
+      "test_data": "",
+      "source_row": 8
+    },
+    {
+      "id": 4,
+      "priority": "High",
+      "area": "Header",
+      "function": "Country Selector",
+      "action": "Once changed to dual/tri lingual site, change Locale (language)",
+      "test_data": "",
+      "source_row": 9
+    },
+    {
+      "id": 5,
+      "priority": "High",
+      "area": "Header",
+      "function": "Sign In",
+      "action": "Sign In as registered user",
+      "test_data": "",
+      "source_row": 10
+    },
+    {
+      "id": 6,
+      "priority": "High",
+      "area": "Header",
+      "function": "Sign Out",
+      "action": "Sign out as registered user",
+      "test_data": "",
+      "source_row": 11
+    },
+    {
+      "id": 7,
+      "priority": "High",
+      "area": "Header",
+      "function": "Create an Account",
+      "action": "Register as a User",
+      "test_data": "",
+      "source_row": 12
+    },
+    {
+      "id": 8,
+      "priority": "High",
+      "area": "Header",
+      "function": "Basket Icon",
+      "action": "Click to navigate to Basket page",
+      "test_data": "",
+      "source_row": 13
+    },
+    {
+      "id": 9,
+      "priority": "High",
+      "area": "Menu",
+      "function": "Epson Logo",
+      "action": "Click to navigate to homepage",
+      "test_data": "",
+      "source_row": 14
+    },
+    {
+      "id": 10,
+      "priority": "Medium",
+      "area": "Menu",
+      "function": "Menu Links",
+      "action": "Ensure all Menu Links (at Parent, Child and Sub child level) point to a page and do not display Error 404, Server Error etc or redirect back to homepage",
+      "test_data": "",
+      "source_row": 15
+    },
+    {
+      "id": 11,
+      "priority": "High",
+      "area": "Homepage",
+      "function": "Content",
+      "action": "Homepage renders correctly and Amplience/Smartedit components created can be scrolled and interacted with",
+      "test_data": "",
+      "source_row": 16
+    },
+    {
+      "id": 12,
+      "priority": "Medium",
+      "area": "Footer",
+      "function": "Epson Registration",
+      "action": "User can complete registration for ECRM/Marketing purposes",
+      "test_data": "",
+      "source_row": 17
+    },
+    {
+      "id": 13,
+      "priority": "Low",
+      "area": "Footer",
+      "function": "Social Media Links",
+      "action": "Clicking Links redirect User to the correct social media platform",
+      "test_data": "",
+      "source_row": 18
+    },
+    {
+      "id": 14,
+      "priority": "Low",
+      "area": "Footer",
+      "function": "Footer Links",
+      "action": "Ensure Footer Links point to a page and do not display Error 404, Server Error etc or redirect back to homepage",
+      "test_data": "",
+      "source_row": 19
+    },
+    {
+      "id": 15,
+      "priority": "Medium",
+      "area": "Search",
+      "function": "Search via SOLR",
+      "action": "Search Bar displayed and user able to enter Text",
+      "test_data": "",
+      "source_row": 20
+    },
+    {
+      "id": 16,
+      "priority": "Medium",
+      "area": "Search",
+      "function": "Search via SOLR",
+      "action": "Matches displayed Left side for Keyword suggestions and Right side for Product suggestions",
+      "test_data": "",
+      "source_row": 21
+    },
+    {
+      "id": 17,
+      "priority": "Medium",
+      "area": "Search",
+      "function": "Search via SOLR",
+      "action": "Clicking Keyword suggestion displays PLP page with matches similar to search criteria",
+      "test_data": "",
+      "source_row": 22
+    },
+    {
+      "id": 18,
+      "priority": "Medium",
+      "area": "Search",
+      "function": "Search via SOLR",
+      "action": "Clicking Product suggestion displays PDP page for product",
+      "test_data": "",
+      "source_row": 23
+    },
+    {
+      "id": 19,
+      "priority": "Medium",
+      "area": "Search",
+      "function": "Search via SOLR",
+      "action": "Close Search",
+      "test_data": "",
+      "source_row": 24
+    },
+    {
+      "id": 20,
+      "priority": "High",
+      "area": "Search",
+      "function": "Search via Attraqt",
+      "action": "Search Bar displayed and user able to enter Text",
+      "test_data": "",
+      "source_row": 25
+    },
+    {
+      "id": 21,
+      "priority": "High",
+      "area": "Search",
+      "function": "Search via Attraqt",
+      "action": "Matches displayed Left side for Keyword suggestions and Right side for Product suggestions",
+      "test_data": "",
+      "source_row": 26
+    },
+    {
+      "id": 22,
+      "priority": "High",
+      "area": "Search",
+      "function": "Search via Attraqt",
+      "action": "Clicking Keyword suggestion displays PLP page with matches similar to search criteria",
+      "test_data": "",
+      "source_row": 27
+    },
+    {
+      "id": 23,
+      "priority": "High",
+      "area": "Search",
+      "function": "Search via Attraqt",
+      "action": "Clicking Product suggestion displays PDP page for product",
+      "test_data": "",
+      "source_row": 28
+    },
+    {
+      "id": 24,
+      "priority": "High",
+      "area": "Search",
+      "function": "Search via Attraqt",
+      "action": "Close Search",
+      "test_data": "",
+      "source_row": 29
+    },
+    {
+      "id": 25,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Attraqt Facets",
+      "action": "Ensure the various facets available when using Attraqt still work as expected e.g. Sliders, input boxes, radio filters, checkbox filters",
+      "test_data": "",
+      "source_row": 30
+    },
+    {
+      "id": 26,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Remove Facets",
+      "action": "Remove some selected filters from the Left Hand panel and ensure results are updated accordingly",
+      "test_data": "",
+      "source_row": 31
+    },
+    {
+      "id": 27,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Reset Filters",
+      "action": "Click on 'Reset' to ensure all filters are removed and ensure results are updated accordingly",
+      "test_data": "",
+      "source_row": 32
+    },
+    {
+      "id": 28,
+      "priority": "Medium",
+      "area": "PLP",
+      "function": "Click on Printers > Inkjet > Consumer from the main menu",
+      "action": "Once page loads, click on 3rd level breadcrumb option to ensure breadcrumb is correct",
+      "test_data": "",
+      "source_row": 33
+    },
+    {
+      "id": 29,
+      "priority": "Medium",
+      "area": "PLP",
+      "function": "Click on Printers > Inkjet > Consumer from the main menu",
+      "action": "Once page loads, click on 2nd level breadcrumb option to ensure breadcrumb is correct",
+      "test_data": "",
+      "source_row": 34
+    },
+    {
+      "id": 30,
+      "priority": "Medium",
+      "area": "PLP",
+      "function": "Click on Printers > Inkjet > Consumer from the main menu",
+      "action": "Once page loads, click on 1st level breadcrumb option to ensure breadcrumb is correct",
+      "test_data": "",
+      "source_row": 35
+    },
+    {
+      "id": 31,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Product Listing",
+      "action": "Ensure highlights, images, prices, currency symbol, Vat Incl. and Excl. are displayed",
+      "test_data": "",
+      "source_row": 36
+    },
+    {
+      "id": 32,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Product Listing",
+      "action": "Ensure when Promotions are applied they are shown in PLP page as Strike Through's",
+      "test_data": "",
+      "source_row": 37
+    },
+    {
+      "id": 33,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Product Listing",
+      "action": "Ensure when Referrer Promotions are applied they are shown in PLP page as Strike Through's",
+      "test_data": "",
+      "source_row": 38
+    },
+    {
+      "id": 34,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Product Listing",
+      "action": "Stock Label for \"In stock\" is shown with the 'Buy Now' button",
+      "test_data": "",
+      "source_row": 39
+    },
+    {
+      "id": 35,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Pagination",
+      "action": "Click on Next, Previous",
+      "test_data": "",
+      "source_row": 40
+    },
+    {
+      "id": 36,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Sort By",
+      "action": "Sort by Newest, Higher etc",
+      "test_data": "",
+      "source_row": 41
+    },
+    {
+      "id": 37,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Sort By",
+      "action": "Click on 'Learn More' for a Product",
+      "test_data": "",
+      "source_row": 42
+    },
+    {
+      "id": 38,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Sort By",
+      "action": "Click on 'Find a Dealer' for a Product",
+      "test_data": "",
+      "source_row": 43
+    },
+    {
+      "id": 39,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Sort By",
+      "action": "Click on 'Request Callback' for a Product",
+      "test_data": "",
+      "source_row": 44
+    },
+    {
+      "id": 40,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Sort By",
+      "action": "Click on 'ReadyPrint' link for a Product",
+      "test_data": "",
+      "source_row": 45
+    },
+    {
+      "id": 41,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Compare 2 or 3 Products",
+      "test_data": "",
+      "source_row": 46
+    },
+    {
+      "id": 42,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Remove from Compare List",
+      "test_data": "",
+      "source_row": 47
+    },
+    {
+      "id": 43,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Click on 'Learn More' for a Product",
+      "test_data": "",
+      "source_row": 48
+    },
+    {
+      "id": 44,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Click on 'Find a Dealer' for a Product",
+      "test_data": "",
+      "source_row": 49
+    },
+    {
+      "id": 45,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Click on 'Request Callback' for a Product",
+      "test_data": "",
+      "source_row": 50
+    },
+    {
+      "id": 46,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Click on 'Support' for a Product",
+      "test_data": "",
+      "source_row": 51
+    },
+    {
+      "id": 47,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Click on Print",
+      "test_data": "",
+      "source_row": 52
+    },
+    {
+      "id": 48,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Go back to Listings",
+      "test_data": "",
+      "source_row": 53
+    },
+    {
+      "id": 49,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Add to Compare",
+      "action": "Hide Compare Box",
+      "test_data": "",
+      "source_row": 54
+    },
+    {
+      "id": 50,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Quick View",
+      "action": "Ensure clicking on 'Quick View' displays details as per PDP page including Buy Box features",
+      "test_data": "",
+      "source_row": 55
+    },
+    {
+      "id": 51,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Badges",
+      "action": "Ensure that Badges images can be assigned to a Product and viewed on a PLP",
+      "test_data": "",
+      "source_row": 56
+    },
+    {
+      "id": 52,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Awards",
+      "action": "Ensure that Award images can be assigned to a Product and viewed on a PDP",
+      "test_data": "",
+      "source_row": 57
+    },
+    {
+      "id": 53,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Badges",
+      "action": "Ensure that Badges images can be assigned to a Product and viewed on a PDP",
+      "test_data": "",
+      "source_row": 58
+    },
+    {
+      "id": 54,
+      "priority": "High",
+      "area": "PLP",
+      "function": "Discontinued",
+      "action": "Check to ensure Discontinued products do not show in the PLP page",
+      "test_data": "",
+      "source_row": 59
+    },
+    {
+      "id": 55,
+      "priority": "High",
+      "area": "SLP",
+      "function": "Discontinued",
+      "action": "Check to ensure Discontinued products are displayed in the SLP page",
+      "test_data": "",
+      "source_row": 60
+    },
+    {
+      "id": 56,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Discontinued",
+      "action": "Check to ensure PDP page for a Discontinued product shows limited information",
+      "test_data": "",
+      "source_row": 61
+    },
+    {
+      "id": 57,
+      "priority": "High",
+      "area": "PDP",
+      "function": "CTA Logic",
+      "action": "Check to ensure the PDP pages display the correct CTA's for:\nBuy Now - Available to Purchase\nRequest Callback - Not Available to Purchase & Request Callback = True\nFind a Dealer - Discontinued = true & Not Available to Purchase\nNotify me when available - Available to Purchase & Stock level <=0\nStop notifying me - Option available when 'Notify me when available' is selected\nLearn More - \nBuy Online - \nWhere to Buy - \nFind a Repair Centre - Discontinued = true & Not Available to Purchase",
+      "test_data": "",
+      "source_row": 62
+    },
+    {
+      "id": 58,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Ensure Heading Title, Subheading tile, overview text, SKU, Stock Labels, gallery, prices, currency symbol, Vat Incl. and Excl. are displayed",
+      "test_data": "",
+      "source_row": 63
+    },
+    {
+      "id": 59,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Ensure when Promotions are applied they are shown in PDP as Strike Through's",
+      "test_data": "",
+      "source_row": 64
+    },
+    {
+      "id": 60,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Ensure when Referrer Promotions are applied they are shown in PDP as Strike Through's",
+      "test_data": "",
+      "source_row": 65
+    },
+    {
+      "id": 61,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Click on 'Find a Dealer'",
+      "test_data": "",
+      "source_row": 66
+    },
+    {
+      "id": 62,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Gallery",
+      "action": "Ensure the Product Gallery images and carousels can be zoomed in, viewed and scrolled",
+      "test_data": "",
+      "source_row": 67
+    },
+    {
+      "id": 63,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Buy Box",
+      "action": "Ensure CoverPlus can be added to the Basket from the Buy Box section using the Checkboxes and clicking on 'Buy Now'",
+      "test_data": "",
+      "source_row": 68
+    },
+    {
+      "id": 64,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Buy Box",
+      "action": "Ensure Mains product can be added to the Basket from the Buy Box section by clicking on 'Buy Now'",
+      "test_data": "",
+      "source_row": 69
+    },
+    {
+      "id": 65,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Buy Box",
+      "action": "Ensure Support page for Mains product can be accessed by clicking on the Support link",
+      "test_data": "",
+      "source_row": 70
+    },
+    {
+      "id": 66,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Buy Box",
+      "action": "Verify if Badges/Banners are setup they are showing against the product within the Buy Box",
+      "test_data": "",
+      "source_row": 71
+    },
+    {
+      "id": 67,
+      "priority": "Medium",
+      "area": "PDP",
+      "function": "Buy Box",
+      "action": "Verify if colour variants are setup they are showing against the product within the Buy Box and clicking on them takes the user to the relevant PDP page",
+      "test_data": "",
+      "source_row": 72
+    },
+    {
+      "id": 68,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Click on 'Request Callback'",
+      "test_data": "",
+      "source_row": 73
+    },
+    {
+      "id": 69,
+      "priority": "Medium",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Click on 'ReadyPrint' link",
+      "test_data": "",
+      "source_row": 74
+    },
+    {
+      "id": 70,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Product Details Page",
+      "action": "Stock Label for \"In stock\" is shown with the 'Buy Now' button",
+      "test_data": "",
+      "source_row": 75
+    },
+    {
+      "id": 71,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Anchor Bar",
+      "action": "Ensure Anchor bar links for 'Overview', 'Tech Specs', Accessories, 'Support' jump to correct section on PDP page",
+      "test_data": "",
+      "source_row": 76
+    },
+    {
+      "id": 72,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Anchor Bar",
+      "action": "Ensure Anchor bar updates to show section User is on when scrolling down",
+      "test_data": "",
+      "source_row": 77
+    },
+    {
+      "id": 73,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Anchor Bar",
+      "action": "Ensure Anchor bar sticks to the top of the page when User is scrolling down",
+      "test_data": "",
+      "source_row": 78
+    },
+    {
+      "id": 74,
+      "priority": "High",
+      "area": "PDP",
+      "function": "What's in the Box",
+      "action": "Ensure the 'What's in the Box' section is displayed when User is scrolling down",
+      "test_data": "",
+      "source_row": 79
+    },
+    {
+      "id": 75,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Tech Specs",
+      "action": "Ensure all +/- accordion buttons in Tech Spec work and expand and collapse sections correctly",
+      "test_data": "",
+      "source_row": 80
+    },
+    {
+      "id": 76,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Accessories",
+      "action": "Ensure accessories can be added to the Basket from the 'Consumables' tab",
+      "test_data": "",
+      "source_row": 81
+    },
+    {
+      "id": 77,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Accessories",
+      "action": "Ensure accessories can be added to the Basket from the 'Media' tab",
+      "test_data": "",
+      "source_row": 82
+    },
+    {
+      "id": 78,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Accessories",
+      "action": "Ensure accessories can be added to the Basket from the 'Ext. with Cover+' tab",
+      "test_data": "",
+      "source_row": 83
+    },
+    {
+      "id": 79,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Accessories",
+      "action": "Ensure accessories can be added to the Basket from the 'Options' tab (available for Projectors etc)",
+      "test_data": "",
+      "source_row": 84
+    },
+    {
+      "id": 80,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Support",
+      "action": "Ensure Support displays Recommended Links for Product",
+      "test_data": "",
+      "source_row": 85
+    },
+    {
+      "id": 81,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Support",
+      "action": "Click on 'Go to Support' - Takes you to the Support page for the selected Product",
+      "test_data": "",
+      "source_row": 86
+    },
+    {
+      "id": 82,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Support",
+      "action": "Click on 'Drivers & Software' - Takes you to the Downloads section on Support page for the selected Product",
+      "test_data": "",
+      "source_row": 87
+    },
+    {
+      "id": 83,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Support",
+      "action": "Click on 'FAQ's' - Takes you to the FAQ's section on Support page for the selected Product",
+      "test_data": "",
+      "source_row": 88
+    },
+    {
+      "id": 84,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Support",
+      "action": "Click on 'Manuals & Documentation' - Takes you to the Manuals & Documentation section on Support page for the selected Product",
+      "test_data": "",
+      "source_row": 89
+    },
+    {
+      "id": 85,
+      "priority": "High",
+      "area": "PDP",
+      "function": "Support",
+      "action": "Click on 'Repairs Services' - Takes you to the Contact Us section on Support page for the selected Product",
+      "test_data": "",
+      "source_row": 90
+    },
+    {
+      "id": 86,
+      "priority": "High",
+      "area": "Add Consum. & Access.",
+      "function": "Accessories",
+      "action": "From PDP page, click on the 'Buy Now' button to display Add Consum. & Access. page",
+      "test_data": "",
+      "source_row": 91
+    },
+    {
+      "id": 87,
+      "priority": "High",
+      "area": "Add Consum. & Access.",
+      "function": "Accessories",
+      "action": "Click on 'Go To Checkout' button",
+      "test_data": "",
+      "source_row": 92
+    },
+    {
+      "id": 88,
+      "priority": "High",
+      "area": "Add Consum. & Access.",
+      "function": "Accessories",
+      "action": "Ensure Accessories can be added using the Qty and 'Buy Now' buttons",
+      "test_data": "",
+      "source_row": 93
+    },
+    {
+      "id": 89,
+      "priority": "High",
+      "area": "Add Consum. & Access.",
+      "function": "Accessories",
+      "action": "Ensure CoverPlus can be added using the Qty and 'Buy Now' buttons",
+      "test_data": "",
+      "source_row": 94
+    },
+    {
+      "id": 90,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Click on the 'Continue Shopping' button",
+      "test_data": "",
+      "source_row": 95
+    },
+    {
+      "id": 91,
+      "priority": "Medium",
+      "area": "Basket",
+      "function": "PDP",
+      "action": "Ensure user can click on PDP page, by clicking on Product Name",
+      "test_data": "",
+      "source_row": 96
+    },
+    {
+      "id": 92,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Cover+ Sell On",
+      "action": "Ensure user can add Cover+ products for their mains item from the Basket page",
+      "test_data": "",
+      "source_row": 97
+    },
+    {
+      "id": 93,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure User can Delete Line Items",
+      "test_data": "",
+      "source_row": 98
+    },
+    {
+      "id": 94,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure Prices are displayed Incl. of VAT",
+      "test_data": "",
+      "source_row": 99
+    },
+    {
+      "id": 95,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure for Products with Promotions applied to them, Promotional Prices are shown",
+      "test_data": "",
+      "source_row": 100
+    },
+    {
+      "id": 96,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure User can increase/decrease Line Items",
+      "test_data": "",
+      "source_row": 101
+    },
+    {
+      "id": 97,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure Totals are correct and adjusted accordingly when Qty is changed",
+      "test_data": "",
+      "source_row": 102
+    },
+    {
+      "id": 98,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure a Valid Amount based voucher can be redeemed and adjusts price accordingly",
+      "test_data": "",
+      "source_row": 103
+    },
+    {
+      "id": 99,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure a Valid Percentage based voucher can be redeemed and adjusts price accordingly",
+      "test_data": "",
+      "source_row": 104
+    },
+    {
+      "id": 100,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Basket",
+      "action": "Ensure Vouchers can be removed from the Basket adjusts price accordingly",
+      "test_data": "",
+      "source_row": 105
+    },
+    {
+      "id": 101,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Wishlist",
+      "action": "Ensure items added to the Wishlist can be added to the Basket",
+      "test_data": "",
+      "source_row": 106
+    },
+    {
+      "id": 102,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Wishlist",
+      "action": "Ensure items added to the Wishlist can be removed from the Wishlist",
+      "test_data": "",
+      "source_row": 107
+    },
+    {
+      "id": 103,
+      "priority": "High",
+      "area": "Basket",
+      "function": "Wishlist",
+      "action": "Ensure user can view the Product PDP page, by clicking Wishlist item",
+      "test_data": "",
+      "source_row": 108
+    },
+    {
+      "id": 104,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Delivery",
+      "action": "Ensure user is able to auto populate an Address using Loqate Post Code finder",
+      "test_data": "",
+      "source_row": 109
+    },
+    {
+      "id": 105,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Delivery",
+      "action": "Ensure user is able to insert an Address manually",
+      "test_data": "",
+      "source_row": 110
+    },
+    {
+      "id": 106,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Delivery",
+      "action": "Ensure validation is displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 111
+    },
+    {
+      "id": 107,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Collection - UPS Access Point",
+      "action": "Check to ensure a User is able to complete an Order by:\n\n. Selecting the 'Collection' option\n. Entering a Post Code relevant to the Country and clicking on 'Choose Access Point'\n. With the popup displayed, user is able to click on the 'Select' button to choose an Access Point\n. Ensure that once an Address is chosen, as you progress through Checkout, the right hand panel displays the UPS Access Point ID e.g. UPS Access Point ID: U26980338 all through to the Order Confirmation page",
+      "test_data": "",
+      "source_row": 112
+    },
+    {
+      "id": 108,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Collection - UPS Access Point",
+      "action": "Ensure validation is displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 113
+    },
+    {
+      "id": 109,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Shipping Method",
+      "action": "Choose a shipping method from drop down list",
+      "test_data": "",
+      "source_row": 114
+    },
+    {
+      "id": 110,
+      "priority": "Medium",
+      "area": "Checkout",
+      "function": "Shipping Method",
+      "action": "Set 'Use my shipping address' to TRUE",
+      "test_data": "",
+      "source_row": 115
+    },
+    {
+      "id": 111,
+      "priority": "Medium",
+      "area": "Checkout",
+      "function": "Shipping Method",
+      "action": "Set 'Use my shipping address' to FALSE",
+      "test_data": "",
+      "source_row": 116
+    },
+    {
+      "id": 112,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Shipping Method",
+      "action": "Ensure user is able to auto populate an Address using Loqate Post Code finder",
+      "test_data": "",
+      "source_row": 117
+    },
+    {
+      "id": 113,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Shipping Method",
+      "action": "Ensure user is able to insert an Address manually",
+      "test_data": "",
+      "source_row": 118
+    },
+    {
+      "id": 114,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Shipping Method",
+      "action": "Ensure validation is displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 119
+    },
+    {
+      "id": 115,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Credit Card",
+      "action": "Using Credit Card details from the 'Payment Info' tab, complete Orders using various Credit Cards e.g. VISA, AMEX, Mastercard, Bancaire (FR), Dankort (DK)",
+      "test_data": "",
+      "source_row": 120
+    },
+    {
+      "id": 116,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Tokenisation",
+      "action": "Using tokenisation details from the 'Payment Info' tab, complete Orders using various Credit Cards e.g. VISA, AMEX, Mastercard, Bancaire (FR), Dankort (DK)",
+      "test_data": "",
+      "source_row": 121
+    },
+    {
+      "id": 117,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - PayPal",
+      "action": "If available, using PayPal details from the 'Payment Info' tab, complete Orders using country specific PayPal account",
+      "test_data": "",
+      "source_row": 122
+    },
+    {
+      "id": 118,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Klarna",
+      "action": "If available, using Klarna details from the 'Payment Info' tab, complete Orders using country specific Klarna account",
+      "test_data": "",
+      "source_row": 123
+    },
+    {
+      "id": 119,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - DotPay",
+      "action": "If available, using Dotpay details from the 'Payment Info' tab, complete Orders using country specific Dotpay account",
+      "test_data": "",
+      "source_row": 124
+    },
+    {
+      "id": 120,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - GiroPay",
+      "action": "If available, using Giropay details from the 'Payment Info' tab, complete Orders using country specific Giropay account",
+      "test_data": "",
+      "source_row": 125
+    },
+    {
+      "id": 121,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Ideal",
+      "action": "If available, using iDeal details from the 'Payment Info' tab, complete Orders using country specific iDeal account",
+      "test_data": "",
+      "source_row": 126
+    },
+    {
+      "id": 122,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Blik",
+      "action": "If available, using Blik details from the 'Payment Info' tab, complete an Order for PL using Blik",
+      "test_data": "",
+      "source_row": 127
+    },
+    {
+      "id": 123,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Sofort",
+      "action": "If available, using Sofort details from the 'Payment Info' tab, complete Orders using country specific Sofort account",
+      "test_data": "",
+      "source_row": 128
+    },
+    {
+      "id": 124,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Payment Method - Trustly",
+      "action": "If available, using Trustly details from the 'Payment Info' tab, complete Orders using country specific Trustly account",
+      "test_data": "",
+      "source_row": 129
+    },
+    {
+      "id": 125,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Final Review",
+      "action": "Attempt to place an Order without setting T&C checkbox to TRUE",
+      "test_data": "",
+      "source_row": 130
+    },
+    {
+      "id": 126,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Final Review",
+      "action": "Ensure all information within Order Summary is correct",
+      "test_data": "",
+      "source_row": 131
+    },
+    {
+      "id": 127,
+      "priority": "Medium",
+      "area": "Checkout",
+      "function": "Final Review",
+      "action": "Click on Product Name to view product PDP page",
+      "test_data": "",
+      "source_row": 132
+    },
+    {
+      "id": 128,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Ensure Order Confirmation No. and Date of Order is shown",
+      "test_data": "",
+      "source_row": 133
+    },
+    {
+      "id": 129,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Ensure all details displayed match those entered during Checkout",
+      "test_data": "",
+      "source_row": 134
+    },
+    {
+      "id": 130,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Ensure Prices are displayed Incl. of VAT",
+      "test_data": "",
+      "source_row": 135
+    },
+    {
+      "id": 131,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Ensure for Products with Promotions applied to them, Promotional Prices are shown",
+      "test_data": "",
+      "source_row": 136
+    },
+    {
+      "id": 132,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Ensure Totals are correct and match those in Final Review section",
+      "test_data": "",
+      "source_row": 137
+    },
+    {
+      "id": 133,
+      "priority": "Medium",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Click on Product Name to view product PDP page",
+      "test_data": "",
+      "source_row": 138
+    },
+    {
+      "id": 134,
+      "priority": "Medium",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Click on Print button",
+      "test_data": "",
+      "source_row": 139
+    },
+    {
+      "id": 135,
+      "priority": "Medium",
+      "area": "Checkout",
+      "function": "Order Confirmation",
+      "action": "Click on 'Return to Store' button",
+      "test_data": "",
+      "source_row": 140
+    },
+    {
+      "id": 136,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "ASM Agent",
+      "action": "Ensure that an ASM Agent can complete an Order on behalf of a Registered Customer",
+      "test_data": "",
+      "source_row": 141
+    },
+    {
+      "id": 137,
+      "priority": "High",
+      "area": "Checkout",
+      "function": "ASM Agent",
+      "action": "Ensure that an ASM Agent can complete an Order on behalf of a Guest Customer",
+      "test_data": "",
+      "source_row": 142
+    },
+    {
+      "id": 138,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Registered Users",
+      "action": "Check to ensure that a Registered User can place a Normal Order",
+      "test_data": "",
+      "source_row": 143
+    },
+    {
+      "id": 139,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Registered Users",
+      "action": "Check to ensure that a Registered User can place an Order containing a Promotion",
+      "test_data": "",
+      "source_row": 144
+    },
+    {
+      "id": 140,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Registered Users",
+      "action": "Check to ensure that a Registered User can place an Order containing a CUG Discount:\n\nSteps for \"Check to ensure that a Registered User can place an Order containing a CUG Discount\":\n1. Go to BO\n2. Open the \"Promotion Rules\" page\n3. Add new \"Promotion Rule\"\n4. Add \"promogroup-epson-gb\" in \"Website\" field\n5. Change \"Priority\" to 1 and save it\n6. Open \u2018CONDITIONS & ACTIONS\u2019 tab\n7. Drag the \"Target customers\" field from \"Available Conditions\" to \"Conditions\" column\n8. Select the group that includes the customer in the \"Customer group\" field\n9. Select the your own customer in the \"Customers\" field\n10. Add some action (e.g. Percentage discount value = 50%)\n11. Save and Publish (need to use another account)\n\nNOTE: This test case can be applied to the specific users &/or groups",
+      "test_data": "",
+      "source_row": 145
+    },
+    {
+      "id": 141,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Registered Users",
+      "action": "Check to ensure that a Registered User can place an Order containing a Amount based Voucher",
+      "test_data": "",
+      "source_row": 146
+    },
+    {
+      "id": 142,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Registered Users",
+      "action": "Check to ensure that a Registered User can place an Order containing a Percentage based Voucher",
+      "test_data": "",
+      "source_row": 147
+    },
+    {
+      "id": 143,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Registered Users",
+      "action": "Check to ensure that a Registered User can place an Order containing a Promotion and a Voucher (any)",
+      "test_data": "",
+      "source_row": 148
+    },
+    {
+      "id": 144,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Guest Users",
+      "action": "Check to ensure that a Guest User place a Normal Order",
+      "test_data": "",
+      "source_row": 149
+    },
+    {
+      "id": 145,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Guest Users",
+      "action": "Check to ensure that a Guest User can place an Order containing a Promotion",
+      "test_data": "",
+      "source_row": 150
+    },
+    {
+      "id": 146,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Guest Users",
+      "action": "Check to ensure that a Guest User can place an Order containing a Amount based Voucher",
+      "test_data": "",
+      "source_row": 151
+    },
+    {
+      "id": 147,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Guest Users",
+      "action": "Check to ensure that a Guest User can place an Order containing a Percentage based Voucher",
+      "test_data": "",
+      "source_row": 152
+    },
+    {
+      "id": 148,
+      "priority": "High",
+      "area": "Orders",
+      "function": "Guest Users",
+      "action": "Check to ensure that a Guest User can place an Order containing a Promotion and a Voucher (any)",
+      "test_data": "",
+      "source_row": 153
+    },
+    {
+      "id": 149,
+      "priority": "High",
+      "area": "Ink Page",
+      "function": "Buy Accessories for My Products",
+      "action": "Click on the Ink link within the Menu to be taken to the Ink finder page",
+      "test_data": "",
+      "source_row": 154
+    },
+    {
+      "id": 150,
+      "priority": "High",
+      "area": "Ink Page",
+      "function": "Buy Accessories for My Products",
+      "action": "Enter text of \"XP-\" and click on the Search button. The results page should be shown for all matches where Product Name starts with \"XP-\"",
+      "test_data": "",
+      "source_row": 155
+    },
+    {
+      "id": 151,
+      "priority": "High",
+      "area": "Ink Page",
+      "function": "Buy Accessories for My Products",
+      "action": "Enter text of \"XP-9\" and select the XP-960 match from the suggestive products. The PDP page for XP-960 is shown with the page anchoring at the 'Accessories' section",
+      "test_data": "",
+      "source_row": 156
+    },
+    {
+      "id": 152,
+      "priority": "High",
+      "area": "Email",
+      "function": "Registration",
+      "action": "Check to ensure the Registered Confirmation email can be triggered upon a successful registration",
+      "test_data": "",
+      "source_row": 157
+    },
+    {
+      "id": 153,
+      "priority": "High",
+      "area": "Email",
+      "function": "Forgot Password",
+      "action": "Check to ensure the Forgot Password Confirmation email can be triggered using the reset link",
+      "test_data": "",
+      "source_row": 158
+    },
+    {
+      "id": 154,
+      "priority": "High",
+      "area": "Email",
+      "function": "Order Confirmation",
+      "action": "Check to ensure the Order Confirmation email can be triggered upon a successful Order for Registered users",
+      "test_data": "",
+      "source_row": 159
+    },
+    {
+      "id": 155,
+      "priority": "High",
+      "area": "Email",
+      "function": "Order Confirmation",
+      "action": "Check to ensure the Order Confirmation email can be triggered upon a successful Order for Guest users",
+      "test_data": "",
+      "source_row": 160
+    },
+    {
+      "id": 156,
+      "priority": "High",
+      "area": "Email",
+      "function": "Pay By Link",
+      "action": "Check to ensure the Pay By Link email can be triggered by an ASM Agent after placing a successful Order for Registered users",
+      "test_data": "",
+      "source_row": 161
+    },
+    {
+      "id": 157,
+      "priority": "High",
+      "area": "Email",
+      "function": "Pay By Link",
+      "action": "Check to ensure the Pay By Link email can be triggered by an ASM Agent after placing a successful Order for Guest users",
+      "test_data": "",
+      "source_row": 162
+    },
+    {
+      "id": 158,
+      "priority": "High",
+      "area": "Email",
+      "function": "Return 1",
+      "action": "Check to ensure the Return Opt. 1 (With Label) email can be triggered",
+      "test_data": "",
+      "source_row": 163
+    },
+    {
+      "id": 159,
+      "priority": "High",
+      "area": "Email",
+      "function": "Return 2",
+      "action": "Check to ensure the Return Opt. 2 (Digital/QR Code) email can be triggered and it contains the Digital Label",
+      "test_data": "",
+      "source_row": 164
+    },
+    {
+      "id": 160,
+      "priority": "High",
+      "area": "Email",
+      "function": "Back in Stock",
+      "action": "Check to ensure the Back in Stock Notification email can be triggered for a product which is Out of Stock",
+      "test_data": "",
+      "source_row": 165
+    },
+    {
+      "id": 161,
+      "priority": "Medium",
+      "area": "Cover+",
+      "function": "Cover+ Registration",
+      "action": "Check to ensure Cover+ registration can be completed and a Successful CoverPlus Registration email is sent",
+      "test_data": "",
+      "source_row": 166
+    },
+    {
+      "id": 162,
+      "priority": "High",
+      "area": "Case Management",
+      "function": "Payment",
+      "action": "Ensure an Order which is stuck in Adyen under Case Management rule, can be released and sent to SAP ECC",
+      "test_data": "",
+      "source_row": 167
+    },
+    {
+      "id": 163,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Order History",
+      "action": "Within the My Account section, click on the Order History link",
+      "test_data": "",
+      "source_row": 168
+    },
+    {
+      "id": 164,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Order History",
+      "action": "Sort by Date",
+      "test_data": "",
+      "source_row": 169
+    },
+    {
+      "id": 165,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Order History",
+      "action": "Sort by Order No",
+      "test_data": "",
+      "source_row": 170
+    },
+    {
+      "id": 166,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Order History",
+      "action": "Click on an Order to view the details and ensure details captured are correct and displayed correctly",
+      "test_data": "",
+      "source_row": 171
+    },
+    {
+      "id": 167,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Order History",
+      "action": "Click on the 'Reorder' button to place the items in your Basket (If still available)",
+      "test_data": "",
+      "source_row": 172
+    },
+    {
+      "id": 168,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Order History",
+      "action": "Click on the 'Back to Your Account' link to go back to My Account",
+      "test_data": "",
+      "source_row": 173
+    },
+    {
+      "id": 169,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Update Personal Details",
+      "action": "Ensure valid details can be changed and saved",
+      "test_data": "",
+      "source_row": 174
+    },
+    {
+      "id": 170,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Update Personal Details",
+      "action": "Ensure validation errors are displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 175
+    },
+    {
+      "id": 171,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Update Email Address",
+      "action": "Ensure valid details can be changed and saved",
+      "test_data": "",
+      "source_row": 176
+    },
+    {
+      "id": 172,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Update Email Address",
+      "action": "Ensure validation errors are displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 177
+    },
+    {
+      "id": 173,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Update Password",
+      "action": "Ensure valid details can be changed and saved",
+      "test_data": "",
+      "source_row": 178
+    },
+    {
+      "id": 174,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Update Password",
+      "action": "Ensure validation errors are displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 179
+    },
+    {
+      "id": 175,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Delete",
+      "action": "Ensure an existing Address can be Deleted",
+      "test_data": "",
+      "source_row": 180
+    },
+    {
+      "id": 176,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Edit",
+      "action": "Ensure an existing Address can be Edited",
+      "test_data": "",
+      "source_row": 181
+    },
+    {
+      "id": 177,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Edit",
+      "action": "When Editing an existing address, valid details can be changed and saved",
+      "test_data": "",
+      "source_row": 182
+    },
+    {
+      "id": 178,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Edit",
+      "action": "When Editing an existing address, ensure validation errors are displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 183
+    },
+    {
+      "id": 179,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Edit",
+      "action": "Ensure user is able to auto populate an Address using Loqate Post Code finder",
+      "test_data": "",
+      "source_row": 184
+    },
+    {
+      "id": 180,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Add",
+      "action": "Ensure user is able to auto populate an Address using Loqate Post Code finder",
+      "test_data": "",
+      "source_row": 185
+    },
+    {
+      "id": 181,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Address Book > Add",
+      "action": "Ensure user is able to insert an Address manually",
+      "test_data": "",
+      "source_row": 186
+    },
+    {
+      "id": 182,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Add",
+      "action": "Ensure validation is displayed when mandatory fields are left empty",
+      "test_data": "",
+      "source_row": 187
+    },
+    {
+      "id": 183,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Add",
+      "action": "Ensure new Address can be Saved",
+      "test_data": "",
+      "source_row": 188
+    },
+    {
+      "id": 184,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Address Book > Add",
+      "action": "Ensure new Address can be Cancelled and is not Saved",
+      "test_data": "",
+      "source_row": 189
+    },
+    {
+      "id": 185,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Buy Accessories for My Products",
+      "action": "Pre-requisite: for My Products > Register (dependent on ECRM connectivity)\n\nEnsure User is able to Register a Product by clicking on 'Register a New Device'",
+      "test_data": "",
+      "source_row": 190
+    },
+    {
+      "id": 186,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Buy Accessories for My Products",
+      "action": "Ensure existing Products Registered are displayed correctly",
+      "test_data": "",
+      "source_row": 191
+    },
+    {
+      "id": 187,
+      "priority": "Medium",
+      "area": "My Account",
+      "function": "Buy Accessories for My Products",
+      "action": "Click on the 'Back to Your Account' link to go back to My Account",
+      "test_data": "",
+      "source_row": 192
+    },
+    {
+      "id": 188,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Wishlist",
+      "action": "Ensure items added to the Wishlist can be removed from the Wishlist",
+      "test_data": "",
+      "source_row": 193
+    },
+    {
+      "id": 189,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Wishlist",
+      "action": "Ensure user can view the Product PDP page, by clicking Wishlist item",
+      "test_data": "",
+      "source_row": 194
+    },
+    {
+      "id": 190,
+      "priority": "High",
+      "area": "My Account",
+      "function": "Wishlist",
+      "action": "Ensure items added to the Wishlist can be added to the Basket",
+      "test_data": "",
+      "source_row": 195
+    },
+    {
+      "id": 191,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Search all",
+      "action": "Click on the Support link within the Menu to be taken to the Support page",
+      "test_data": "",
+      "source_row": 196
+    },
+    {
+      "id": 192,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Search all",
+      "action": "Enter text of \"XP-\" and click on the Search button. The results should be shown below the Search bar, for all matches where Product Name starts with \"XP-\"",
+      "test_data": "",
+      "source_row": 197
+    },
+    {
+      "id": 193,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Search all",
+      "action": "Clicking on the a Product from the matches, takes the User to the Support page showing all available Support related articles and items e.g. Drivers, FAQ's, Manuals etc",
+      "test_data": "",
+      "source_row": 198
+    },
+    {
+      "id": 194,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Suggested Match",
+      "action": "Click on the Support link within the Menu to be taken to the Support page",
+      "test_data": "",
+      "source_row": 199
+    },
+    {
+      "id": 195,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Suggested Match",
+      "action": "Enter text of \"XP-9\" and select the XP-960 match from the suggestive products. The Support page showing all available Support related articles and items e.g. Drivers, FAQ's, Manuals etc",
+      "test_data": "",
+      "source_row": 200
+    },
+    {
+      "id": 196,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Suggested Match",
+      "action": "Ensure all +/- accordion buttons in Downloads section expand and collapse sections correctly",
+      "test_data": "",
+      "source_row": 201
+    },
+    {
+      "id": 197,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Product Name > Suggested Match",
+      "action": "Ensure changing the Operating System from the drop down list, updates the articles within the 'Downloads' and 'FAQ' sections so to be relevant to the OS chosen",
+      "test_data": "",
+      "source_row": 202
+    },
+    {
+      "id": 198,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Serial Number",
+      "action": "Click on the Support link within the Menu to be taken to the Support page",
+      "test_data": "",
+      "source_row": 203
+    },
+    {
+      "id": 199,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Serial Number",
+      "action": "Enter Test Data and click on the 'Check' button and ensure details of the Product, Warranty and Extended Warranty information are displayed",
+      "test_data": "X3B8030324",
+      "source_row": 204
+    },
+    {
+      "id": 200,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Serial Number",
+      "action": "Enter Test Data and click on the 'Check' button and only Product information is displayed",
+      "test_data": "X59U001243",
+      "source_row": 205
+    },
+    {
+      "id": 201,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Serial Number",
+      "action": "Enter Test Data and click on the 'Check' button and only Product information and 1 EPP Subscription is displayed",
+      "test_data": "UV4Y030323",
+      "source_row": 206
+    },
+    {
+      "id": 202,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Serial Number",
+      "action": "Enter Test Data and click on the 'Check' button and ensure a Technical Error message is displayed",
+      "test_data": "X576037640",
+      "source_row": 207
+    },
+    {
+      "id": 203,
+      "priority": "High",
+      "area": "Support",
+      "function": "Search by Serial Number",
+      "action": "Enter Test Data and click on the 'Check' button and only Product information and 3 Subscription are displayed",
+      "test_data": "X3B8030324",
+      "source_row": 208
+    }
+  ]
+}

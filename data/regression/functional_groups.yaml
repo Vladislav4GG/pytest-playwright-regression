@@ -1,0 +1,147 @@
+version: 1
+source_sheet: "B2C GB"
+description: >
+  Functional grouping rules for collapsing checklist-style regression rows into
+  reusable automated modules. Each group maps many Excel rows to one or a few
+  parametrized pytest scenarios.
+
+groups:
+  - id: site_shell_and_navigation
+    title: "Site shell, locale, and global navigation"
+    target_layers:
+      - pages
+      - flows
+      - tests/functional
+    match:
+      areas:
+        - "Site"
+        - "Header"
+        - "Footer"
+        - "Menu"
+        - "Homepage"
+      function_keywords:
+        - "Cookie"
+        - "Country Selector"
+        - "Locale"
+        - "Sign In"
+        - "Logo"
+
+  - id: discovery_search_and_listing
+    title: "Search, PLP, and listing behavior"
+    target_layers:
+      - pages
+      - flows
+      - tests/functional
+    match:
+      areas:
+        - "Search"
+        - "PLP"
+        - "SLP"
+      function_keywords:
+        - "Search"
+        - "Sort"
+        - "Filter"
+        - "Facet"
+        - "Pagination"
+
+  - id: product_details_and_entrypoints
+    title: "PDP content, merchandising, and purchase entry points"
+    target_layers:
+      - pages
+      - flows
+      - tests/functional
+    match:
+      areas:
+        - "PDP"
+        - "Add Consum. & Access."
+      function_keywords:
+        - "Buy Now"
+        - "Badge"
+        - "Award"
+        - "Image"
+        - "Description"
+
+  - id: basket_and_pre_checkout
+    title: "Basket interactions before checkout"
+    target_layers:
+      - pages
+      - flows
+      - tests/functional
+    match:
+      areas:
+        - "Basket"
+      function_keywords:
+        - "Quantity"
+        - "Continue Shopping"
+        - "Go To Checkout"
+        - "Remove"
+
+  - id: checkout_core
+    title: "Checkout address, shipping, billing, and summary"
+    target_layers:
+      - pages
+      - flows
+      - tests/functional
+    match:
+      areas:
+        - "Checkout"
+      function_keywords:
+        - "Delivery"
+        - "Billing"
+        - "Address"
+        - "Summary"
+        - "Terms"
+
+  - id: payment_matrix
+    title: "Payment methods across personas"
+    target_layers:
+      - pages
+      - flows
+      - tests/ui
+      - tests/functional
+    match:
+      areas:
+        - "Checkout"
+        - "Orders"
+      function_keywords:
+        - "Card"
+        - "PayPal"
+        - "Klarna"
+
+  - id: order_lifecycle_and_returns
+    title: "Order placement, shipment sync, status, and returns"
+    target_layers:
+      - pages
+      - flows
+      - utils
+      - tests/ui
+      - tests/functional
+    match:
+      areas:
+        - "Orders"
+        - "My Account"
+        - "Case Management"
+      function_keywords:
+        - "Order"
+        - "Shipment"
+        - "Return"
+        - "Status"
+        - "History"
+
+  - id: comms_and_support
+    title: "Transactional emails and support journeys"
+    target_layers:
+      - pages
+      - flows
+      - tests/functional
+    match:
+      areas:
+        - "Email"
+        - "Support"
+        - "Ink Page"
+        - "Cover+"
+      function_keywords:
+        - "Registration"
+        - "Forgot Password"
+        - "Support"
+        - "Warranty"

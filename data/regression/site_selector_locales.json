@@ -1,0 +1,531 @@
+{
+  "generated_at_utc": "2026-03-12T21:41:54+00:00",
+  "source_base_url": "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB",
+  "country_count": 30,
+  "countries": [
+    {
+      "country": "Austria",
+      "site_code": "epson-at",
+      "default_locale": "de_AT",
+      "default_url_s1": "https://epson-at.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/de_AT",
+      "default_url_s2": "https://epson-at.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/de_AT",
+      "languages": [
+        {
+          "language": "German",
+          "locale": "de_AT",
+          "url_s1": "https://epson-at.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/de_AT",
+          "url_s2": "https://epson-at.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/de_AT"
+        }
+      ]
+    },
+    {
+      "country": "Belgium",
+      "site_code": "epson-be",
+      "default_locale": "nl_BE",
+      "default_url_s1": "https://epson-be.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/nl_BE",
+      "default_url_s2": "https://epson-be.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/nl_BE",
+      "languages": [
+        {
+          "language": "Dutch",
+          "locale": "nl_BE",
+          "url_s1": "https://epson-be.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/nl_BE",
+          "url_s2": "https://epson-be.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/nl_BE"
+        },
+        {
+          "language": "French",
+          "locale": "fr_BE",
+          "url_s1": "https://epson-be.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_BE",
+          "url_s2": "https://epson-be.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_BE"
+        }
+      ]
+    },
+    {
+      "country": "Bulgaria",
+      "site_code": "epson-bg",
+      "default_locale": "bg_BG",
+      "default_url_s1": "https://epson-bg.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/bg_BG",
+      "default_url_s2": "https://epson-bg.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/bg_BG",
+      "languages": [
+        {
+          "language": "Bulgarian",
+          "locale": "bg_BG",
+          "url_s1": "https://epson-bg.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/bg_BG",
+          "url_s2": "https://epson-bg.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/bg_BG"
+        }
+      ]
+    },
+    {
+      "country": "Croatia",
+      "site_code": "epson-hr",
+      "default_locale": "hr_HR",
+      "default_url_s1": "https://epson-hr.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/hr_HR",
+      "default_url_s2": "https://epson-hr.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/hr_HR",
+      "languages": [
+        {
+          "language": "Croatian",
+          "locale": "hr_HR",
+          "url_s1": "https://epson-hr.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/hr_HR",
+          "url_s2": "https://epson-hr.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/hr_HR"
+        }
+      ]
+    },
+    {
+      "country": "Czech Republic",
+      "site_code": "epson-cz",
+      "default_locale": "cs_CZ",
+      "default_url_s1": "https://epson-cz.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/cs_CZ",
+      "default_url_s2": "https://epson-cz.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/cs_CZ",
+      "languages": [
+        {
+          "language": "Czech",
+          "locale": "cs_CZ",
+          "url_s1": "https://epson-cz.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/cs_CZ",
+          "url_s2": "https://epson-cz.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/cs_CZ"
+        }
+      ]
+    },
+    {
+      "country": "Denmark",
+      "site_code": "epson-dk",
+      "default_locale": "da_DK",
+      "default_url_s1": "https://epson-dk.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/da_DK",
+      "default_url_s2": "https://epson-dk.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/da_DK",
+      "languages": [
+        {
+          "language": "Danish",
+          "locale": "da_DK",
+          "url_s1": "https://epson-dk.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/da_DK",
+          "url_s2": "https://epson-dk.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/da_DK"
+        }
+      ]
+    },
+    {
+      "country": "Estonia",
+      "site_code": "epson-ee",
+      "default_locale": "et_EE",
+      "default_url_s1": "https://epson-ee.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/et_EE",
+      "default_url_s2": "https://epson-ee.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/et_EE",
+      "languages": [
+        {
+          "language": "Estonian",
+          "locale": "et_EE",
+          "url_s1": "https://epson-ee.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/et_EE",
+          "url_s2": "https://epson-ee.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/et_EE"
+        }
+      ]
+    },
+    {
+      "country": "Europe",
+      "site_code": "epson-eu",
+      "default_locale": "en_EU",
+      "default_url_s1": "https://epson-eu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_EU",
+      "default_url_s2": "https://epson-eu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_EU",
+      "languages": [
+        {
+          "language": "English",
+          "locale": "en_EU",
+          "url_s1": "https://epson-eu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_EU",
+          "url_s2": "https://epson-eu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_EU"
+        },
+        {
+          "language": "French",
+          "locale": "fr_EU",
+          "url_s1": "https://epson-eu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_EU",
+          "url_s2": "https://epson-eu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_EU"
+        }
+      ]
+    },
+    {
+      "country": "Finland",
+      "site_code": "epson-fi",
+      "default_locale": "fi_FI",
+      "default_url_s1": "https://epson-fi.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fi_FI",
+      "default_url_s2": "https://epson-fi.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fi_FI",
+      "languages": [
+        {
+          "language": "Finnish",
+          "locale": "fi_FI",
+          "url_s1": "https://epson-fi.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fi_FI",
+          "url_s2": "https://epson-fi.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fi_FI"
+        }
+      ]
+    },
+    {
+      "country": "France",
+      "site_code": "epson-fr",
+      "default_locale": "fr_FR",
+      "default_url_s1": "https://epson-fr.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_FR",
+      "default_url_s2": "https://epson-fr.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_FR",
+      "languages": [
+        {
+          "language": "French",
+          "locale": "fr_FR",
+          "url_s1": "https://epson-fr.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_FR",
+          "url_s2": "https://epson-fr.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_FR"
+        }
+      ]
+    },
+    {
+      "country": "Germany",
+      "site_code": "epson-de",
+      "default_locale": "de_DE",
+      "default_url_s1": "https://epson-de.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/de_DE",
+      "default_url_s2": "https://epson-de.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/de_DE",
+      "languages": [
+        {
+          "language": "German",
+          "locale": "de_DE",
+          "url_s1": "https://epson-de.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/de_DE",
+          "url_s2": "https://epson-de.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/de_DE"
+        }
+      ]
+    },
+    {
+      "country": "Greece",
+      "site_code": "epson-gr",
+      "default_locale": "el_GR",
+      "default_url_s1": "https://epson-gr.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/el_GR",
+      "default_url_s2": "https://epson-gr.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/el_GR",
+      "languages": [
+        {
+          "language": "Greek",
+          "locale": "el_GR",
+          "url_s1": "https://epson-gr.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/el_GR",
+          "url_s2": "https://epson-gr.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/el_GR"
+        }
+      ]
+    },
+    {
+      "country": "Hungary",
+      "site_code": "epson-hu",
+      "default_locale": "hu_HU",
+      "default_url_s1": "https://epson-hu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/hu_HU",
+      "default_url_s2": "https://epson-hu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/hu_HU",
+      "languages": [
+        {
+          "language": "Hungarian",
+          "locale": "hu_HU",
+          "url_s1": "https://epson-hu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/hu_HU",
+          "url_s2": "https://epson-hu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/hu_HU"
+        }
+      ]
+    },
+    {
+      "country": "Ireland",
+      "site_code": "epson-ie",
+      "default_locale": "en_IE",
+      "default_url_s1": "https://epson-ie.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_IE",
+      "default_url_s2": "https://epson-ie.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_IE",
+      "languages": [
+        {
+          "language": "English",
+          "locale": "en_IE",
+          "url_s1": "https://epson-ie.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_IE",
+          "url_s2": "https://epson-ie.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_IE"
+        }
+      ]
+    },
+    {
+      "country": "Italy",
+      "site_code": "epson-it",
+      "default_locale": "it_IT",
+      "default_url_s1": "https://epson-it.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/it_IT",
+      "default_url_s2": "https://epson-it.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/it_IT",
+      "languages": [
+        {
+          "language": "Italian",
+          "locale": "it_IT",
+          "url_s1": "https://epson-it.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/it_IT",
+          "url_s2": "https://epson-it.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/it_IT"
+        }
+      ]
+    },
+    {
+      "country": "Latvia",
+      "site_code": "epson-lv",
+      "default_locale": "lv_LV",
+      "default_url_s1": "https://epson-lv.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/lv_LV",
+      "default_url_s2": "https://epson-lv.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/lv_LV",
+      "languages": [
+        {
+          "language": "Latvian",
+          "locale": "lv_LV",
+          "url_s1": "https://epson-lv.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/lv_LV",
+          "url_s2": "https://epson-lv.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/lv_LV"
+        }
+      ]
+    },
+    {
+      "country": "Lithuania",
+      "site_code": "epson-lt",
+      "default_locale": "lt_LT",
+      "default_url_s1": "https://epson-lt.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/lt_LT",
+      "default_url_s2": "https://epson-lt.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/lt_LT",
+      "languages": [
+        {
+          "language": "Lithuanian",
+          "locale": "lt_LT",
+          "url_s1": "https://epson-lt.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/lt_LT",
+          "url_s2": "https://epson-lt.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/lt_LT"
+        }
+      ]
+    },
+    {
+      "country": "Malta",
+      "site_code": "epson-mt",
+      "default_locale": "mt_MT",
+      "default_url_s1": "https://epson-mt.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/mt_MT",
+      "default_url_s2": "https://epson-mt.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/mt_MT",
+      "languages": [
+        {
+          "language": "English",
+          "locale": "mt_MT",
+          "url_s1": "https://epson-mt.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/mt_MT",
+          "url_s2": "https://epson-mt.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/mt_MT"
+        }
+      ]
+    },
+    {
+      "country": "Netherlands",
+      "site_code": "epson-nl",
+      "default_locale": "nl_NL",
+      "default_url_s1": "https://epson-nl.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/nl_NL",
+      "default_url_s2": "https://epson-nl.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/nl_NL",
+      "languages": [
+        {
+          "language": "Dutch",
+          "locale": "nl_NL",
+          "url_s1": "https://epson-nl.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/nl_NL",
+          "url_s2": "https://epson-nl.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/nl_NL"
+        }
+      ]
+    },
+    {
+      "country": "Norway",
+      "site_code": "epson-no",
+      "default_locale": "no_NO",
+      "default_url_s1": "https://epson-no.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/no_NO",
+      "default_url_s2": "https://epson-no.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/no_NO",
+      "languages": [
+        {
+          "language": "Norwegian",
+          "locale": "no_NO",
+          "url_s1": "https://epson-no.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/no_NO",
+          "url_s2": "https://epson-no.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/no_NO"
+        }
+      ]
+    },
+    {
+      "country": "Poland",
+      "site_code": "epson-pl",
+      "default_locale": "pl_PL",
+      "default_url_s1": "https://epson-pl.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/pl_PL",
+      "default_url_s2": "https://epson-pl.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/pl_PL",
+      "languages": [
+        {
+          "language": "Polish",
+          "locale": "pl_PL",
+          "url_s1": "https://epson-pl.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/pl_PL",
+          "url_s2": "https://epson-pl.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/pl_PL"
+        }
+      ]
+    },
+    {
+      "country": "Portugal",
+      "site_code": "epson-pt",
+      "default_locale": "pt_PT",
+      "default_url_s1": "https://epson-pt.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/pt_PT",
+      "default_url_s2": "https://epson-pt.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/pt_PT",
+      "languages": [
+        {
+          "language": "Portuguese",
+          "locale": "pt_PT",
+          "url_s1": "https://epson-pt.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/pt_PT",
+          "url_s2": "https://epson-pt.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/pt_PT"
+        }
+      ]
+    },
+    {
+      "country": "Romania",
+      "site_code": "epson-ro",
+      "default_locale": "ro_RO",
+      "default_url_s1": "https://epson-ro.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/ro_RO",
+      "default_url_s2": "https://epson-ro.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/ro_RO",
+      "languages": [
+        {
+          "language": "Romanian",
+          "locale": "ro_RO",
+          "url_s1": "https://epson-ro.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/ro_RO",
+          "url_s2": "https://epson-ro.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/ro_RO"
+        }
+      ]
+    },
+    {
+      "country": "Serbia",
+      "site_code": "epson-rs",
+      "default_locale": "sr_RS",
+      "default_url_s1": "https://epson-rs.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sr_RS",
+      "default_url_s2": "https://epson-rs.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sr_RS",
+      "languages": [
+        {
+          "language": "Serbian",
+          "locale": "sr_RS",
+          "url_s1": "https://epson-rs.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sr_RS",
+          "url_s2": "https://epson-rs.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sr_RS"
+        }
+      ]
+    },
+    {
+      "country": "Slovakia",
+      "site_code": "epson-sk",
+      "default_locale": "sk_SK",
+      "default_url_s1": "https://epson-sk.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sk_SK",
+      "default_url_s2": "https://epson-sk.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sk_SK",
+      "languages": [
+        {
+          "language": "Slovak",
+          "locale": "sk_SK",
+          "url_s1": "https://epson-sk.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sk_SK",
+          "url_s2": "https://epson-sk.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sk_SK"
+        }
+      ]
+    },
+    {
+      "country": "Slovenia",
+      "site_code": "epson-si",
+      "default_locale": "sl_SI",
+      "default_url_s1": "https://epson-si.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sl_SI",
+      "default_url_s2": "https://epson-si.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sl_SI",
+      "languages": [
+        {
+          "language": "Slovenian",
+          "locale": "sl_SI",
+          "url_s1": "https://epson-si.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sl_SI",
+          "url_s2": "https://epson-si.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sl_SI"
+        }
+      ]
+    },
+    {
+      "country": "Spain",
+      "site_code": "epson-es",
+      "default_locale": "es_ES",
+      "default_url_s1": "https://epson-es.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/es_ES",
+      "default_url_s2": "https://epson-es.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/es_ES",
+      "languages": [
+        {
+          "language": "Spanish",
+          "locale": "es_ES",
+          "url_s1": "https://epson-es.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/es_ES",
+          "url_s2": "https://epson-es.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/es_ES"
+        }
+      ]
+    },
+    {
+      "country": "Sweden",
+      "site_code": "epson-se",
+      "default_locale": "sv_SE",
+      "default_url_s1": "https://epson-se.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sv_SE",
+      "default_url_s2": "https://epson-se.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sv_SE",
+      "languages": [
+        {
+          "language": "Swedish",
+          "locale": "sv_SE",
+          "url_s1": "https://epson-se.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/sv_SE",
+          "url_s2": "https://epson-se.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/sv_SE"
+        }
+      ]
+    },
+    {
+      "country": "Switzerland",
+      "site_code": "epson-ch",
+      "default_locale": "fr_CH",
+      "default_url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_CH",
+      "default_url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_CH",
+      "languages": [
+        {
+          "language": "French",
+          "locale": "fr_CH",
+          "url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_CH",
+          "url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_CH"
+        },
+        {
+          "language": "German",
+          "locale": "de_CH",
+          "url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/de_CH",
+          "url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/de_CH"
+        },
+        {
+          "language": "Italian",
+          "locale": "it_CH",
+          "url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/it_CH",
+          "url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/it_CH"
+        }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "site_code": "epson-gb",
+      "default_locale": "en_GB",
+      "default_url_s1": "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB",
+      "default_url_s2": "https://epson-gb.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_GB",
+      "languages": [
+        {
+          "language": "English",
+          "locale": "en_GB",
+          "url_s1": "https://epson-gb.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_GB",
+          "url_s2": "https://epson-gb.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_GB"
+        }
+      ]
+    }
+  ],
+  "focus_multi_locale_countries": {
+    "Belgium": [
+      {
+        "language": "Dutch",
+        "locale": "nl_BE",
+        "url_s1": "https://epson-be.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/nl_BE",
+        "url_s2": "https://epson-be.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/nl_BE"
+      },
+      {
+        "language": "French",
+        "locale": "fr_BE",
+        "url_s1": "https://epson-be.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_BE",
+        "url_s2": "https://epson-be.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_BE"
+      }
+    ],
+    "Switzerland": [
+      {
+        "language": "French",
+        "locale": "fr_CH",
+        "url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_CH",
+        "url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_CH"
+      },
+      {
+        "language": "German",
+        "locale": "de_CH",
+        "url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/de_CH",
+        "url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/de_CH"
+      },
+      {
+        "language": "Italian",
+        "locale": "it_CH",
+        "url_s1": "https://epson-ch.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/it_CH",
+        "url_s2": "https://epson-ch.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/it_CH"
+      }
+    ],
+    "Europe": [
+      {
+        "language": "English",
+        "locale": "en_EU",
+        "url_s1": "https://epson-eu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/en_EU",
+        "url_s2": "https://epson-eu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/en_EU"
+      },
+      {
+        "language": "French",
+        "locale": "fr_EU",
+        "url_s1": "https://epson-eu.cbnd-seikoepso3-s1-public.model-t.cc.commerce.ondemand.com/fr_EU",
+        "url_s2": "https://epson-eu.cbnd-seikoepso3-s2-public.model-t.cc.commerce.ondemand.com/fr_EU"
+      }
+    ]
+  }
+}
