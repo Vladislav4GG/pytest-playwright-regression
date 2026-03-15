@@ -46,6 +46,12 @@ on:
         type: string
         default: "0"
 
+      menu_links_workers:
+        description: "Parallel workers for menu links check"
+        required: false
+        type: string
+        default: "8"
+
 jobs:
   run-regression:
     runs-on: ubuntu-latest
@@ -53,6 +59,7 @@ jobs:
     env:
       TEST_ENV: ${{ inputs.env }}
       MENU_LINKS_LIMIT: ${{ inputs.menu_links_limit }}
+      MENU_LINKS_WORKERS: ${{ inputs.menu_links_workers }}
 
       PW_HEADLESS: "true"
       PW_TIMEOUT_MS: "60000"

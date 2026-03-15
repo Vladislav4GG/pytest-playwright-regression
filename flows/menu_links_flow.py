@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import os
+import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from urllib.parse import urlsplit
 
-from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError
+import requests
+from playwright.sync_api import Page
 
 from pages.menu_navigation_page import MenuLink, MenuNavigationPage
 from utils.consent import dismiss_onetrust
@@ -21,12 +25,18 @@ class MenuLinkFailure:
 
 class MenuLinksFlow:
     NOT_FOUND_TEXT = "We may have sent a printer into space, but this page is beyond even our reach"
+    DEFAULT_WORKERS = 8
+    USER_AGENT = (
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+    )
 
     def __init__(self, page: Page, base_url: str):
         self.page = page
         self.base_url = base_url.rstrip("/")
         self.home_url = f"{self.base_url}/en_GB"
         self.menu = MenuNavigationPage(page)
+        self.last_warnings: list[MenuLinkFailure] = []
 
     def open_home_and_collect_links(self) -> list[MenuLink]:
         self.page.goto(self.home_url, wait_until="domcontentloaded", timeout=45000)
@@ -35,81 +45,102 @@ class MenuLinksFlow:
 
     def validate_links(self, links: list[MenuLink], timeout: int = 45000) -> list[MenuLinkFailure]:
         failures: list[MenuLinkFailure] = []
+        warnings: list[MenuLinkFailure] = []
+        workers = self._workers()
+        timeout_s = max(int(timeout / 1000), 10)
+
+        print(f"[MENU][INFO] HTTP parallel check enabled, workers={workers}, timeout_s={timeout_s}")
 
         for index, link in enumerate(links, start=1):
             print(f"[MENU][CHECK] {index}/{len(links)} [{link.level}] {link.label} -> {link.url}")
 
-            reasons: list[str] = []
-            status_code: int | None = None
-            final_url = ""
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            future_to_link = {
+                executor.submit(self._check_link_http, link, timeout_s): link
+                for link in links
+            }
 
-            try:
-                response, final_url, timed_out_without_navigation = self._open_link(link.url, timeout=timeout)
-                status_code = response.status if response else None
-
-                if status_code is not None and status_code >= 400:
-                    reasons.append(f"http_status_{status_code}")
-
-                if self._redirected_to_home(link.url, final_url):
-                    reasons.append("redirected_to_homepage")
-
-                if timed_out_without_navigation:
-                    reasons.append("navigation_timeout_no_navigation")
-
-                page_text = self.page.evaluate("() => (document.body?.innerText || '').toLowerCase()")
-                if self.NOT_FOUND_TEXT.lower() in (page_text or ""):
-                    reasons.append("not_found_phrase_detected")
-
-                title = (self.page.title() or "").lower()
-                if "server error" in title or "internal server error" in title:
-                    reasons.append("server_error_title_detected")
-
-            except Exception as exc:
-                reasons.append(f"navigation_error_{exc.__class__.__name__}")
-                final_url = self.page.url
-
-            if reasons:
-                failures.append(
-                    MenuLinkFailure(
+            for future in as_completed(future_to_link):
+                link = future_to_link[future]
+                try:
+                    failure = future.result()
+                except Exception as exc:
+                    failure = MenuLinkFailure(
                         level=link.level,
                         label=link.label,
                         requested_url=link.url,
-                        final_url=final_url,
-                        status_code=status_code,
-                        reasons=tuple(reasons),
+                        final_url=link.url,
+                        status_code=None,
+                        reasons=(f"worker_error_{exc.__class__.__name__}",),
                     )
-                )
 
+                if failure:
+                    if all(reason.startswith("http_request_error_") for reason in failure.reasons):
+                        warnings.append(failure)
+                    else:
+                        failures.append(failure)
+
+        failures.sort(key=lambda item: item.requested_url)
+        warnings.sort(key=lambda item: item.requested_url)
+        self.last_warnings = warnings
         return failures
 
-    def _open_link(self, url: str, timeout: int) -> tuple[object | None, str, bool]:
-        response = None
-        timed_out_without_navigation = False
+    def _check_link_http(self, link: MenuLink, timeout_s: int) -> MenuLinkFailure | None:
+        reasons: list[str] = []
+        status_code: int | None = None
+        final_url = link.url
 
-        for attempt in range(2):
-            start_url = self.page.url
-            timed_out = False
+        try:
+            response = requests.get(
+                link.url,
+                allow_redirects=True,
+                timeout=timeout_s,
+                headers={"User-Agent": self.USER_AGENT},
+            )
+            status_code = response.status_code
+            final_url = response.url
+            body = response.text or ""
+            body_lower = body.lower()
 
-            try:
-                # commit is enough for link-health checks and avoids long waits on heavy pages
-                response = self.page.goto(url, wait_until="commit", timeout=timeout)
-            except PlaywrightTimeoutError:
-                timed_out = True
+            if status_code >= 400:
+                reasons.append(f"http_status_{status_code}")
 
-            try:
-                self.page.wait_for_load_state("domcontentloaded", timeout=min(timeout, 20000))
-            except PlaywrightTimeoutError:
-                pass
+            if self._redirected_to_home(link.url, final_url):
+                reasons.append("redirected_to_homepage")
 
-            final_url = self.page.url
-            if not timed_out or final_url != start_url:
-                return response, final_url, False
+            if self.NOT_FOUND_TEXT.lower() in body_lower:
+                reasons.append("not_found_phrase_detected")
 
-            timed_out_without_navigation = True
-            if attempt == 0:
-                print(f"[MENU][RETRY] Timeout without navigation for {url}, retrying once")
+            title_match = re.search(r"<title[^>]*>(.*?)</title>", body, re.IGNORECASE | re.DOTALL)
+            if title_match:
+                title = title_match.group(1).strip().lower()
+                if "server error" in title or "internal server error" in title:
+                    reasons.append("server_error_title_detected")
 
-        return response, self.page.url, timed_out_without_navigation
+        except requests.RequestException as exc:
+            reasons.append(f"http_request_error_{exc.__class__.__name__}")
+
+        if not reasons:
+            return None
+
+        return MenuLinkFailure(
+            level=link.level,
+            label=link.label,
+            requested_url=link.url,
+            final_url=final_url,
+            status_code=status_code,
+            reasons=tuple(reasons),
+        )
+
+    def _workers(self) -> int:
+        raw = os.getenv("MENU_LINKS_WORKERS", "").strip()
+        if not raw:
+            return self.DEFAULT_WORKERS
+        try:
+            value = int(raw)
+        except ValueError:
+            return self.DEFAULT_WORKERS
+        return max(1, min(value, 32))
 
     def _redirected_to_home(self, requested_url: str, final_url: str) -> bool:
         requested_path = urlsplit(requested_url).path.rstrip("/")

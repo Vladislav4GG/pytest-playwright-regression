@@ -69,6 +69,17 @@ def test_menu_links_open_without_404_or_home_redirect(page):
 
     with allure.step("Open each menu link and collect broken pages without stopping test"):
         failures = flow.validate_links(links)
+        warnings = flow.last_warnings
+
+    if warnings:
+        warnings_report = _format_failures(warnings)
+        print(f"[MENU][WARN] Request-level issues found: {len(warnings)}")
+        print(warnings_report)
+        allure.attach(
+            warnings_report,
+            name="Menu links request warnings",
+            attachment_type=allure.attachment_type.TEXT,
+        )
 
     if failures:
         report = _format_failures(failures)
