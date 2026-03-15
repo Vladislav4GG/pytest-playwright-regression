@@ -40,6 +40,12 @@ on:
         type: boolean
         default: false
 
+      case_smartedit_homepage_amplience:
+        description: "smartedit_homepage_amplience.py"
+        required: false
+        type: boolean
+        default: false
+
       menu_links_limit:
         description: "Optional limit for menu links test (0 = no limit)"
         required: false
@@ -51,6 +57,54 @@ on:
         required: false
         type: string
         default: "8"
+
+      smartedit_site_label:
+        description: "SmartEdit site label"
+        required: false
+        type: string
+        default: "Epson United Kingdom"
+
+      smartedit_catalog_label:
+        description: "SmartEdit catalog label"
+        required: false
+        type: string
+        default: "Epson GB Content Catalog"
+
+      smartedit_page_search_query:
+        description: "SmartEdit pages search query"
+        required: false
+        type: string
+        default: "vlad"
+
+      smartedit_page_name:
+        description: "SmartEdit target page name"
+        required: false
+        type: string
+        default: "vladampliencepage"
+
+      smartedit_target_slot_id:
+        description: "SmartEdit target slot id"
+        required: false
+        type: string
+        default: "Content3Slot-cmsitem_00475000"
+
+      smartedit_amplience_slot_id:
+        description: "Amplience Slot Id value"
+        required: false
+        type: string
+        default: "b55e50d0-8195-4945-ad41-5e7e61efc647"
+
+      smartedit_rendered_heading_text:
+        description: "Expected heading rendered on storefront page"
+        required: false
+        type: string
+        default: "Content text HUP+"
+
+      smartedit_storefront_page_url:
+        description: "Optional direct storefront URL for verification"
+        required: false
+        type: string
+        default: ""
 
 jobs:
   run-regression:
@@ -69,6 +123,19 @@ jobs:
       STAGE_PASSWORD: ${{ secrets.STAGE_PASSWORD }}
       REG_EMAIL: ${{ secrets.STAGE_EMAIL }}
       REG_PASS: ${{ secrets.STAGE_PASSWORD }}
+
+      SMARTEDIT_URL: ${{ secrets.SMARTEDIT_URL }}
+      SMARTEDIT_USERNAME: ${{ secrets.SMARTEDIT_USERNAME }}
+      SMARTEDIT_PASSWORD: ${{ secrets.SMARTEDIT_PASSWORD }}
+
+      SMARTEDIT_SITE_LABEL: ${{ inputs.smartedit_site_label }}
+      SMARTEDIT_CATALOG_LABEL: ${{ inputs.smartedit_catalog_label }}
+      SMARTEDIT_PAGE_SEARCH_QUERY: ${{ inputs.smartedit_page_search_query }}
+      SMARTEDIT_PAGE_NAME: ${{ inputs.smartedit_page_name }}
+      SMARTEDIT_TARGET_SLOT_ID: ${{ inputs.smartedit_target_slot_id }}
+      SMARTEDIT_AMPLIENCE_SLOT_ID: ${{ inputs.smartedit_amplience_slot_id }}
+      SMARTEDIT_RENDERED_HEADING_TEXT: ${{ inputs.smartedit_rendered_heading_text }}
+      SMARTEDIT_STOREFRONT_PAGE_URL: ${{ inputs.smartedit_storefront_page_url }}
 
     steps:
       - uses: actions/checkout@v4
@@ -121,12 +188,14 @@ jobs:
               "tests/functional/test_site_selector_locale.py"
               "tests/functional/test_account_access_navigation.py"
               "tests/functional/test_menu_links.py"
+              "tests/functional/test_smartedit_homepage_amplience.py"
             )
           else
             [ "${{ inputs.case_cookie_management }}" = "true" ] && TARGETS+=("tests/functional/test_cookie_banner.py")
             [ "${{ inputs.case_country_locale }}" = "true" ] && TARGETS+=("tests/functional/test_site_selector_locale.py")
             [ "${{ inputs.case_auth_navigation }}" = "true" ] && TARGETS+=("tests/functional/test_account_access_navigation.py")
             [ "${{ inputs.case_menu_links }}" = "true" ] && TARGETS+=("tests/functional/test_menu_links.py")
+            [ "${{ inputs.case_smartedit_homepage_amplience }}" = "true" ] && TARGETS+=("tests/functional/test_smartedit_homepage_amplience.py")
           fi
 
           if [ ${#TARGETS[@]} -eq 0 ]; then

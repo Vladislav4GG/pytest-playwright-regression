@@ -69,27 +69,34 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture()
 def context(browser: Browser, request) -> BrowserContext:
     test_name = _safe_name(request.node.name)
+    is_smartedit = request.node.get_closest_marker("smartedit") is not None
 
-    ctx = browser.new_context(
-        viewport={"width": 1440, "height": 900},
-        record_video_dir=str(VIDEO_DIR / test_name),
-    )
+    context_kwargs = {
+        "viewport": {"width": 1440, "height": 900},
+    }
+    if not is_smartedit:
+        context_kwargs["record_video_dir"] = str(VIDEO_DIR / test_name)
+
+    ctx = browser.new_context(**context_kwargs)
     ctx.set_default_timeout(PW_TIMEOUT_MS)
 
-    # трасу стартуємо завжди, але зберігаємо файл тільки якщо fail
-    ctx.tracing.start(screenshots=True, snapshots=True, sources=True)
+    # For SmartEdit DnD flow we disable tracing/video to reduce browser instability.
+    if not is_smartedit:
+        # трасу стартуємо завжди, але зберігаємо файл тільки якщо fail
+        ctx.tracing.start(screenshots=True, snapshots=True, sources=True)
 
     yield ctx
 
     failed = getattr(request.node, "rep_call", None) is not None and request.node.rep_call.failed
 
     try:
-        if failed:
-            trace_path = TRACE_DIR / f"{test_name}.zip"
-            ctx.tracing.stop(path=str(trace_path))
-            print(f"\n🧵 Trace saved: {trace_path}")
-        else:
-            ctx.tracing.stop()
+        if not is_smartedit:
+            if failed:
+                trace_path = TRACE_DIR / f"{test_name}.zip"
+                ctx.tracing.stop(path=str(trace_path))
+                print(f"\n🧵 Trace saved: {trace_path}")
+            else:
+                ctx.tracing.stop()
     finally:
         ctx.close()
 
