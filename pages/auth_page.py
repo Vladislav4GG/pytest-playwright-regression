@@ -3,7 +3,10 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import Page, expect
+
+from utils.consent import dismiss_onetrust
 
 
 @dataclass(frozen=True)
@@ -57,8 +60,18 @@ class AuthPage:
 
         submit = self.login_form.get_by_role("button", name=re.compile(r"log\s*in|sign\s*in", re.I)).first
         expect(submit).to_be_enabled(timeout=timeout)
-        with self.page.expect_navigation(wait_until="domcontentloaded", timeout=timeout):
-            submit.click()
+        dismiss_onetrust(self.page)
+        try:
+            with self.page.expect_navigation(wait_until="domcontentloaded", timeout=timeout):
+                submit.click()
+        except PlaywrightError:
+            dismiss_onetrust(self.page)
+            # OneTrust overlays can still intercept pointer events; fallback to JS click.
+            handle = submit.element_handle()
+            if not handle:
+                raise
+            with self.page.expect_navigation(wait_until="domcontentloaded", timeout=timeout):
+                self.page.evaluate("(el) => el.click()", handle)
         self.page.wait_for_load_state("domcontentloaded")
 
     def wait_register_form(self, timeout: int = 15000):

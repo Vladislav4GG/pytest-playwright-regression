@@ -64,6 +64,12 @@ on:
         type: boolean
         default: false
 
+      case_my_account_management:
+        description: "my_account_management.py"
+        required: false
+        type: boolean
+        default: false
+
       menu_links_limit:
         description: "Optional limit for menu links test (0 = no limit)"
         required: false
@@ -155,6 +161,10 @@ jobs:
       SMARTEDIT_RENDERED_HEADING_TEXT: ${{ inputs.smartedit_rendered_heading_text }}
       SMARTEDIT_STOREFRONT_PAGE_URL: ${{ inputs.smartedit_storefront_page_url }}
 
+      MY_ACCOUNT_EMAIL: ${{ secrets.MY_ACCOUNT_EMAIL }}
+      MY_ACCOUNT_PASSWORD: ${{ secrets.MY_ACCOUNT_PASSWORD }}
+      MY_ACCOUNT_LOQATE_POSTCODE: ${{ secrets.MY_ACCOUNT_LOQATE_POSTCODE }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -210,6 +220,7 @@ jobs:
               "tests/functional/test_attraqt_search.py"
               "tests/functional/test_plp_checks.py"
               "tests/functional/test_smartedit_homepage_amplience.py"
+              "tests/functional/test_my_account_management.py"
             )
           else
             [ "${{ inputs.case_cookie_management }}" = "true" ] && TARGETS+=("tests/functional/test_cookie_banner.py")
@@ -220,6 +231,7 @@ jobs:
             [ "${{ inputs.case_search_attraqt }}" = "true" ] && TARGETS+=("tests/functional/test_attraqt_search.py")
             [ "${{ inputs.case_plp_checks }}" = "true" ] && TARGETS+=("tests/functional/test_plp_checks.py")
             [ "${{ inputs.case_smartedit_homepage_amplience }}" = "true" ] && TARGETS+=("tests/functional/test_smartedit_homepage_amplience.py")
+            [ "${{ inputs.case_my_account_management }}" = "true" ] && TARGETS+=("tests/functional/test_my_account_management.py")
           fi
 
           if [ ${#TARGETS[@]} -eq 0 ]; then
