@@ -40,6 +40,24 @@ on:
         type: boolean
         default: false
 
+      case_social_links:
+        description: "social_media_links.py"
+        required: false
+        type: boolean
+        default: false
+
+      case_search_attraqt:
+        description: "attraqt_search.py"
+        required: false
+        type: boolean
+        default: false
+
+      case_plp_checks:
+        description: "plp_checks.py"
+        required: false
+        type: boolean
+        default: false
+
       case_smartedit_homepage_amplience:
         description: "smartedit_homepage_amplience.py"
         required: false
@@ -86,7 +104,7 @@ on:
         description: "SmartEdit target slot id"
         required: false
         type: string
-        default: "Content3Slot-cmsitem_00475000"
+        default: "Content1Slot-cmsitem_00475000"
 
       smartedit_amplience_slot_id:
         description: "Amplience Slot Id value"
@@ -188,6 +206,9 @@ jobs:
               "tests/functional/test_site_selector_locale.py"
               "tests/functional/test_account_access_navigation.py"
               "tests/functional/test_menu_links.py"
+              "tests/functional/test_social_media_links.py"
+              "tests/functional/test_attraqt_search.py"
+              "tests/functional/test_plp_checks.py"
               "tests/functional/test_smartedit_homepage_amplience.py"
             )
           else
@@ -195,6 +216,9 @@ jobs:
             [ "${{ inputs.case_country_locale }}" = "true" ] && TARGETS+=("tests/functional/test_site_selector_locale.py")
             [ "${{ inputs.case_auth_navigation }}" = "true" ] && TARGETS+=("tests/functional/test_account_access_navigation.py")
             [ "${{ inputs.case_menu_links }}" = "true" ] && TARGETS+=("tests/functional/test_menu_links.py")
+            [ "${{ inputs.case_social_links }}" = "true" ] && TARGETS+=("tests/functional/test_social_media_links.py")
+            [ "${{ inputs.case_search_attraqt }}" = "true" ] && TARGETS+=("tests/functional/test_attraqt_search.py")
+            [ "${{ inputs.case_plp_checks }}" = "true" ] && TARGETS+=("tests/functional/test_plp_checks.py")
             [ "${{ inputs.case_smartedit_homepage_amplience }}" = "true" ] && TARGETS+=("tests/functional/test_smartedit_homepage_amplience.py")
           fi
 
